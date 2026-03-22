@@ -1,0 +1,2629 @@
+\documentclass[12pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[letterpaper,top=1.0in,bottom=1.0in,left=1.18in,right=1.18in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{0pt}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\abovedisplayshortskip}{6pt plus 2pt minus 3pt}
+\setlength{\belowdisplayshortskip}{6pt plus 2pt minus 3pt}
+\DeclareMathOperator{\len}{len}
+\linespread{1.01}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{componentlemma}{Component lemma}
+\newtheorem*{auxlemma}{Auxiliary lemma (flux across a regular superlevel component)}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remarkplain}{Remark}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries A Short Path Joining Two Zeros Inside a Polynomial Lemniscate}
+\end{center}
+
+\begin{abstract}
+Let
+\[
+ f(z)=\prod_{j=1}^n (z-z_j)
+\]
+be a monic polynomial whose zeros are listed with multiplicity and satisfy $|z_j|<1$ for all $j$.
+Assuming the known Erd\H{o}s--Herzog--Piranian component lemma that some connected component of
+\[
+ \Lambda_f:=\{z\in\mathbb{C}: |f(z)|<1\}
+\]
+contains at least two zeros of $f$, we prove that there exist two roots of $f$ which can be joined by
+ a rectifiable curve of Euclidean length $<2$ contained in $\Lambda_f$. The proof combines a sharp
+ integral estimate on each component of a polynomial lemniscate, an explicit two-parameter perturbation
+ that makes the critical-level structure above a fixed base level Morse and excellent on a fixed
+ collar, and a spanning-tree construction in the resulting Reeb decomposition.
+\end{abstract}
+
+\section{Introduction}
+
+Let
+\[
+ f(z)=\prod_{j=1}^n (z-z_j), \qquad |z_j|<1 \quad (1\le j\le n),
+\]
+where the zeros are listed with multiplicity. We consider the filled unit lemniscate
+\[
+ \Lambda_f:=\{z\in\mathbb{C}: |f(z)|<1\}.
+\]
+The question addressed here is the following.
+
+\medskip
+\noindent Must there always exist a rectifiable curve of Euclidean length less than $2$, contained in
+$\Lambda_f$, whose endpoints are two roots of $f$?
+\medskip
+
+\noindent Our main result answers this in the affirmative.
+
+\begin{theorem}\label{thm:main}
+\emph{Let
+\[
+ f(z)=\prod_{j=1}^n (z-z_j), \qquad |z_j|<1 \quad (1\le j\le n),
+\]
+where the zeros are listed with multiplicity. Then there exist indices $i,j\in\{1,\dots,n\}$ and a rectifiable
+curve $\gamma\subset \Lambda_f$ joining $z_i$ to $z_j$ such that
+\[
+ \operatorname{len}(\gamma)<2.
+\]
+In particular, if $f$ is squarefree and $n\ge 2$, then the endpoints may be chosen to be distinct zeros of $f$.}
+\end{theorem}
+
+\begin{remark}
+If $f$ has a multiple zero, the conclusion is immediate: two coincident roots may be
+joined by the constant curve. Thus the only nontrivial case is when $f$ is squarefree and $n\ge 2$.
+In the proof below we therefore reduce immediately to that case.
+\end{remark}
+
+The main geometric input we use is the following component lemma.
+
+\begin{componentlemma}
+Some connected component of $\Lambda_f$ contains at least two zeros of $f$.
+\end{componentlemma}
+
+\medskip
+\noindent
+This is known due to work of Erd\H{o}s, Herzog, and Piranian; see \cite{EHP58} and the later references listed below. 
+In addition, we use standard results from planar potential theory, planar topology, and Morse theory: Carleman's inequality, P\'olya's inequality, the Jordan--Schoenflies theorem, and the local Morse normal form for a nondegenerate saddle.
+\noindent The proof of Theorem~1 has three parts.
+\begin{enumerate}
+\item For any component $U\subset \Lambda_f$ containing $m$ zeros of $f$, we prove the sharp integral estimate
+\[
+ \int_U \frac{|f'(z)|}{|f(z)|}\,dA(z)\le 2\pi m.
+\]
+\item Above a fixed base level we construct, under a genericity hypothesis on the critical points, a finite
+      tree spanning the relevant roots, with total length controlled by the tail integral of the level lengths.
+\item A small explicit perturbation of the form $f\mapsto f+\lambda z+\beta$ makes the critical-point configuration
+      generic on a fixed collar, while preserving the relevant component and a fixed positive slack below the threshold $2$.
+\end{enumerate}
+
+\section{An analytic estimate on a component}
+
+Let $U$ be a connected component of $\Lambda_f$, and suppose that $U$ contains exactly $m\ge 1$ zeros of $f$,
+counted with multiplicity. Set
+\[
+ u:=-\log|f| \quad\text{on } U.
+\]
+Then $u>0$ on $U$, $u=0$ on $\partial U$, and $u(z)\to +\infty$ at the zeros of $f$ in $U$. For $t\ge 0$ define
+\[
+ K_t:=\{z\in U:u(z)\ge t\}, \qquad A(t):=\operatorname{Area}(K_t).
+\]
+For regular $t$ write
+\[
+ P(t):=\mathcal H^1(\{z\in U:u(z)=t\}).
+\]
+We also set
+\[
+ I(U):=\int_U \frac{|f'(z)|}{|f(z)|}\,dA(z)=\int_U |\nabla u|\,dA.
+\]
+
+\medskip
+\begin{lemma}
+\emph{Let $p$ be a nonconstant polynomial and let $r>0$. Then the level set
+\[
+ \{z\in\mathbb{C}: |p(z)|=r\}
+\]
+has planar Lebesgue measure zero. Consequently, if $E$ is a connected component of
+\[
+ \{z\in\mathbb{C}: |p(z)|<r\},
+\]
+then $\partial E\subset\{|p|=r\}$ and
+\[
+ \operatorname{Area}(E)=\operatorname{Area}(\overline E).
+\]}
+\end{lemma}
+
+\begin{proof} Set
+\[
+S:=\{z\in \mathbb{C}: |p(z)|=r,\ p'(z)\neq 0\}.
+\]
+The function $F(z):=|p(z)|^2-r^2$ is real-analytic on $\mathbb{C}$, and on $S$ its gradient is nonzero because,
+after identifying $\mathbb{C}$ with $\mathbb{R}^2$,
+\[
+\nabla F(z)=2\,\overline{p(z)}\,p'(z).
+\]
+Therefore the implicit function theorem shows that $S$ is a one-dimensional real-analytic submanifold
+of $\mathbb{C}$, hence it has planar measure zero. The complement
+\[
+\{|p|=r\}\setminus S
+\]
+is contained in the finite set $\{p'=0\}$, because $r>0$ excludes the zeros of $p$. Thus $\{|p|=r\}$ has
+planar measure zero.
+
+\indent If $E$ is a connected component of $\{|p|<r\}$, then $\partial E\subset\{|p|=r\}$. Hence
+\[
+\operatorname{Area}(\overline E\setminus E)=0,
+\]
+so $\operatorname{Area}(E)=\operatorname{Area}(\overline E)$. \end{proof}
+
+\medskip
+\begin{auxlemma}
+Let $s>0$ be a regular value of $u=-\log|f|$, and let $G$ be a connected component of
+\[
+\{z\in U:u(z)>s\}.
+\]
+Suppose that the zeros of $f$ in $G$ are $a_1,\dots,a_r$, with multiplicities $m_1,\dots,m_r$, and set
+\[
+M:=m_1+\cdots+m_r.
+\]
+Then
+\[
+\int_{\partial G} |\nabla u|\,ds = 2\pi M.
+\]
+\end{auxlemma}
+
+\begin{proof} Because $s$ is a regular value, $\partial G\subset\{u=s\}$ is a smooth compact $1$-manifold. For $\rho>0$ small enough, let
+\[
+G_\rho:=G\setminus \bigcup_{j=1}^r \overline{D(a_j,\rho)}.
+\]
+Since $u$ is harmonic on $G_\rho$, Green's identity gives
+\[
+0=\int_{G_\rho}\Delta u\,dA
+  =\int_{\partial G_\rho}\partial_\nu u\,ds
+  =\int_{\partial G}\partial_\nu u\,ds
+   +\sum_{j=1}^r \int_{\partial D(a_j,\rho)} \partial_\nu u\,ds,
+\]
+where $\nu$ denotes the outward unit normal of $G_\rho$.
+
+On $\partial G$, the function $u$ decreases in the outward direction, so
+\[
+\partial_\nu u=-|\nabla u|.
+\]
+Near $a_j$ one has
+\[
+u(z)=-m_j\log|z-a_j|+h_j(z),
+\]
+where $h_j$ is harmonic. Therefore, on $\partial D(a_j,\rho)$,
+\[
+\partial_\nu u=\frac{m_j}{\rho}+O(1),
+\]
+because the outward normal of $G_\rho$ on the inner boundary points toward the center $a_j$. Hence
+\[
+\int_{\partial D(a_j,\rho)} \partial_\nu u\,ds \to 2\pi m_j
+\qquad (\rho\downarrow 0).
+\]
+Letting $\rho\downarrow 0$ yields
+\[
+-\int_{\partial G}|\nabla u|\,ds + 2\pi\sum_{j=1}^r m_j = 0,
+\]
+which is exactly the stated identity. \end{proof}
+\medskip
+\begin{proposition}
+\emph{With the notation above,}
+\[
+I(U)\le 2\pi m.
+\]
+\end{proposition}
+
+\begin{proof}
+Let \(a_1,\dots,a_r\) be the distinct zeros of \(f\) in \(U\), with multiplicities
+\(m_1,\dots,m_r\), so that
+\[
+m_1+\cdots+m_r=m.
+\]
+
+We first justify the coarea identities by truncation away from the singularities of
+\(u=-\log|f|\). 
+
+
+Fix regular values $0<\varepsilon<t$, and set
+\[
+U_\varepsilon:=\{z\in U:u(z)>\varepsilon\},
+\qquad
+\Omega_{\varepsilon,t}:=U_\varepsilon\setminus K_t=\{\varepsilon<u<t\}.
+\]
+Since every zero of $f$ in $U$ lies in $K_t$, the function $u$ is harmonic on a neighborhood of $\Omega_{\varepsilon,t}$. Consider
+\[
+v_{\varepsilon,t}(z):=\min\!\left\{\frac{u(z)-\varepsilon}{t-\varepsilon},\,1\right\}
+\qquad (z\in U_\varepsilon).
+\]
+Then $v_{\varepsilon,t}=0$ on $\partial U_\varepsilon$, $v_{\varepsilon,t}=1$ on $K_t$, and
+\[
+\nabla v_{\varepsilon,t}=\frac{\nabla u}{t-\varepsilon}
+\qquad\text{on }\Omega_{\varepsilon,t}.
+\]
+Thus $v_{\varepsilon,t}$ is admissible for the condenser $(K_t,U_\varepsilon)$.
+
+We now justify directly that $v_{\varepsilon,t}$ minimizes the Dirichlet energy. Let $w$ be any admissible competitor for $(K_t,U_\varepsilon)$. Replacing $w$ by $\min\{1,\max\{w,0\}\}$ if necessary, we may assume $0\le w\le 1$. On $\Omega_{\varepsilon,t}$ set
+\[
+\eta:=w-v_{\varepsilon,t}.
+\]
+Since both $w$ and $v_{\varepsilon,t}$ equal $0$ on $\partial U_\varepsilon$ and equal $1$ on $\partial K_t=\{u=t\}$, the function $\eta$ has zero trace on $\partial\Omega_{\varepsilon,t}$. Because $u$ is harmonic on $\Omega_{\varepsilon,t}$, so is $v_{\varepsilon,t}$. Hence
+\[
+\int_{\Omega_{\varepsilon,t}} |\nabla w|^2\,dA
+=
+\int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA
++
+\int_{\Omega_{\varepsilon,t}} |\nabla\eta|^2\,dA
++
+2\int_{\Omega_{\varepsilon,t}} \nabla v_{\varepsilon,t}\cdot \nabla\eta\,dA.
+\]
+The last term vanishes by integration by parts:
+\[
+\int_{\Omega_{\varepsilon,t}} \nabla v_{\varepsilon,t}\cdot \nabla\eta\,dA
+=
+-\int_{\Omega_{\varepsilon,t}} \eta\,\Delta v_{\varepsilon,t}\,dA
++
+\int_{\partial\Omega_{\varepsilon,t}} \eta\,\partial_\nu v_{\varepsilon,t}\,ds
+=0,
+\]
+because $\Delta v_{\varepsilon,t}=0$ on $\Omega_{\varepsilon,t}$ and $\eta|_{\partial\Omega_{\varepsilon,t}}=0$. Therefore
+\[
+\int_{\Omega_{\varepsilon,t}} |\nabla w|^2\,dA
+\ge
+\int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA.
+\]
+Since the total Dirichlet energy of $w$ on $U_\varepsilon$ is at least its energy on $\Omega_{\varepsilon,t}$, it follows that $v_{\varepsilon,t}$ is the capacitary potential of $(K_t,U_\varepsilon)$. With the normalization
+\[
+\operatorname{cap}(E,B)
+=
+\frac1{4\pi}\inf \int |\nabla v|^2\,dA,
+\]
+we obtain
+\[
+\operatorname{cap}(K_t,U_\varepsilon)
+=
+\frac1{4\pi}\int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA
+=
+\frac1{4\pi(t-\varepsilon)^2}\int_{\varepsilon<u<t} |\nabla u|^2\,dA.
+\]
+Applying the coarea formula on the smooth region $\Omega_{\varepsilon,t}$, we obtain
+\[
+\int_{\varepsilon<u<t} |\nabla u|^2\,dA
+=
+\int_\varepsilon^t
+\left(\int_{u=s} |\nabla u|\,d\sigma\right) ds.
+\]
+For each regular $s\in(\varepsilon,t)$, the level set $\{u=s\}$ is the disjoint union
+of the boundaries of the connected components of $\{u>s\}$. Applying the auxiliary
+flux lemma above to each such component and summing over all components shows that
+\[
+\int_{u=s} |\nabla u|\,d\sigma = 2\pi m,
+\]
+because the total multiplicity of the zeros of $f$ in $U$ is $m$. Hence
+\[
+\int_{\varepsilon<u<t} |\nabla u|^2\,dA
+=
+\int_\varepsilon^t 2\pi m\,ds
+=
+2\pi m(t-\varepsilon).
+\]
+Therefore
+\[
+\operatorname{cap}(K_t,U_\varepsilon)=\frac{m}{2(t-\varepsilon)}.
+\]
+
+As $\varepsilon\downarrow 0$, the domains $U_\varepsilon$ increase to $U$. We claim that
+\[
+\operatorname{cap}_{\mathrm{cond}}(K_t,U)
+=
+\lim_{\varepsilon\downarrow 0}\operatorname{cap}_{\mathrm{cond}}(K_t,U_\varepsilon).
+\]
+Indeed, for each $\varepsilon>0$, every admissible function for $(K_t,U_\varepsilon)$
+is also admissible for $(K_t,U)$, hence
+\[
+\operatorname{cap}_{\mathrm{cond}}(K_t,U)
+\le
+\operatorname{cap}_{\mathrm{cond}}(K_t,U_\varepsilon).
+\]
+Conversely, let $v\in C_c^\infty(U)$ satisfy $v\ge 1$ on $K_t$. Since $\operatorname{supp}v$
+is compact in $U$, there exists $\varepsilon_0>0$ such that $\operatorname{supp}v\subset U_\varepsilon$
+for all $0<\varepsilon<\varepsilon_0$. Thus, for all such $\varepsilon$,
+\[
+\operatorname{cap}_{\mathrm{cond}}(K_t,U_\varepsilon)
+\le
+\frac1{4\pi}\int_{\mathbb C} |\nabla v|^2\,dA.
+\]
+Taking $\limsup$ as $\varepsilon\downarrow 0$ and then the infimum over all such $v$
+gives the reverse inequality. Therefore
+\begin{equation}
+\tag{5}
+\operatorname{cap}_{\mathrm{cond}}(K_t,U)=\frac{m}{2t}.
+\end{equation}
+
+
+For bounded open sets $G\subset\mathbb C$ we write
+\[
+\operatorname{cap}_{\log}(G):=\operatorname{cap}_{\log}(\overline G).
+\]
+We also record explicitly the normalization used here: for the round condenser
+\[
+\bigl(D(0,R),\overline{D(0,r)}\bigr)
+\qquad (0<r<R),
+\]
+\[
+\operatorname{cap}_{\mathrm{cond}}\bigl(\overline{D(0,r)},D(0,R)\bigr)
+=
+\frac{1}{2\log(R/r)}.
+\]
+Accordingly, Carleman's inequality in the present normalization reads
+\[
+\frac{1}{\operatorname{cap}_{\mathrm{cond}}(E,B)}
+\le
+\log\frac{\operatorname{Area}(B)}{\operatorname{Area}(E)}
+\qquad (E\Subset B),
+\]
+and P\'olya's inequality reads
+\[
+\operatorname{Area}(K)\le \pi\,\operatorname{cap}_{\log}(K)^2
+\qquad (K\subset\mathbb C \text{ compact}).
+\]
+
+Applying Carleman's inequality to the condenser \((U,K_t)\) and using \((5)\), we obtain
+\[
+\log \frac{\operatorname{Area}(U)}{A(t)} \ge \frac{2t}{m},
+\]
+that is,
+\[
+A(t)\le \operatorname{Area}(U)e^{-2t/m}.
+\tag{6}
+\]
+
+It remains to bound \(\operatorname{Area}(U)\). Since \(f\) is monic, the filled lemniscate
+\[
+\{z\in\mathbb C: |f(z)|\le 1\}
+\]
+has logarithmic capacity \(1\). Hence, by monotonicity of logarithmic capacity,
+\[
+\operatorname{cap}_{\log}(\overline U)\le 1.
+\]
+By Lemma~3, \(\partial U\subset \{|f|=1\}\) has planar measure zero, so
+\[
+\operatorname{Area}(U)=\operatorname{Area}(\overline U).
+\]
+Applying Pólya's inequality to \(\overline U\) yields
+\[
+\operatorname{Area}(U)=\operatorname{Area}(\overline U)
+\le
+\pi\,\operatorname{cap}_{\log}(\overline U)^2
+\le \pi.
+\tag{7}
+\]
+
+Combining \((6)\) and \((7)\), we get
+\[
+A(t)\le \pi e^{-2t/m}.
+\]
+We now record explicitly the regularity of the distribution function
+\[
+A(t)=\operatorname{Area}(K_t).
+\]
+Since $u$ has only finitely many critical values and is smooth away from the zeros of
+$f$, the function $A$ is absolutely continuous on every compact interval of $(0,\infty)$.
+Moreover, for almost every regular value $t>0$,
+\[
+-A'(t)=\int_{u=t}\frac{1}{|\nabla u|}\,ds.
+\]
+Indeed, if $[a,b]$ contains no critical values of $u$, then the coarea formula applied
+on $\{a<u<b\}$ gives
+\[
+A(a)-A(b)
+=\int_{\{a<u<b\}}1\,dA
+=\int_a^b\left(\int_{u=t}\frac{1}{|\nabla u|}\,ds\right)dt.
+\]
+Since there are only finitely many critical values, this yields the asserted absolute
+continuity and derivative formula for almost every $t>0$.
+
+For almost every regular $t>0$, Cauchy--Schwarz and the flux identity give
+\[
+P(t)^2
+=\left(\int_{u=t}1\,ds\right)^2
+\le
+\left(\int_{u=t}|\nabla u|\,ds\right)
+\left(\int_{u=t}\frac{1}{|\nabla u|}\,ds\right)
+=
+2\pi m\,(-A'(t)).
+\]
+Hence
+\[
+P(t)\le \sqrt{2\pi m\,(-A'(t))}. \tag{8}
+\]
+Using the elementary inequality
+\[
+2\sqrt{xy}\le \frac{x}{\lambda}+\lambda y
+\]
+with \(x=2\pi m\), \(y=-A'(t)\), and \(\lambda= m e^{t/m}\), we obtain
+\[
+P(t)\le \pi e^{-t/m}+\frac{m}{2}e^{t/m}(-A'(t)).
+\]
+Integrating and using \((1)\),
+\[
+I(U)\le \pi\int_0^\infty e^{-t/m}\,dt
++\frac{m}{2}\int_0^\infty e^{t/m}(-A'(t))\,dt.
+\]
+The first integral equals \(\pi m\). For the second, the bound \(A(t)\le \pi e^{-2t/m}\) implies
+\(e^{t/m}A(t)\le \pi e^{-t/m}\to 0\) as \(t\to\infty\), so integration by parts gives
+\[
+\int_0^\infty e^{t/m}(-A'(t))\,dt
+=
+A(0)+\frac{1}{m}\int_0^\infty e^{t/m}A(t)\,dt.
+\]
+Using \((7)\) and \((6)\),
+\[
+A(0)\le \pi,
+\qquad
+\frac{1}{m}\int_0^\infty e^{t/m}A(t)\,dt
+\le
+\frac{\pi}{m}\int_0^\infty e^{-t/m}\,dt
+=
+\pi.
+\]
+Therefore
+\[
+\int_0^\infty e^{t/m}(-A'(t))\,dt \le 2\pi,
+\]
+and hence
+\[
+I(U)\le \pi m+\frac{m}{2}(2\pi)=2\pi m.
+\]
+\end{proof}
+
+\medskip
+\begin{corollary}\label{cor:component-integral-bound}
+\emph{Let $h$ be a monic polynomial, let $c\ge 0$, and let $v:=-\log|h|$. Let $W$ be a connected component of $\{v>c\}$. If $W$
+contains exactly $M$ zeros of $h$, counted with multiplicity, then}
+\[
+\int_W |\nabla v|\,dA\le 2\pi M.
+\]
+\emph{Equivalently,}
+\[
+\frac{1}{2\pi}\int_c^{\infty} P_W(t)\,dt\le M,
+\]
+\emph{where $P_W(t)=\mathcal H^1(\{z\in W:v(z)=t\})$ for regular $t>c$.}
+\end{corollary}
+
+\begin{proof}
+Set
+\[
+\widetilde h:=e^c h,
+\qquad
+\widetilde v:=-\log|\widetilde h|=v-c.
+\]
+Then $W$ is a connected component of
+\[
+\{\widetilde v>0\}=\{|\widetilde h|<1\},
+\]
+and $W$ contains exactly $M$ zeros of $\widetilde h$.
+
+The proof of Proposition~4 applies verbatim to $\widetilde h$ on $W$. The only place where monicity was used there was the bound $\operatorname{Area}(W)\le \pi$, obtained via P\'olya's inequality. Here the leading coefficient of $\widetilde h$ is $e^c$, so the filled lemniscate $\{|\widetilde h|\le 1\}$ has logarithmic capacity $e^{-c/\deg h}\le 1$. Since $W\subset \{|\widetilde h|<1\}$, monotonicity gives
+\[
+\operatorname{cap}_{\log}(W)=\operatorname{cap}_{\log}(\overline W)\le 1.
+\]
+By Lemma~3, the boundary $\partial W\subset \{|\widetilde h|=1\}$ has planar measure zero, so
+\[
+\operatorname{Area}(W)=\operatorname{Area}(\overline W).
+\]
+Applying P\'olya's inequality to $\overline W$ yields
+\[
+\operatorname{Area}(W)=\operatorname{Area}(\overline W)
+\le
+\pi\,\operatorname{cap}_{\log}(W)^2
+\le
+\pi.
+\]
+Therefore the same argument gives
+\[
+\int_W |\nabla \widetilde v|\,dA\le 2\pi M.
+\]
+Since $\nabla \widetilde v=\nabla v$, this is the desired estimate.
+\end{proof}
+
+\section{The first critical value and the low superlevel sets}
+
+Throughout the rest of the paper, $f$ is assumed squarefree on the component under consideration.
+Let $U\subset \Lambda_f$ be a connected component containing exactly $m\ge 2$ zeros of $f$, and write again
+\[
+ u=-\log|f|\quad\text{on }U.
+\]
+
+\medskip
+\begin{lemma}
+\emph{The function $u$ has at least one critical point in $U$. Consequently the set of positive
+critical values of $u$ is nonempty, and it has a smallest element. Denote that smallest positive critical
+value by $\lambda_*$ .}
+\end{lemma}
+
+\begin{proof} Choose pairwise disjoint closed disks $E_1,\dots,E_m\Subset U$ centered at the zeros of $f$. Since the
+superlevel sets of $u$ shrink to the zeros of $f$ as the level tends to $+\infty$, there exists $T>0$ such that
+\[
+ K_T:=\{u\ge T\}\subset \bigcup_{j=1}^m \operatorname{int}(E_j).
+\]
+In particular $u<T$ on $\bigcup_j \partial E_j$, and $K_T$ has at least $m$ connected components, one contained in
+each $E_j$.
+
+\indent Assume for contradiction that $u$ has no critical point in $\{0<u\le T\}$. Consider the vector field
+\[
+ X:=\frac{\nabla u}{|\nabla u|^2}
+\]
+on $\{0<u\le T\}$; it satisfies $Xu=1$. Let $z\in U\setminus K_T$, and write $s:=u(z)\in(0,T)$. Set
+\[
+ M_s:=U\cap\{e^{-T}\le |f|\le e^{-s/2}\}.
+\]
+The set $M_s$ is compact. It is bounded because $M_s\subset \Lambda_f$ and $\Lambda_f$ is bounded. To see that it is closed
+in $\mathbb{C}$, let $z_k\in M_s$ with $z_k\to z$. Then continuity of $f$ gives
+\[
+ e^{-T}\le |f(z)|\le e^{-s/2}<1.
+\]
+Hence $z\in \Lambda_f$. Since $U$ is a connected component of the open set $\Lambda_f$, it is relatively closed in $\Lambda_f$;
+because $z$ is also a limit point of $U$, we obtain $z\in U$. Thus $z\in M_s$. Also $M_s\subset\{s/2\le u\le T\}$, so
+$X$ is smooth on a neighborhood of $M_s$. Let $\varphi_\tau(z)$ be the maximal trajectory of $X$ through $z$. Along
+this trajectory,
+\[
+ \frac{d}{d\tau}u(\varphi_\tau(z))=Xu(\varphi_\tau(z))=1,
+\]
+so
+\[
+ u(\varphi_\tau(z))=s+\tau
+\]
+whenever the trajectory is defined. In particular, for $0\le \tau\le T-s$ one has
+\[
+ s/2\le s+\tau\le T,
+\]
+so the trajectory stays in the compact set $M_s$. Standard ODE continuation therefore shows that
+$\varphi_\tau(z)$ is defined on the whole interval $[0,T-s]$, and $\varphi_{T-s}(z)\in K_T$.
+
+\indent Define
+\[
+R_T(z)=\begin{cases}
+z, & z\in K_T,\\
+\varphi_{T-u(z)}(z), & z\in U\setminus K_T,
+\end{cases}
+\]
+and
+\[
+H:[0,1]\times U\to U,\qquad H(\theta,z)=\begin{cases}
+z, & z\in K_T,\\
+\varphi_{\theta(T-u(z))}(z), & z\in U\setminus K_T.
+\end{cases}
+\]
+If $z_0\in U\setminus K_T$, then the trajectory segment
+\[
+\{\varphi_\tau(z_0):0\le \tau\le T-u(z_0)\}
+\]
+is contained in the compact set $M_{u(z_0)}$, on which $X$ is smooth. Standard continuous dependence for smooth ODEs therefore shows that the map
+\[
+(\theta,z)\mapsto \varphi_{\theta(T-u(z))}(z)
+\]
+is continuous near each point of $[0,1]\times (U\setminus K_T)$. At points with $u(z)=T$ the two formulas agree, so $H$ is continuous on all of $[0,1]\times U$. Also
+\[
+H(0,z)=z,\qquad H(1,z)=R_T(z),\qquad H(\theta,z)=z \text{ for every } z\in K_T.
+\]
+Thus $R_T:U\to K_T$ is a well-defined strong deformation retraction. In particular $K_T$ is connected, contradicting the previous paragraph.
+Therefore $u$ has a critical point in $\{0<u\le T\}$, and the set of positive critical values is nonempty.
+
+\indent Since $u=-\log|f|$ is smooth on $U\setminus Z(f)$, its finite critical points are exactly
+the points of $U\setminus Z(f)$ where $f'(z)=0$. Because $f$ is squarefree on $U$, we have
+\[
+Z(f)\cap Z(f')=\varnothing.
+\]
+Hence $u$ has only finitely many finite critical points in $U$, and therefore only finitely many
+positive critical values. Thus the set of positive critical values has a smallest element, denoted
+$\lambda_*$. \end{proof}
+
+\medskip
+\noindent Set
+\[
+ \alpha:=\lambda_*/4.
+\]
+Then $u$ has no critical values in $[0,4\alpha)$.
+
+\medskip
+\begin{lemma}
+\emph{For every $t\in [0,\lambda_*)$, the superlevel set $K_t:=\{u\ge t\}$ is connected. In particular,}
+\[
+ K:=\{u\ge \alpha/2\},\qquad L:=\{u\ge 3\alpha/2\}
+\]
+\emph{are compact and connected.}
+\end{lemma}
+
+\begin{proof} Fix $0<t<\lambda_*$. By definition of $\lambda_*$, the function $u$ has no critical points in $\{0<u\le t\}$. For
+$z\in U\setminus K_t$ write $s:=u(z)\in(0,t)$, and set
+\[
+ M_s:=U\cap\{e^{-t}\le |f|\le e^{-s/2}\}.
+\]
+As in the proof of Lemma~6, $M_s$ is compact and contained in $\{s/2\le u\le t\}$, so the vector field
+\[
+ X=\frac{\nabla u}{|\nabla u|^2}
+\]
+is smooth on a neighborhood of $M_s$. Along the maximal trajectory $\varphi_\tau(z)$ of $X$ through $z$ one has
+$u(\varphi_\tau(z))=s+\tau$, hence the trajectory stays in $M_s$ for $0\le \tau\le t-s$ and therefore exists on that
+whole interval. Consequently
+\[
+ R_t(z)=\begin{cases}
+ z, & z\in K_t,\\
+ \varphi_{t-u(z)}(z), & z\in U\setminus K_t,
+ \end{cases}
+\]
+is well defined. Define
+\[
+H:[0,1]\times U\to U,
+\qquad
+H(\sigma,z):=\begin{cases}
+z, & z\in K_t,\\
+\varphi_{\sigma(t-u(z))}(z), & z\in U\setminus K_t.
+\end{cases}
+\]
+As in Lemma~6, the trajectory segments remain in the compact slab $M_s$, so standard
+continuous dependence for smooth ODEs implies that $H$ is continuous. Thus $H$ is a strong
+deformation retraction of $U$ onto $K_t$. Since $U$ is connected, $K_t$ is connected. The
+case $t=0$ is immediate.
+
+\indent For any $t>0$,
+\[
+ K_t=U\cap \{|f|\le e^{-t}\},
+\]
+because $|f|=1$ on $\partial U$. The right-hand side is closed and bounded in $\mathbb{C}$, hence compact. Taking
+$t=\alpha/2$ and $t=3\alpha/2$ gives the compactness of $K$ and $L$. \end{proof}
+
+\medskip
+\noindent Define
+\[
+ q:=\frac{1}{2\pi}\int_\alpha^{2\alpha} P(t)\,dt.
+\]
+Since $P(t)>0$ for $\alpha<t<2\alpha$, we have $q>0$. By Corollary~\ref{cor:component-integral-bound},
+\begin{equation}
+\frac{1}{2\pi}\int_{2\alpha}^{\infty} P(t)\,dt\le m-q.
+\tag{9}
+\end{equation}
+
+\section{A generic spanning tree above the base level}
+
+\begin{lemma}[Connected regular regions are strips]
+\emph{Let $0<a<b$, and let $V\subset U$ be a connected
+open set such that:}
+\begin{enumerate}
+\item[(i)] \emph{$a<u<b$ on $V$;}
+\item[(ii)] \emph{$u$ has no critical points on $V$;}
+\item[(iii)] \emph{every component of
+\[
+ \partial V\setminus \bigl(\{u=a\}\cup\{u=b\}\bigr)
+\]
+is contained in an integral curve of
+\[
+ X:=\frac{\nabla u}{|\nabla u|^2}.
+\]}
+\end{enumerate}
+\emph{For $t\in(a,b)$ set
+\[
+ \Sigma_t:=V\cap\{u=t\}.
+\]
+Then for every $s\in(a,b)$ the flow of $X$ defines a diffeomorphism
+\[
+ \Phi_s:\Sigma_s\times(a,b)\to V,\qquad \Phi_s(x,t)=\varphi_{t-s}(x),
+\]
+where $\varphi_\tau$ denotes the time-$\tau$ flow of $X$. In particular:}
+\begin{enumerate}
+\item[(a)] \emph{every level section $\Sigma_t$ is connected;}
+\item[(b)] \emph{$\partial V\cap\{u=a\}$ is connected;}
+\item[(c)] \emph{$\partial V\cap\{u=b\}$ is connected.}
+\end{enumerate}
+\emph{Thus $V$ is a genuine strip with one lower cross-section and one upper cross-section.}
+\end{lemma}
+
+\begin{proof} Since $Xu=1$, the function $u$ increases at unit speed along each trajectory of $X$. Fix $s\in(a,b)$
+and $x\in\Sigma_s$. Let $\gamma_x(\tau)=\varphi_\tau(x)$ be the maximal trajectory of $X$ through $x$.
+
+\indent We first claim that $\gamma_x(\tau)$ is defined for all $\tau\in(a-s,b-s)$ and remains in $V$. Fix
+\[
+ 0<\eta<\min\{s-a,b-s\},
+\]
+and let $K_\eta$ be the closure in $\mathbb{C}$ of the set $V\cap\{a+\eta<u<b-\eta\}$. The set $K_\eta$ is compact. Indeed,
+since $0<a<b$ and $0<\eta<\min\{s-a,b-s\}$, we have $a+\eta>0$, so
+\[
+V\cap\{a+\eta<u<b-\eta\}\subset \{e^{-(b-\eta)}\le |f|\le e^{-(a+\eta)}\},
+\]
+and the set on the right is closed and bounded in $\mathbb{C}$ because $\Lambda_f$ is bounded. Hence $K_\eta$, being
+the closure of a subset of a compact set, is compact. Every point of $K_\eta$ lies in the interior of $U$:
+interior points of $V$ are obvious, while points of $K_\eta\cap\partial V$ lie on the side boundary of $V$ and satisfy
+$a+\eta\le u\le b-\eta$, so they cannot lie on $\partial U=\{u=0\}$; hence they also lie in the interior of $U$.
+By hypothesis each side-boundary component is an integral curve of $X$, so $\nabla u\neq 0$ there as well.
+Therefore $X$ is smooth on a neighborhood of $K_\eta$.
+
+\indent Along the trajectory one has
+\[
+ u(\gamma_x(\tau))=s+\tau
+\]
+whenever $\gamma_x(\tau)$ is defined. Thus, as long as
+\[
+ a+\eta\le u(\gamma_x(\tau))\le b-\eta,
+\]
+the trajectory stays in $K_\eta$. Standard ODE continuation then implies that the trajectory cannot
+cease to exist while $u(\gamma_x(\tau))$ remains in $[a+\eta,b-\eta]$.
+
+\indent The only remaining way in which the trajectory could fail to stay in $V$ would be to hit the side
+boundary
+\[
+\partial V\setminus \bigl(\{u=a\}\cup\{u=b\}\bigr)
+\]
+at some first time $\tau_0\in(a-s,b-s)$. Let $p=\gamma_x(\tau_0)$. By hypothesis, the side-boundary component
+through $p$ is itself an integral curve of $X$. Since both that boundary curve and $\gamma_x$ solve the same ODE
+and pass through $p$, uniqueness for the initial-value problem forces them to agree in a neighborhood
+of $\tau_0$. But the boundary curve lies in $\partial V$, whereas $\gamma_x(\tau)\in V$ for $\tau<\tau_0$ close to $\tau_0$,
+a contradiction. Hence $\gamma_x(\tau)$ never hits the side boundary.
+
+\indent Since $u(\gamma_x(\tau))=s+\tau$, the preceding paragraph shows that $\gamma_x(\tau)$ exists and lies in $V$
+for every $\tau\in(a-s,b-s)$.
+
+\indent Therefore the formula
+\[
+\Phi_s(x,t)=\varphi_{t-s}(x)
+\]
+is well defined on $\Sigma_s\times(a,b)$. It is smooth. If $y\in V$, then the same compact-trapping and first-hit
+argument, with $u(y)$ in place of $s$, shows that the trajectory through $y$ exists on the interval
+$[s-u(y),0]$ and stays in $V$. Hence $\varphi_{s-u(y)}(y)\in\Sigma_s$, and the inverse map is
+\[
+ y\mapsto \bigl(\varphi_{s-u(y)}(y),u(y)\bigr),
+\]
+which is smooth as well. So $\Phi_s$ is a diffeomorphism.
+
+\indent Since $V\cong \Sigma_s\times(a,b)$ and $V$ is connected, the fiber $\Sigma_s$ must be connected. This proves (a). For
+$\varepsilon>0$ define
+\[
+V_\varepsilon^-:=V\cap\{a<u<a+\varepsilon\},\qquad C_\varepsilon^-:=\overline{V_\varepsilon^-},
+\]
+where the closure is taken in $\mathbb{C}$. By the product representation, $V_\varepsilon^-=\Phi_s(\Sigma_s\times(a,a+\varepsilon))$ is connected,
+so $C_\varepsilon^-$ is connected. Since $V$ is bounded, each $C_\varepsilon^-$ is compact. Moreover the family is nested:
+\[
+ C_{\varepsilon_2}^-\subset C_{\varepsilon_1}^-\qquad (0<\varepsilon_2<\varepsilon_1),
+\]
+and
+\[
+ \bigcap_{\varepsilon>0} C_\varepsilon^-=\partial V\cap\{u=a\}.
+\]
+Hence $\partial V\cap\{u=a\}$ is connected as an intersection of nested compact connected sets. The proof of
+(c) is identical, using
+\[
+V_\varepsilon^+:=V\cap\{b-\varepsilon<u<b\}.
+\]
+\end{proof}
+
+\medskip
+\begin{lemma}[Regular lemniscate components are Jordan domains]
+\emph{Let $c$ be a regular value of
+$u=-\log|f|$, and let $W$ be a connected component of
+\[
+\{u>c\}=\{|f|<e^{-c}\}.
+\]
+Then $W$ is simply connected, and $\partial W$ is a smooth Jordan curve.}
+\end{lemma}
+
+\begin{proof} Since $c$ is a regular value of $u$, the set $\partial W\subset\{u=c\}$ is a smooth compact $1$-manifold, hence
+a finite disjoint union of smooth Jordan curves.
+
+\indent Suppose that $W$ had more than one boundary component. Choose an innermost boundary
+component $\Gamma\subset\partial W$ in the following sense: if $H$ is the bounded Jordan domain enclosed by $\Gamma$, then
+$H$ contains no other boundary component of any connected component of $\{u>c\}$. Such a choice is
+possible because the boundary consists of finitely many disjoint Jordan curves.
+
+\indent By the choice of $\Gamma$, the interior $H$ contains no point of $\{u>c\}$. Otherwise some connected
+component of $\{u>c\}$ would lie in $H$, and one of its boundary components would be strictly inside
+$\Gamma$, contradicting innermostness. Hence
+\[
+H\subset\{u\le c\}=\{|f|\ge e^{-c}\},\qquad \partial H=\Gamma\subset\{u=c\}.
+\]
+In particular $f$ has no zeros on $H$, so
+\[
+ v:=\log|f|
+\]
+is harmonic on $H$ and continuous on $\overline H$. On $\partial H$ we have $v\equiv -c$. By the maximum principle,
+$v\equiv -c$ on $H$. Thus $|f|$ is constant on $H$, impossible for a nonconstant holomorphic function.
+
+\indent This contradiction shows that $\partial W$ has only one connected component. Since it is a smooth
+compact $1$-manifold, it is a single smooth Jordan curve. Therefore $W$ is simply connected. \end{proof}
+
+\medskip
+\begin{lemma}[Regular-slab deformation and connectivity]
+\emph{Let $V$ be a connected component of
+$\{u>c\}$, and let $c<a<b$. Assume that $u$ has no critical points on
+\[
+ M:=V\cap\{a\le u\le b\}.
+\]
+Write
+\[
+V_{\ge t}:=V\cap\{u\ge t\},\qquad V_{>t}:=V\cap\{u>t\}.
+\]
+Then:}
+\begin{enumerate}
+\item[(a)] \emph{the map
+\[
+R_{a,b}:V_{\ge a}\to V_{\ge b},\qquad R_{a,b}(z)=\begin{cases}
+z, & u(z)\ge b,\\
+\varphi_{b-u(z)}(z), & a\le u(z)<b,
+\end{cases}
+\]
+is a well-defined strong deformation retraction;}
+\item[(b)] \emph{if $V_{\ge b}$ is connected, then $V_{>a}$ is connected. More precisely, every point of $V_{>a}$ can be joined to
+$V_{\ge b}$ by a trajectory segment of $X=\nabla u/|\nabla u|^2$ lying entirely in $V_{>a}$;}
+\item[(c)] \emph{if moreover $a$ and $b$ are regular values, then every connected component of $V\cap\{a<u<b\}$ is
+ a regular strip in the sense of Lemma~8.}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof} Since $u>c$ on $V$ and $a>c$, the compact slab $M$ is contained in the interior of $V$. On $M$
+the vector field
+\[
+ X:=\frac{\nabla u}{|\nabla u|^2}
+\]
+is smooth and satisfies $Xu=1$.
+
+\indent If $z\in V_{\ge a}$ and $u(z)<b$, then along the trajectory of $X$ through $z$ the value of $u$ increases
+linearly:
+\[
+ u(\varphi_\tau(z))=u(z)+\tau.
+\]
+Hence the trajectory is defined for all $0\le \tau\le b-u(z)$ and remains in $M\subset V$. This proves that
+$R_{a,b}$ is well defined. Define
+\[
+ H:[0,1]\times V_{\ge a}\to V_{\ge a}
+\]
+by
+\[
+H(s,z)=\begin{cases}
+z, & u(z)\ge b,\\
+\varphi_{s(b-u(z))}(z), & a\le u(z)<b.
+\end{cases}
+\]
+If $z_0\in V_{\ge a}$ and $u(z_0)<b$, then the trajectory segment
+\[
+\{\varphi_\tau(z_0):0\le \tau\le b-u(z_0)\}
+\]
+lies in the compact slab $M$, on which $X$ is smooth. Standard continuous dependence for smooth ODEs therefore implies that $H$ is continuous near each point of $[0,1]\times (V_{\ge a}\setminus V_{\ge b})$. On $V_{\ge b}$ we have $H(s,z)=z$, and at points with $u(z)=b$ the two formulas agree. Therefore $H$ is continuous on all of $[0,1]\times V_{\ge a}$. It is immediate that
+\[
+H(0,z)=z,\qquad H(1,z)=R_{a,b}(z),\qquad H(s,z)=z\text{ for }z\in V_{\ge b}.
+\]
+Thus $R_{a,b}$ is a strong deformation retraction. This proves (a).
+
+\indent For (b), let $z\in V_{>a}$. If $u(z)\ge b$, then $z\in V_{\ge b}$. Otherwise the trajectory segment
+\[
+\tau\mapsto \varphi_\tau(z),\qquad 0\le \tau\le b-u(z),
+\]
+lies in $V_{>a}$ and ends at $R_{a,b}(z)\in V_{\ge b}$. Therefore every point of $V_{>a}$ lies in the same connected
+component of $V_{>a}$ as some point of $V_{\ge b}$. If $V_{\ge b}$ is connected, it follows that $V_{>a}$ is connected.
+
+\indent For (c), let $S$ be a connected component of $V\cap\{a<u<b\}$. Since $\partial V\subset\{u=c\}$ and $c<a$,
+every boundary point of $S$ lying in $V$ belongs to one of the levels $\{u=a\}$ or $\{u=b\}$. Thus
+\[
+\partial S\setminus \bigl(\{u=a\}\cup\{u=b\}\bigr)=\varnothing,
+\]
+so the side-boundary hypothesis of Lemma~8 is vacuous. Applying Lemma~8 to $S$ gives the desired
+strip structure. \end{proof}
+
+
+\paragraph{Component inheritance for nested superlevel sets.}
+We shall use the following elementary observation repeatedly. Let \(V\) be a connected component of
+\[
+\{u>c\},
+\]
+and let \(d>c\). If \(C\) is a connected component of
+\[
+V\cap\{u>d\},
+\]
+then \(C\) is also a connected component of the global superlevel set \(\{u>d\}\). Indeed, if \(D\) is the
+connected component of \(\{u>d\}\) containing \(C\), then \(D\subset \{u>c\}\). Since \(D\) is connected
+and meets the connected component \(V\) of \(\{u>c\}\), we must have \(D\subset V\). Hence
+\(D\subset V\cap\{u>d\}\), and by maximality of \(C\) inside \(V\cap\{u>d\}\) we get \(D=C\).
+
+\medskip
+\begin{lemma}[Geometric realization of a finite tree]
+\emph{Let $T$ be a finite tree with vertex set $V(T)$ and
+edge set $E(T)$. Suppose that to each vertex $v\in V(T)$ there is assigned a point $p_v\in U$, and to each
+edge $e=\{v,w\}\in E(T)$ there is assigned an embedded arc
+\[
+ A_e\subset U
+\]
+joining $p_v$ to $p_w$, such that:}
+\begin{enumerate}
+\item[(i)] \emph{if $v\neq w$, then $p_v\neq p_w$;}
+\item[(ii)] \emph{the interior of $A_e$ contains no point $p_{v'}$;}
+\item[(iii)] \emph{if $e\neq e'$, then the interiors of $A_e$ and $A_{e'}$ are disjoint;}
+\item[(iv)] \emph{if $e=\{v,w\}$ and $e'=\{v',w'\}$ are distinct, then
+\[
+ A_e\cap A_{e'}\subset \{p_v,p_w\}\cap\{p_{v'},p_{w'}\}.
+\]
+Equivalently, two distinct edge-arcs meet only at common endpoints, and they meet there
+exactly when the corresponding edges of $T$ share that vertex.}
+\end{enumerate}
+\emph{Then
+\[
+ H:=\bigcup_{e\in E(T)} A_e
+\]
+is homeomorphic to $T$.}
+\end{lemma}
+
+\begin{proof} For each edge $e=\{v,w\}$ choose a homeomorphism $\varphi_e:[0,1]\to A_e$ with $\varphi_e(0)=p_v$ and
+$\varphi_e(1)=p_w$. Because of (ii), no interior point of an edge-arc is identified with a vertex-point. Because
+of (iii) and (iv), if $e\neq e'$ then points of $[0,1]$ and $[0,1]$ can map to the same point of $U$ only when
+both are endpoints corresponding to a common endpoint-vertex of the two edges. Hence the maps
+$\varphi_e$ are compatible with the quotient relation defining the geometric realization $|T|$ of the abstract
+tree. They therefore glue to a continuous map
+\[
+ \Phi:|T|\to H.
+\]
+The map $\Phi$ is surjective by construction. It is injective because distinct open edges of $|T|$ map
+into disjoint interiors by (iii), and an open edge can meet another edge-image only at shared
+endpoint-vertices by (iv). Thus $\Phi$ is a continuous bijection from the compact space $|T|$ onto the
+Hausdorff space $H\subset\mathbb{C}$, hence a homeomorphism. \end{proof}
+
+\medskip
+\noindent\textbf{Auxiliary topological fact.}
+Let $\Omega_0,\Omega_1\subset \mathbb C$ be Jordan domains such that
+\[
+\Omega_1\subset \Omega_0
+\qquad\text{and}\qquad
+\partial\Omega_1\cap \partial\Omega_0=\varnothing.
+\]
+Then $\overline{\Omega_1}\subset \Omega_0$, and $\Omega_0\setminus \overline{\Omega_1}$
+is homeomorphic to an annulus.
+
+\smallskip
+\noindent
+Indeed, since $\overline{\Omega_1}$ is connected, meets $\Omega_0$, and is disjoint from
+$\partial\Omega_0$, it cannot meet the exterior component of $\mathbb C\setminus \partial\Omega_0$.
+Hence $\overline{\Omega_1}\subset \Omega_0$.
+Now choose, by the Jordan--Schoenflies theorem, a homeomorphism
+\[
+h:\overline{\Omega_0}\to \overline{\mathbb D}.
+\]
+Then $h(\partial\Omega_1)$ is a Jordan curve contained in $\mathbb D$, so it bounds a Jordan
+domain $\Delta\Subset \mathbb D$. The set $h(\Omega_1)$ is a connected component of
+$\mathbb D\setminus h(\partial\Omega_1)$, whose two components are $\Delta$ and
+$\mathbb D\setminus \overline{\Delta}$. Since $h(\overline{\Omega_1})$ is compactly contained in
+$\mathbb D$, its closure does not meet $\partial\mathbb D$, so $h(\Omega_1)$ cannot be the outer
+component $\mathbb D\setminus \overline{\Delta}$. Hence $h(\Omega_1)=\Delta$. Therefore
+\[
+h\bigl(\Omega_0\setminus \overline{\Omega_1}\bigr)=\mathbb D\setminus \overline{\Delta},
+\]
+which is an annulus.
+
+\medskip
+\begin{proposition}\label{prop:generic-spanning-tree}
+\emph{Let $c\ge 0$, and let $V$ be a connected component of $\{u>c\}$ containing exactly $m$
+zeros of $f$. Assume that:}
+\begin{enumerate}
+\item[(a)] \emph{$u$ has no critical values on $V$ in $[c,2\alpha]$;}
+\item[(b)] \emph{all critical points of $u$ in $V$ with value $>2\alpha$ are nondegenerate;}
+\item[(c)] \emph{all critical values of $u$ in $V$ larger than $2\alpha$ are pairwise distinct.}
+\end{enumerate}
+\emph{Then for every $\varepsilon>0$ there exists a finite embedded tree $G_\varepsilon\subset V$ containing all $m$ zeros of $f$ in $V$
+and satisfying}
+\begin{equation}
+\operatorname{len}(G_\varepsilon)\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt+\varepsilon,
+\tag{10}
+\end{equation}
+\emph{where $P_V(t):=\mathcal H^1(\{z\in V:u(z)=t\})$ for regular $t>2\alpha$.}
+\end{proposition}
+
+\begin{proof}
+
+If $m=1$, then the one-point set consisting of the unique zero has length $0$, so the conclusion is immediate. Thus we may assume that $m \ge 2$.
+
+Let the distinct critical values of $u$ in $V$ above $2\alpha$ be
+\[
+2\alpha < \mu_1 < \mu_2 < \cdots < \mu_s.
+\]
+We claim that $s \ge 1$.
+
+Indeed, suppose for contradiction that $s=0$. Then there are no critical values of $u$ in $(2\alpha,\infty)$. We first claim that
+\[
+V_{\ge 2\alpha}:=\{z\in V : u(z)\ge 2\alpha\}
+\]
+is connected.
+
+Let $z\in V$ with $u(z)<2\alpha$, and write $s_z:=u(z)\in(c,2\alpha)$. Set
+\[
+M_z:=V\cap\{s_z\le u\le 2\alpha\}.
+\]
+Because $V$ is a connected component of the open set $\{u>c\}$, it is relatively closed there; since $s_z>c$, the set $M_z$ is closed in $\mathbb{C}$. It is also bounded because $\Lambda_f$ is bounded, hence compact. As $u$ has no critical points on $M_z$, the vector field
+\[
+X=\frac{\nabla u}{|\nabla u|^2}
+\]
+is smooth on a neighborhood of $M_z$. Along the maximal trajectory $\phi_\tau(z)$ through $z$ one has
+\[
+u(\phi_\tau(z))=s_z+\tau,
+\]
+so the trajectory stays in $M_z$ for $0\le \tau\le 2\alpha-s_z$ and therefore exists on that whole interval. Thus every point of $V$ flows inside $V$ to a point of $V_{\ge 2\alpha}$. Defining the homotopy by
+flowing each point upward until it reaches level $2\alpha$ (and then keeping it fixed), one obtains,
+by the same continuity argument used in Lemma~10(a) on each compact subslab
+$V\cap\{s\le u\le 2\alpha\}$ with $c<s<2\alpha$, a strong deformation retraction of $V$ onto
+$V_{\ge 2\alpha}$. Since $V$ is connected, $V_{\ge 2\alpha}$ is connected.
+
+Now let $T>2\alpha$ be a sufficiently large regular value such that $\{z\in V:u(z)>T\}$ has exactly $m$ connected components, one near each zero of $f$ in $V$. Since there are no critical values of $u$ in $[2\alpha,T]$, Lemma~10(a) gives a strong deformation retraction of $V_{\ge 2\alpha}$ onto
+\[
+V_{\ge T}:=\{z\in V:u(z)\ge T\}.
+\]
+Hence $V_{\ge T}$ is connected.
+
+Let $W_1,\dots,W_m$ be the connected components of $\{z\in V:u(z)>T\}$. Since $T$ is a regular value of $u$, every point $p\in\{z\in V:u(z)=T\}$ has a neighborhood $U_p\subset V$ in which, after a smooth change of coordinates, $u-T=x$. Hence
+\[
+U_p\cap\{u>T\}
+\]
+is connected. It follows that at most one component $W_j$ can accumulate at $p$. Therefore the closures $\overline{W_1}^{\,V},\dots,\overline{W_m}^{\,V}$ are pairwise disjoint. Moreover,
+\[
+V_{\ge T}=\bigcup_{j=1}^m \overline{W_j}^{\,V}.
+\]
+Since the closure of a connected set is connected, each $\overline{W_j}^{\,V}$ is connected. Thus these $m$ sets are precisely the connected components of $V_{\ge T}$. Because $m\ge2$, this contradicts the connectedness of $V_{\ge T}$.
+
+This contradiction shows that $s\ge1$.
+
+\indent Choose pairwise disjoint closed intervals
+\[
+ I_r=[\mu_r-\delta_r,\mu_r+\delta_r] \qquad (1\le r\le s)
+\]
+so small that each $I_r$ contains no critical value of $u$ other than $\mu_r$. Choose a regular value
+\[
+ \tau_0\in(2\alpha,\mu_1-\delta_1),
+\]
+and choose a regular value
+\[
+ T>\mu_s+\delta_s
+\]
+so large that the connected components
+\[
+ Z_1,\dots,Z_m
+\]
+of $\{z\in V:u(z)>T\}$ have pairwise disjoint closures. 
+
+For each $j$ set
+\[
+K_j:=\overline{Z_j}.
+\]
+Then $K_1,\dots,K_m$ are pairwise disjoint compact sets, each lying in a small neighborhood of one zero
+$a_j$ of $f$. Since $f$ is squarefree, each $Z_j$ (and hence each $K_j$) contains exactly one zero $a_j$.
+
+\indent We first note that $\{z\in V:u>\tau_0\}$ is connected. Choose a regular value $t_0\in(c,2\alpha)$. As above,
+the absence of critical points on $V\cap\{c<u\le t_0\}$ gives a strong deformation retraction of $V$ onto
+\[
+V_{\ge t_0}:=\{z\in V:u\ge t_0\},
+\]
+so $V_{\ge t_0}$ is connected. Since there are no critical points in $\{z\in V:t_0\le u\le \tau_0\}$, Lemma~10(a) shows
+that
+\[
+V_{\ge \tau_0}:=\{z\in V:u\ge \tau_0\}
+\]
+is connected. Next choose a regular value $\tau_1\in(\tau_0,\mu_1-\delta_1)$. Applying Lemma~10(a) on $[\tau_0,\tau_1]$,
+we find that $V_{\ge \tau_1}$ is connected. Lemma~10(b) applied with $a=\tau_0$ and $b=\tau_1$ now gives that
+$\{z\in V:u>\tau_0\}$ is connected.
+
+\indent For each $r=1,\dots,s$, let $p_r$ be the unique critical point of $u$ with critical value $\mu_r$. Since $p_r$ is
+nondegenerate and $u$ is harmonic, the Morse normal form gives local coordinates $(x,y)$ centered at
+$p_r$ in which
+\[
+ u=\mu_r+x^2-y^2;
+\]
+see, for example, \cite{Milnor1963}. Choose pairwise disjoint closed neighborhoods $N_r$ of $p_r$ so small that:
+\begin{enumerate}
+\item[(i)] $N_r\subset u^{-1}(I_r)$;
+\item[(ii)] $\partial N_r$ is the union of one connected incoming cross-section
+\[
+ C_r^-\subset\{u=\mu_r-\delta_r\},
+\]
+two connected outgoing cross-sections
+\[
+ C_{r,1}^+,\ C_{r,2}^+\subset\{u=\mu_r+\delta_r\},
+\]
+and finitely many flow segments of $X$ joining the endpoints of these cross-sections;
+\item[(iii)] inside $N_r$, the local superlevel picture is the standard saddle picture: crossing the level $\mu_r$
+      upward changes one component into two components;
+\item[(iv)] outside $N_r$, there are no critical points in the slab
+\[
+ \mu_r-\delta_r\le u\le \mu_r+\delta_r.
+\]
+\end{enumerate}
+Set
+\[
+\Omega:=\{z\in V:\tau_0<u<T\}\setminus \bigcup_{r=1}^s N_r.
+\]
+
+We shall prove below that, after shrinking the neighborhoods $N_r$ further if
+necessary, each of the cross-sections $C_r^{-}, C_{r,1}^{+}, C_{r,2}^{+}$
+lies on the boundary of a unique connected component of $\Omega$.
+
+Let $S$ be a connected component of $\Omega$. Since $u$ has no critical points on $S$ and every side-boundary
+component of $S$ is a flow line of $X$, Lemma~8 applies: $S$ is a regular strip, with one connected lower
+cross-section and one connected upper cross-section, and every level section
+\[
+\Gamma_t:=S\cap\{u=t\}
+\]
+is connected.
+
+\indent For such a strip $S$, let $a_S<b_S$ be the levels of its lower and upper cross-sections.
+For $t\in(a_S,b_S)$, let $C_t(S)$ denote the connected component of
+\[
+\{z\in V:u(z)>t\}
+\]
+that meets $S\cap\{t<u<t+\eta\}$ for some (equivalently, every sufficiently small)
+$\eta>0$. Let $k_S$ be the number of zeros of $f$ in $C_t(S)$. This is independent of
+$t\in(a_S,b_S)$. Indeed, if $t_1<t_2$ both lie in $(a_S,b_S)$, then the slab
+\[
+M:=C_{t_1}(S)\cap\{t_1\le u\le t_2\}
+\]
+contains no critical points of $u$. Hence the flow of
+\[
+X=\frac{\nabla u}{|\nabla u|^2}
+\]
+provides the regular continuation of the component determined by $S$ from level $t_1$ up to level $t_2$; in particular, no splitting or merging of this component can occur between these two regular levels. Thus the component of $\{u>t_2\}$ obtained from $C_{t_1}(S)$ by passing through the slab is exactly $C_{t_2}(S)$. Since every zero of $f$ corresponds to the singular level $u=+\infty$, no zero lies in the finite slab $\{t_1\le u\le t_2\}$, and therefore the set of zeros contained in the continued component is the same at levels $t_1$ and $t_2$. Hence the number of zeros in $C_t(S)$ is constant on $(a_S,b_S)$.
+
+Set
+\[
+\Gamma_t:=S\cap\{u=t\}.
+\]
+We claim that
+\[
+\partial C_t(S)=\Gamma_t.
+\]
+
+Since $t$ is a regular value and $C_t(S)$ is a connected component of $\{u>t\}\cap V$,
+Lemma~9 implies that $\partial C_t(S)$ is a smooth Jordan curve contained in
+$\{u=t\}\cap V$.
+
+Because $t\in (a_S,b_S)\subset (\tau_0,T)\setminus \bigcup_{r=1}^s I_r$, the level
+$\{u=t\}\cap V$ does not meet any $N_r$. Hence
+\[
+\{u=t\}\cap V=\{u=t\}\cap \Omega,
+\]
+and $\Gamma_t$ is a connected component of $\Omega\cap\{u=t\}$.
+
+First, $\Gamma_t\subset \partial C_t(S)$: if $x\in \Gamma_t$, then for every sufficiently
+small $\eta>0$ the set $S\cap\{t<u<t+\eta\}$ lies in $C_t(S)$ by definition, and its
+points converge to $x$. Since $x\notin C_t(S)$, this shows $x\in \partial C_t(S)$.
+
+Conversely, $\partial C_t(S)$ is a connected subset of $\Omega\cap\{u=t\}$, and it meets
+$\Gamma_t$ by the previous paragraph. Because $\Gamma_t$ is a connected component of
+$\Omega\cap\{u=t\}$, it follows that
+\[
+\partial C_t(S)\subset \Gamma_t.
+\]
+Combining the two inclusions gives
+\[
+\partial C_t(S)=\Gamma_t.
+\]
+Applying the auxiliary flux lemma to the component $C_t(S)$ gives
+\[
+\int_{\Gamma_t} |\nabla u|\,ds = 2\pi k_S.
+\]
+For an arc $I\subset \Gamma_{t_1}$, let $I_{t_2}$ be its image under the flow from level $t_1$ to level $t_2$. The region swept by
+these trajectories has boundary consisting of $I$, $I_{t_2}$, and two flow lines. Since $\Delta u=0$ in this region
+and $\nabla u$ is tangent to the side flow lines, Green's formula gives
+\[
+\int_I |\nabla u|\,ds = \int_{I_{t_2}} |\nabla u|\,ds.
+\]
+Thus the measures
+\[
+ d\mu_t:=\frac{|\nabla u|\,ds}{2\pi k_S}
+\]
+on $\Gamma_t$ are probability measures preserved by the flow.
+
+\indent Fix $s_0\in(a_S,b_S)$. For $x\in\Gamma_{s_0}$, let
+\[
+\widetilde\gamma_x(t):=\Phi_{s_0}(x,t),\qquad t\in(a_S,b_S),
+\]
+where $\Phi_{s_0}$ is the strip diffeomorphism from Lemma~8. We claim that $\widetilde\gamma_x$ extends continuously to
+$[a_S,b_S]$, with endpoint values on the lower and upper cross-sections of $S$. Indeed, let $K_x^-$ and $K_x^+$
+be the closures in $\mathbb{C}$ of the sets
+\[
+ S\cap\{a_S<u<s_0\}, \qquad S\cap\{s_0<u<b_S\},
+\]
+respectively. These sets are compact because
+\[
+S\cap\{a_S<u<s_0\}\subset\{a_S\le u\le s_0\},\qquad S\cap\{s_0<u<b_S\}\subset\{s_0\le u\le b_S\},
+\]
+and the right-hand sides are closed and bounded subsets of $\mathbb{C}$. Moreover every point of $K_x^{\pm}$ is
+noncritical: interior points because $S$ contains no critical points, points on the lower or upper
+cross-sections because these lie on regular levels of $u$, and points on the side boundary because
+those components are integral curves of $X$. All such points lie in the interior of $V\setminus\{p_1,\dots,p_s\}$,
+so by continuity $X$ is smooth on a neighborhood of $K_x^-\cup K_x^+$. Since $Xu=1$, standard ODE
+continuation shows that the trajectory through $x$ extends to times $a_S-s_0$ and $b_S-s_0$. Thus
+\[
+\gamma_x:=\widetilde\gamma_x([a_S,b_S])
+\]
+is a well-defined compact trajectory segment joining the lower cross-section of $S$ to its upper
+cross-section. For $x\in\Gamma_{s_0}$, define
+\[
+\ell(x):=\operatorname{len}(\gamma_x).
+\]
+Since $\widetilde\gamma_x(t)=\Phi_{s_0}(x,t)$ for $t\in[a_S,b_S]$, we have
+\[
+\ell(x)
+=
+\int_{a_S}^{b_S}\left|\partial_t\Phi_{s_0}(x,t)\right|\,dt
+=
+\int_{a_S}^{b_S}\left|X\bigl(\Phi_{s_0}(x,t)\bigr)\right|\,dt.
+\]
+Because
+\[
+X=\frac{\nabla u}{|\nabla u|^2},
+\]
+it follows that
+\[
+|X|=\frac{1}{|\nabla u|},
+\]
+and hence
+\[
+\ell(x)
+=
+\int_{a_S}^{b_S}\frac{dt}{|\nabla u(\Phi_{s_0}(x,t))|}.
+\]
+Integrating with respect to the probability measure $\mu_{s_0}$ and using Fubini,
+\[
+\int_{\Gamma_{s_0}}\ell(x)\,d\mu_{s_0}(x)
+=
+\int_{a_S}^{b_S}
+\left(
+\int_{\Gamma_{s_0}}
+\frac{1}{|\nabla u(\Phi_{s_0}(x,t))|}
+\,d\mu_{s_0}(x)
+\right)\,dt.
+\]
+Since the flow preserves the measures $\mu_t$, we have
+\[
+(\Phi_{s_0}(\cdot,t))_{\#}\mu_{s_0}=\mu_t.
+\]
+Therefore the inner integral equals
+\[
+\int_{\Gamma_t}\frac{1}{|\nabla u(y)|}\,d\mu_t(y)
+=
+\frac{1}{2\pi k_S}\int_{\Gamma_t} ds
+=
+\frac{P_S(t)}{2\pi k_S},
+\]
+where $P_S(t):=\mathcal H^1(\Gamma_t)$. Thus
+\[
+\int_{\Gamma_{s_0}} \operatorname{len}(\gamma_x)\,d\mu_{s_0}(x)
+=
+\frac{1}{2\pi k_S}\int_{a_S}^{b_S} P_S(t)\,dt.
+\]
+Since $\mu_{s_0}$ is a probability measure, there exists $x\in \Gamma_{s_0}$ such that
+\[
+\operatorname{len}(\gamma_x)\le \frac{1}{2\pi k_S}\int_{a_S}^{b_S} P_S(t)\,dt.
+\]
+Fix such an $x$ and denote the corresponding trajectory segment by $\gamma_S$.
+
+\indent Summing over all strips and using $k_S\ge 1$, we obtain
+\[
+\sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt.
+\]
+Since the strips are disjoint and
+\[
+\sum_S P_S(t)=\mathcal H^1(\{u=t\}\cap\Omega)\le P_V(t)
+\]
+for every regular $t\in(\tau_0,T)$, Fubini's theorem yields
+\begin{equation}
+\sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\int_{\tau_0}^{T} P_V(t)\,dt\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt.
+\tag{11}
+\end{equation}
+
+We now prove the uniqueness statements needed for the combinatorics.
+
+\smallskip
+\noindent\emph{Bottom strip.}
+Set
+\[
+W_{\tau_0}:=V\cap\{u>\tau_0\}.
+\]
+We already know that $W_{\tau_0}$ is connected. Since there are no critical points on
+\[
+V\cap\{\tau_0\le u\le \mu_1-\delta_1\},
+\]
+Lemma~10(a), applied on $[\tau_0,\mu_1-\delta_1]$, shows that
+\[
+V^{\ge \mu_1-\delta_1}:=V\cap\{u\ge \mu_1-\delta_1\}
+\]
+is connected because $V^{\ge \tau_0}$ is connected. Choose a regular value
+\[
+\tau_1\in(\mu_1-\delta_1,\mu_1).
+\]
+Applying Lemma~10(a) on $[\mu_1-\delta_1,\tau_1]$ shows that
+$V^{\ge \tau_1}$ is connected. Then Lemma~10(b), applied with
+$a=\mu_1-\delta_1$ and $b=\tau_1$, implies that
+\[
+W_1:=V\cap\{u>\mu_1-\delta_1\}
+\]
+is connected.
+
+By the component-inheritance paragraph above, both $W_{\tau_0}$ and $W_1$ are connected
+components of the global regular superlevel sets $\{u>\tau_0\}$ and $\{u>\mu_1-\delta_1\}$,
+respectively. Hence Lemma~9 applies to both of them, so each is a Jordan domain. Since
+\[
+\partial W_{\tau_0}\subset \{u=\tau_0\},
+\qquad
+\partial W_1\subset \{u=\mu_1-\delta_1\},
+\]
+these boundaries are disjoint. Because $W_1\subset W_{\tau_0}$, the auxiliary topological fact implies that
+\[
+\overline{W_1}\subset W_{\tau_0}
+\]
+and that
+\[
+W_{\tau_0}\setminus \overline{W_1}
+\]
+is an annulus. Since $\partial W_1\subset \{u=\mu_1-\delta_1\}$, we have
+\[
+A_0:=V\cap\{\tau_0<u<\mu_1-\delta_1\}=W_{\tau_0}\setminus \overline{W_1}.
+\]
+Therefore $A_0$ is a connected annulus. Since there are no critical points on $A_0$, Lemma~10(c) implies that every connected component of $A_0$ is a regular strip. Because $A_0$ is connected, it is a single regular strip. Hence there is exactly one strip whose lower cross-section lies in $\{u=\tau_0\}$; denote it by $S_0$.
+
+\smallskip
+\noindent\emph{Critical neighborhoods.}
+\medskip
+\noindent\emph{Claim.}
+After shrinking the pairwise disjoint neighborhoods $N_r$ further if necessary, each of the cross-sections
+$C_r^{-}$, $C_{r,1}^{+}$, and $C_{r,2}^{+}$ lies on the boundary of exactly one connected component of
+$\Omega$. More precisely, there exist unique connected components
+\[
+S_r^{-},\qquad S_{r,1}^{+},\qquad S_{r,2}^{+}
+\]
+of $\Omega$ such that $C_r^{-}$ is the upper cross-section of $S_r^{-}$ and
+$C_{r,1}^{+}, C_{r,2}^{+}$ are the lower cross-sections of $S_{r,1}^{+}, S_{r,2}^{+}$, respectively.
+
+\smallskip
+\noindent\emph{Proof of claim.}
+Fix $r$. Choose Morse coordinates $(x,y)$ on a neighborhood $U_r$ of $p_r$ such that
+\[u=\mu_r+x^2-y^2,
+\]
+and shrink $N_r\Subset U_r$ so that the three cross-sections
+\[
+C_r^- \subset \{u=\mu_r-\delta_r\},\qquad
+C_{r,1}^+,\,C_{r,2}^+\subset \{u=\mu_r+\delta_r\}
+\]
+appear exactly as in the standard saddle picture, with the remainder of $\partial N_r$
+consisting of flow segments of $X$.
+
+In these coordinates, each of the three cross-sections carries a one-sided collar in
+$U_r\setminus N_r$ contained in $\Omega$: the collar adjacent to $C_r^-$ lies on the
+lower side of the saddle, while the collars adjacent to $C_{r,1}^+$ and $C_{r,2}^+$ lie on
+the two upper sides. Each such collar is connected. Therefore each cross-section is
+contained in the boundary of exactly one connected component of $\Omega$; denote these
+components by
+\[
+S_r^-,\qquad S_{r,1}^+,\qquad S_{r,2}^+.
+\]
+
+The same local coordinate picture shows that $C_r^-$ is the upper cross-section of
+$S_r^-$, while $C_{r,1}^+$ and $C_{r,2}^+$ are the lower cross-sections of
+$S_{r,1}^+$ and $S_{r,2}^+$, respectively. This proves the claim.
+\hfill$\triangle$
+\smallskip
+\noindent\emph{Top strips.}
+Fix $j\in\{1,\dots,m\}$ and set
+\[
+c_j:=\mu_s+\delta_s.
+\]
+Let $W_j$ be the connected component of
+\[
+V\cap\{u>c_j\}
+\]
+that contains $K_j$, and set
+\[
+Y_j:=W_j\cap\{u\ge T\}.
+\]
+By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_j\}$. Hence Lemma~9 implies that $W_j$ is a Jordan domain.
+
+We claim that $Y_j$ is connected. Define
+\[
+R_j(z):=
+\begin{cases}
+z, & u(z)\ge T,\\
+\varphi_{T-u(z)}(z), & c_j<u(z)<T,
+\end{cases}
+\]
+and
+\[
+H_j(\theta,z):=
+\begin{cases}
+z, & u(z)\ge T,\\
+\varphi_{\theta(T-u(z))}(z), & c_j<u(z)<T.
+\end{cases}
+\]
+If $z_0\in W_j\setminus Y_j$, then the trajectory segment
+\[
+\{\varphi_\tau(z_0):0\le \tau\le T-u(z_0)\}
+\]
+stays in the compact set
+\[
+W_j\cap\{u(z_0)\le u\le T\},
+\]
+on which $X$ is smooth because there are no critical points on $W_j\cap\{c_j<u\le T\}$. Standard continuous dependence for smooth ODEs therefore shows that $H_j$ is continuous on $[0,1]\times W_j$. Thus $H_j$ is a strong deformation retraction of $W_j$ onto $Y_j$, and $Y_j$ is connected.
+
+Since $T$ is a regular value, the connected components of $V\cap\{u\ge T\}$ are precisely $K_1,\dots,K_m$. The set $Y_j\subset V\cap\{u\ge T\}$ is connected and contains $K_j$, hence $Y_j\subset K_j$. The reverse inclusion is immediate, so $Y_j=K_j$. In particular $Z_j$ is a Jordan domain and $K_j=\overline{Z_j}$. Since
+\[
+\partial W_j\subset \{u=c_j\},
+\qquad
+\partial Z_j=\partial K_j\subset \{u=T\},
+\]
+these boundaries are disjoint, and $Z_j\subset W_j$. Hence, by the auxiliary topological fact,
+\[
+K_j=\overline{Z_j}\subset W_j
+\]
+and
+\[
+W_j\setminus K_j=W_j\setminus \overline{Z_j}
+\]
+is an annulus. Because $\partial K_j\subset \{u=T\}$, we obtain
+\[
+A_j:=W_j\cap\{c_j<u<T\}=W_j\setminus K_j.
+\]
+Therefore $A_j$ is a connected annulus. Since there are no critical points on $A_j$, Lemma~10(c) implies that every connected component of $A_j$ is a regular strip. Because $A_j$ is connected, it is a single regular strip. Hence there is exactly one strip of $\Omega$ whose upper cross-section is $\partial K_j$; denote it by $S_j^{\mathrm{top}}$.
+
+\medskip
+\noindent\textbf{Exhaustion lemma for the strips.}
+Every connected component $S$ of $\Omega$ has its lower cross-section in exactly one of
+\[
+\{u=\tau_0\}, \qquad C_{r,1}^+,\, C_{r,2}^+ \quad (1\le r\le s),
+\]
+and its upper cross-section in exactly one of
+\[
+C_r^- \quad (1\le r\le s), \qquad \partial K_j \quad (1\le j\le m).
+\]
+Conversely, the unique strip with lower cross-section in $\{u=\tau_0\}$ is $S_0$;
+the unique strips with lower cross-sections $C_{r,1}^+,C_{r,2}^+$ are
+$S_{r,1}^+,S_{r,2}^+$; the unique strips with upper cross-sections $C_r^-$ are
+$S_r^-$; and the unique strips with upper cross-sections $\partial K_j$ are
+$S_j^{\mathrm{top}}$.
+
+\smallskip
+\noindent\emph{Proof.}
+Let $S$ be a connected component of $\Omega$. By Lemma~8, $S$ is a regular strip,
+so it has exactly one lower cross-section and exactly one upper cross-section, both lying
+on boundary components of $\Omega$ contained in level sets of $u$.
+Now $\partial\Omega$ consists of:
+\begin{itemize}
+\item the base level $\{u=\tau_0\}$,
+\item the top boundaries $\partial K_j\subset\{u=T\}$,
+\item the cross-sections $C_r^-\subset\{u=\mu_r-\delta_r\}$ and
+      $C_{r,1}^+,C_{r,2}^+\subset\{u=\mu_r+\delta_r\}$,
+\item and side-boundary flow segments on the sets $\partial N_r$.
+\end{itemize}
+By definition, a cross-section of a regular strip cannot lie on a side-boundary flow
+segment. Since the lower level of $S$ is strictly smaller than its upper level, the lower
+cross-section cannot lie on any $\partial K_j$ or $C_r^-$, and the upper cross-section
+cannot lie on $\{u=\tau_0\}$ or any $C_{r,i}^+$. This proves the classification.
+
+The converse uniqueness statements are exactly the uniqueness assertions for
+bottom strips, critical neighborhoods, and top strips proved above.
+\hfill$\triangle$
+
+We now define a finite abstract graph $T$. Its vertices are
+\[
+V(T)=\{v_0\}\cup\{w_1,\dots,w_s\}\cup\{\ell_1,\dots,\ell_m\},
+\]
+where $v_0$ is the root, $w_r$ corresponds to the saddle $p_r$, and $\ell_j$
+corresponds to the zero $a_j$.
+
+For each strip $S\subset\Omega$, define an oriented edge $e_S$ from the vertex attached
+to its lower cross-section to the vertex attached to its upper cross-section:
+\begin{itemize}
+\item if the lower cross-section of $S$ lies in $\{u=\tau_0\}$, then the lower endpoint
+      of $e_S$ is $v_0$;
+\item if the lower cross-section of $S$ is one of the arcs $C_{r,i}^+$, then the lower
+      endpoint of $e_S$ is $w_r$;
+\item if the upper cross-section of $S$ is $C_r^-$, then the upper endpoint of $e_S$ is
+      $w_r$;
+\item if the upper cross-section of $S$ is $\partial K_j$, then the upper endpoint of
+      $e_S$ is $\ell_j$.
+\end{itemize}
+By the exhaustion lemma above, every strip determines exactly one such edge.
+
+Every non-root vertex has exactly one incoming edge:
+$w_r$ receives the edge $e_{S_r^-}$, and $\ell_j$ receives the edge
+$e_{S_j^{\mathrm{top}}}$.
+Likewise each $w_r$ has exactly two outgoing edges, namely
+$e_{S_{r,1}^+}$ and $e_{S_{r,2}^+}$.
+
+Assign heights by
+\[
+h(v_0)=\tau_0,\qquad h(w_r)=\mu_r,\qquad h(\ell_j)=T+1.
+\]
+Every oriented edge goes from a vertex of smaller height to a vertex of larger height.
+Hence there is no directed cycle. Moreover, iterating the unique predecessor map from
+any non-root vertex strictly decreases height, so after finitely many steps one reaches
+$v_0$. Thus every vertex is connected to $v_0$, and the graph is connected and acyclic.
+Therefore $T$ is a finite rooted tree.
+
+We now realize \(T\) geometrically. The neighborhoods \(N_r\) and the value \(T\) have already been fixed, and hence so have \(\Omega\), its strips \(S\), and the trajectory segments \(\gamma_S\).
+
+For each \(r\), let
+\[
+x_{r,-}:=\gamma_{S_r^-}\cap C_r^-,
+\qquad
+x_{r,i}:=\gamma_{S_{r,i}^+}\cap C_{r,i}^+
+\quad (i=1,2).
+\]
+These points are well defined, because \(S_r^-\) has upper cross-section \(C_r^-\) and \(S_{r,i}^+\) has lower cross-section \(C_{r,i}^+\). They are pairwise distinct, since the three cross-sections
+\[
+C_r^-,\ C_{r,1}^+,\ C_{r,2}^+
+\]
+are disjoint subsets of \(\partial N_r\). Choose a point \(c_r\in \operatorname{int}(N_r)\). Because \(N_r\) is a closed topological disk, there exists an embedded \(Y\)-shaped tree
+\[
+T_r\subset N_r
+\]
+with branch point \(c_r\) and three terminal vertices \(x_{r,-},x_{r,1},x_{r,2}\). Since the neighborhoods \(N_r\) may be chosen arbitrarily small at the outset and are pairwise disjoint, we may assume in addition that
+\[
+\sum_{r=1}^s \operatorname{len}(T_r)<\frac{\varepsilon}{2}. \tag{12}
+\]
+
+Let \(x_0\) be the lower endpoint of \(\gamma_{S_0}\) on the level \(\{u=\tau_0\}\). For each \(j\), let \(b_j\) be the upper endpoint of \(\gamma_{S_j^{\mathrm{top}}}\) on \(\partial K_j\). Write
+\[
+f(z)=(z-a_j)^{m_j}h_j(z)
+\]
+in a neighborhood of \(a_j\), where \(m_j\ge 1\) and \(h_j\) is holomorphic with \(h_j(a_j)\neq 0\). After shrinking to a sufficiently small closed disk \(B(a_j,r_j)\), choose a holomorphic branch \(q_j\) of \(h_j^{1/m_j}\) there and define
+\[
+\psi_j(z):=(z-a_j)q_j(z).
+\]
+Then \(\psi_j\) is biholomorphic on a neighborhood of \(B(a_j,r_j)\), one has \(\psi_j(a_j)=0\), and
+\[
+f(z)=\psi_j(z)^{m_j}
+\qquad (z\in B(a_j,r_j)).
+\]
+By the choice of $T$, each $K_j$ is contained in $B(a_j,r_j)$ and
+\[
+Z_j=\psi_j^{-1}\bigl(D(0,e^{-T/m_j})\bigr),
+\qquad
+K_j=\psi_j^{-1}\bigl(\overline{D(0,e^{-T/m_j})}\bigr).
+\]
+If $w_j:=\psi_j(b_j)$, then $|w_j|=e^{-T/m_j}$, so the radial segment $[0,w_j]$
+is contained in $\overline{D(0,e^{-T/m_j})}$ and its relative interior is contained in
+$D(0,e^{-T/m_j})$. Therefore its preimage under $\psi_j^{-1}$ is an embedded arc
+\[
+\sigma_j\subset K_j,\qquad \sigma_j^\circ\subset Z_j,
+\]
+joining $a_j$ to $b_j$. Since $\psi_j^{-1}$ is $C^1$ near $0$, there exists $C_j>0$ such that
+\[
+\operatorname{len}(\sigma_j)\le C_j e^{-T/m_j}.
+\]
+Hence, by the choice of \(T\),
+\[
+\sum_{j=1}^m \operatorname{len}(\sigma_j)<\frac{\varepsilon}{2}. \tag{13}
+\]
+
+\indent For each strip $S$, define an embedded arc $A_S$ as follows:
+\begin{itemize}
+\item if $e_S$ joins $v_0$ to $w_r$, let $A_S$ be the union of $\gamma_S$ and the unique arm of $T_r$ joining the upper
+      endpoint of $\gamma_S$ to $c_r$;
+\item if $e_S$ joins $w_r$ to $w_{r'}$, let $A_S$ be the union of the unique arm of $T_r$ from $c_r$ to the lower endpoint
+      of $\gamma_S$, the segment $\gamma_S$, and the unique arm of $T_{r'}$ from the upper endpoint of $\gamma_S$ to $c_{r'}$;
+\item if $e_S$ joins $w_r$ to $\ell_j$, let $A_S$ be the union of the unique arm of $T_r$ from $c_r$ to the lower endpoint
+      of $\gamma_S$, the segment $\gamma_S$, and the arc $\sigma_j$ from the upper endpoint of $\gamma_S$ to $a_j$.
+\end{itemize}
+The geometric vertices are
+\[
+ p_{v_0}=x_0,\qquad p_{w_r}=c_r,\qquad p_{\ell_j}=a_j.
+\]
+We verify the hypotheses of Lemma~11 for the family of arcs $\{A_S\}$. First, if $S\neq S'$, then
+\[
+\gamma_S\cap\gamma_{S'}=\varnothing,
+\]
+because distinct strips are disjoint subsets of $\Omega$. Second, for each $r$, the tree $T_r\subset N_r$ meets the rest of the construction only at its terminal points $x_{r,-},x_{r,1},x_{r,2}$: indeed the neighborhoods $N_r$ are pairwise disjoint, each $N_r$ is disjoint from every $Z_j$, and a strip trajectory can meet $\partial N_r$ only at the cross-section belonging to that strip. Third, for each $j$, the arc $\sigma_j\subset K_j\subset Z_j$ meets the rest of the construction only at its endpoint $b_j\in\partial K_j$. Indeed, the sets $Z_1,\dots,Z_m$ are pairwise disjoint and disjoint from all $N_r$, so the arcs $\sigma_j$ are pairwise disjoint and are disjoint from every $T_r$.
+
+It follows that the interior of each $A_S$ contains no geometric vertex, the interiors of distinct arcs $A_S$ and $A_{S'}$ are disjoint, and two distinct arcs can meet only at a common geometric endpoint corresponding to a common endpoint of the associated edges of $T$. Hence Lemma~11 applies:
+\[
+ H:=\bigcup_S A_S
+\]
+is homeomorphic to $T$. Since $T$ is a tree, $H$ is a finite embedded tree in $V$ containing all zeros
+$a_1,\dots,a_m$.
+
+\indent Finally,
+\[
+\operatorname{len}(H)\le \sum_S \operatorname{len}(\gamma_S)+\sum_{r=1}^s \operatorname{len}(T_r)+\sum_{j=1}^m \operatorname{len}(\sigma_j).
+\]
+Using (11), (12), and (13), we obtain
+\[
+\operatorname{len}(H)\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt+\varepsilon.
+\]
+Setting $G_\varepsilon:=H$ proves (10). \end{proof}
+
+\section{An explicit perturbation lemma}
+
+We now replace the abstract transversality step by a concrete two-parameter perturbation. Fix a
+squarefree monic polynomial $f$, a component $U\subset \Lambda_f$ containing exactly $m\ge 2$ zeros of $f$, and the
+number $\alpha$ introduced above. Define the compact collars
+\[
+K:=\{z\in U:u(z)\ge \alpha/2\},\qquad L:=\{z\in U:u(z)\ge 3\alpha/2\}.
+\]
+Then $K$ and $L$ are compact and connected by Lemma~7.
+
+\indent Set
+\[
+ c:=3\alpha/2.
+\]
+Since $u$ has no critical values in $[0,4\alpha)$, the value $c$ is regular. Let
+\[
+W_1,\dots,W_r
+\]
+be the connected components of $\{z\in U:u(z)>c\}$. We claim that the closures $\overline{W_i}$ are pairwise
+disjoint. Indeed, if $p\in \overline{W_i}\cap\overline{W_j}$, then $u(p)=c$. Because $c>0$, the point $p$ lies in the interior of $U$.
+Since $c$ is a regular value, the implicit function theorem gives local coordinates near $p$ in which
+\[
+ u-c=x.
+\]
+Hence locally $\{u>c\}$ is a single open half-disk, so only one connected component of $\{z\in U:u(z)>c\}$ can
+accumulate at $p$. Thus the sets $\overline{W_i}$ are pairwise disjoint. Every point of
+\[
+ L=\{z\in U:u(z)\ge c\}
+\]
+lies in $\bigcup_i \overline{W_i}$: if $u(p)>c$, then $p\in\{u>c\}=\bigcup_i W_i\subset
+\bigcup_i \overline{W_i}$; if $u(p)=c$, then the same local normal form shows that points with
+$u>c$ lie arbitrarily close to $p$, so again $p\in\bigcup_i \overline{W_i}$. Therefore
+\[
+L=\bigcup_{i=1}^r \overline{W_i}.
+\]
+Since $L$ is connected by Lemma~7 and the $\overline{W_i}$ are pairwise disjoint closed subsets of $L$, it follows
+that $r=1$. Let $W:=W_1$. Because $W\subset U\subset\{u>0\}$ and $c>0$, the set $W$ is also a connected
+component of the global superlevel set $\{u>c\}$. Hence Lemma~9 implies that $W$ is a Jordan domain and
+\[
+L=\overline W.
+\]
+An entirely analogous argument with
+\[
+ d:=\alpha/2
+\]
+shows that $K$ is a compact Jordan domain. Indeed, $d$ is also a regular value because $u$ has no critical
+values in $[0,4\alpha)$. If $Y_1,\dots,Y_s$ are the connected components of $\{u>d\}$, then exactly as above their
+closures are pairwise disjoint and
+\[
+K=\{u\ge d\}=\bigcup_{i=1}^s \overline{Y_i}.
+\]
+Since $K$ is connected by Lemma~7, we must have $s=1$. Let $Y:=Y_1$. Because $d>0$ and $Y\subset U\subset\{u>0\}$,
+this set $Y$ is a connected component of the global superlevel set $\{u>d\}$. Hence Lemma~9 implies that $Y$
+is a Jordan domain and
+\[
+K=\overline Y.
+\]
+Choose pairwise disjoint closed disks
+\[
+D_1,\dots,D_m\Subset \{u>5\alpha/2\}\cap W
+\]
+centered at the zeros of $f$ in $U$, so small that each $D_j$ contains exactly one
+zero and
+\[
+\delta_D:=\min_{z\in \bigcup_{j=1}^m D_j}|f'(z)|>0.
+\]
+In particular,
+\[
+B:=\{z\in U:\alpha/2\le u(z)\le 5\alpha/2\}
+\]
+is disjoint from $\bigcup_{j=1}^m D_j$. Define
+\[
+L_0:=L\setminus \bigcup_{j=1}^m \operatorname{int}(D_j).
+\]
+
+Since $W$ is a Jordan domain, $\overline W$ is homeomorphic to the closed unit disk
+$\overline{\mathbb D}$ by the Jordan--Schoenflies theorem. Under such a homeomorphism,
+the sets $D_j$ correspond to pairwise disjoint compact topological disks
+$E_j\subset \mathbb D$.
+
+\medskip
+\noindent\emph{Auxiliary fact.}
+Let $\Omega$ be a closed topological disk, and let
+$E_1,\dots,E_m\subset \operatorname{int}(\Omega)$ be pairwise disjoint compact
+topological disks. Then
+\[
+\Omega\setminus \bigcup_{j=1}^m \operatorname{int}(E_j)
+\]
+is path connected.
+
+\smallskip
+\noindent\emph{Proof of the auxiliary fact.}
+Set
+\[
+X_r:=\Omega\setminus \bigcup_{j=1}^r \operatorname{int}(E_j)
+\qquad (0\le r\le m),
+\]
+so $X_0=\Omega$. We first prove by induction on $r$ that each $X_r$ is connected.
+This is clear for $r=0$. Assume that $X_{r-1}$ is connected, and consider
+\[
+X_r=X_{r-1}\setminus \operatorname{int}(E_r).
+\]
+Let $U$ be a connected component of $X_r\setminus \partial E_r=X_{r-1}\setminus E_r$.
+Then $U$ is a nonempty proper open subset of the connected space $X_{r-1}$, so its
+boundary in $X_{r-1}$ is nonempty. Every such boundary point must lie in $E_r\cap X_r=\partial E_r$.
+Hence the closure of each connected component of $X_r\setminus \partial E_r$ in $X_r$
+meets $\partial E_r$.
+
+Now suppose that $X_r=A\cup B$ is a separation. Since $\partial E_r$ is connected, it must lie
+entirely in one side, say $\partial E_r\subset A$. Each connected component $U$ of
+$X_r\setminus \partial E_r$ is contained either in $A$ or in $B$; but if $U\subset B$, then,
+because $B$ is closed in $X_r$, the closure of $U$ in $X_r$ would also be contained in $B$,
+contradicting $\overline U\cap \partial E_r\neq\varnothing$. Thus every such component lies in $A$,
+and therefore $B=\varnothing$. So $X_r$ is connected, completing the induction.
+
+Finally, each point of $X_m$ has a neighborhood in $X_m$ homeomorphic either to an open disk
+or to a closed half-disk. For interior points this is immediate. If $x$ lies on $\partial\Omega$
+or on some $\partial E_j$, then, because the finitely many compact Jordan curves
+$\partial\Omega,\partial E_1,\dots,\partial E_m$ are pairwise disjoint, there is a small neighborhood
+of $x$ meeting no boundary curve other than the one through $x$. The Jordan--Schoenflies theorem
+then straightens that boundary curve locally to a line, so the corresponding neighborhood of $x$ in
+$X_m$ is homeomorphic to a closed half-disk. Thus $X_m$ is locally path connected. Since connected
+and locally path connected spaces are path connected, $X_m$ is path connected. This proves the auxiliary fact.
+\medskip
+
+Applying this with $\Omega=\overline{\mathbb D}$, we obtain that
+\[
+\overline{\mathbb D}\setminus \bigcup_{j=1}^m \operatorname{int}(E_j)
+\]
+is path connected. Pulling paths back under the Schoenflies homeomorphism shows that
+\[
+L_0
+=
+L\setminus \bigcup_{j=1}^m \operatorname{int}(D_j)
+\]
+is path connected, hence connected.
+
+For $\lambda,\beta\in\mathbb{C}$ define
+\[
+ g_{\lambda,\beta}(z):=f(z)+\lambda z+\beta,\qquad u_{\lambda,\beta}:=-\log|g_{\lambda,\beta}|.
+\]
+
+\medskip
+\begin{lemma}[Explicit perturbation]\label{lem:explicit-perturbation}
+\emph{There exist arbitrarily small parameters $(\lambda,\beta)\in\mathbb{C}^2$ such that,
+writing $g:=g_{\lambda,\beta}$ and $u_g:=-\log|g|$, the following hold:}
+
+\noindent (1) \emph{each $D_j$ contains exactly one zero of $g$, this zero is simple, and $g$ has no zeros on
+$K\setminus \bigcup_j D_j$;}
+
+\noindent (2) \emph{$u_g$ has no critical values in $[\alpha,2\alpha]$ on $K$;}
+
+\noindent (3) \emph{every critical point of $u_g$ in $K$ with value $>2\alpha$ is nondegenerate;}
+
+\noindent (4) \emph{all critical values of $u_g$ in $K$ larger than $2\alpha$ are pairwise distinct.}
+\end{lemma}
+
+\begin{proof} We proceed in five steps.
+
+Step 1: keep the zeros in the prescribed disks. Since each \(D_j\) contains exactly one simple zero of
+\(f\) and \(f\) has no zeros on
+\[
+C:=K\setminus \bigcup_{j=1}^m \operatorname{int}(D_j),
+\]
+we have
+\[
+\delta_C:=\min_{z\in C}|f(z)|>0.
+\]
+Choose \(\eta_0>0\) so small that \(\eta_0<\delta_C/2\). If
+\[
+\sup_{z\in K}|g(z)-f(z)|<\eta_0,
+\]
+then \(g\) has no zeros on \(C\), since
+\[
+|g(z)|\ge |f(z)|-|g(z)-f(z)|>\delta_C/2
+\qquad (z\in C).
+\]
+On the other hand, for each \(j\), since \(f\) has exactly one zero in \(D_j\) and no zero on
+\(\partial D_j\), Rouché's theorem on \(\partial D_j\) shows that \(g\) also has exactly one zero in
+\(D_j\), counted with multiplicity, provided the same uniform bound holds. Thus each \(D_j\) still
+contains exactly one zero of \(g\), and \(g\) has no zeros on
+\[
+K\setminus \bigcup_{j=1}^m D_j.
+\]
+
+Since
+\[
+\sup_{z\in K}|g_{\lambda,\beta}(z)-f(z)|
+\le
+|\lambda|\max_{z\in K}|z|+|\beta|,
+\]
+this zero configuration is preserved for all sufficiently small \((\lambda,\beta)\).
+
+Moreover, if
+\[
+|\lambda|<\delta_D/2,
+\]
+then for every \(z\in \bigcup_{j=1}^m D_j\),
+\[
+|g'(z)|=|f'(z)+\lambda|\ge |f'(z)|-|\lambda|>\delta_D/2,
+\]
+so \(g'\) has no zeros on any \(D_j\). Combined with the preceding paragraph, this shows that the
+unique zero of \(g\) in each \(D_j\) is simple.
+
+\noindent\textit{Step 2: make the critical points simple.} 
+
+
+On the zero-free set $\{g\neq 0\}$, the function $u_g=-\log|g|$ is smooth, and its critical points are exactly the zeros of $g'$, because
+\[
+\nabla(-\log|g|)=0 \iff g'=0
+\qquad\text{on }\{g\neq 0\}.
+\]
+But
+\[
+g'(z)=f'(z)+\lambda.
+\]
+A zero $\zeta$ of $f'+\lambda$ is multiple if and only if
+\[
+f'(\zeta)+\lambda=0
+\quad\text{and}\quad
+f''(\zeta)=0,
+\]
+equivalently,
+\[
+\lambda=-f'(\zeta)
+\quad\text{with}\quad
+f''(\zeta)=0.
+\]
+Therefore the bad set
+\[
+\Sigma_1:=\{-f'(\zeta):f''(\zeta)=0\}
+\]
+is finite, and for every $\lambda\notin\Sigma_1$ all zeros of $f'+\lambda$ are simple.
+
+We now show that simplicity of the zero of $g'$ implies nondegeneracy of the corresponding critical point of $u_g$. Let $c$ satisfy $g(c)\neq 0$, $g'(c)=0$, and $g''(c)\neq 0$. Choose a simply connected neighborhood of $c$ on which $g$ has no zeros, and let $F=\log g$ be a holomorphic branch there. Then
+\[
+u_g=-\Re F.
+\]
+Since
+\[
+F'(z)=\frac{g'(z)}{g(z)},
+\]
+we have $F'(c)=0$, and
+\[
+F''(c)=\frac{g''(c)}{g(c)}\neq 0.
+\]
+Hence
+\[
+F(z)=F(c)+\frac{F''(c)}{2}(z-c)^2+O(|z-c|^3),
+\]
+so
+\[
+u_g(z)
+=
+u_g(c)-\Re\!\left(\frac{F''(c)}{2}(z-c)^2\right)+O(|z-c|^3).
+\]
+The quadratic form $\Re\!\big(A(z-c)^2\big)$ with $A\neq 0$ is nondegenerate and has signature $(1,1)$. Therefore the Hessian of $u_g$ at $c$ is nondegenerate. Thus every critical point of $u_g$ on $\{g\neq 0\}$ corresponding to a simple zero of $g'$
+is a Morse saddle.
+
+Consequently, for every $\lambda\notin\Sigma_1$, every critical point of $u_g$ with finite critical value is nondegenerate.
+
+
+
+\noindent\textit{Step 3: make the complex critical values distinct.} Set
+\[
+H_\lambda(z):=f(z)+\lambda z.
+\]
+Its critical points are the zeros of
+\[
+H_\lambda'(z)=f'(z)+\lambda.
+\]
+The critical values of $H_\lambda$ are contained among the roots of the resultant polynomial
+\[
+R_\lambda(w):=\operatorname{Res}_z\bigl(f'(z)+\lambda,\,f(z)+\lambda z-w\bigr).
+\]
+If two distinct critical points of $H_\lambda$ have the same critical value, then
+$R_\lambda$ has a repeated root. Hence the discriminant
+\[
+\Delta(\lambda):=\operatorname{Disc}_w R_\lambda(w)
+\]
+vanishes. Therefore every $\lambda$ for which the critical values of $H_\lambda$ are not
+pairwise distinct belongs to the algebraic set
+\[
+\Sigma_2:=\{\lambda:\Delta(\lambda)=0\}.
+\]
+To prove that such bad parameters do not fill the plane, it suffices to exhibit one value of
+$\lambda$ for which the critical values of $H_\lambda$ are pairwise distinct. The asymptotic
+argument below does exactly this: for all sufficiently large $|\lambda|$, the critical points $c_k(\lambda)$
+satisfy
+\[
+c_k(\lambda)=\rho\omega_k+O(1),
+\]
+and the corresponding critical values satisfy
+\[
+H_\lambda(c_k(\lambda))=-(n-1)\rho^n\omega_k+O(|\rho|^{n-1}),
+\]
+so they are pairwise distinct. We now carry out that asymptotic argument in detail.
+Write
+\[
+ f'(z)=nz^{n-1}+Q(z),\qquad \deg Q\le n-2.
+\]
+Fix $R>0$, to be chosen later. Let $\lambda\neq 0$, choose $\rho\in\mathbb{C}$ such that
+\[
+ \rho^{n-1}=-\lambda/n,
+\]
+and let $\omega_1,\dots,\omega_{n-1}$ denote the $(n-1)$st roots of unity. For each $k$ set
+\[
+ c_k^0:=\rho\omega_k,\qquad C_k:=\{z:|z-c_k^0|=R\}.
+\]
+Then $c_1^0,\dots,c_{n-1}^0$ are precisely the zeros of $nz^{n-1}+\lambda$.
+
+\indent Let $z\in C_k$, so that $z=c_k^0+\xi$ with $|\xi|=R$. Since
+\[
+ nz^{n-1}+\lambda=nz^{n-1}-(c_k^0)^{n-1}=n(z-c_k^0)\sum_{m=0}^{n-2} z^{n-2-m}(c_k^0)^m,
+\]
+we have
+\[
+ |nz^{n-1}+\lambda|=nR\left|\sum_{m=0}^{n-2} z^{n-2-m}(c_k^0)^m\right|.
+\]
+Factoring out $(c_k^0)^{n-2}$ gives
+\[
+\sum_{m=0}^{n-2} z^{n-2-m}(c_k^0)^m=(c_k^0)^{n-2}\sum_{m=0}^{n-2}\left(1+\frac{\xi}{c_k^0}\right)^{n-2-m}.
+\]
+Because $R$ is fixed and $|c_k^0|=|\rho|\to\infty$ as $|\lambda|\to\infty$, the second factor converges uniformly on all the
+circles $C_k$ to $n-1$. Therefore there exists $\rho_1>0$ such that, for all $|\rho|\ge \rho_1$ and all $z\in C_k$,
+\[
+\left|\sum_{m=0}^{n-2} z^{n-2-m}(c_k^0)^m\right|\ge \frac{n-1}{2}|\rho|^{n-2}.
+\]
+Hence
+\begin{equation}
+|nz^{n-1}+\lambda|\ge \frac{n(n-1)}{2}R|\rho|^{n-2}\qquad (z\in C_k,\ |\rho|\ge \rho_1).
+\tag{14}
+\end{equation}
+Now write
+\[
+Q(z)=\sum_{j=0}^{n-2} a_j z^j
+\]
+and set
+\[
+ C_0:=\sum_{j=0}^{n-2}|a_j|\left(\frac32\right)^j.
+\]
+If $|\rho|\ge 2R$ and $z\in C_k$, then $|z|\le |\rho|+R\le \tfrac32|\rho|$, so
+\begin{equation}
+|Q(z)|\le \sum_{j=0}^{n-2}|a_j||z|^j\le \sum_{j=0}^{n-2}|a_j|\left(\frac32\right)^j |\rho|^j\le C_0 |\rho|^{n-2}.
+\tag{15}
+\end{equation}
+Choose $R>0$ so large that
+\[
+\frac{n(n-1)}{2}R>C_0.
+\]
+Then, by (14) and (15), there exists $\rho_0\ge \max\{\rho_1,2R\}$ such that for all $|\rho|\ge \rho_0$ and all $z\in C_k$,
+\[
+ |Q(z)|<|nz^{n-1}+\lambda|.
+\]
+Therefore Rouch\'e's theorem implies that, for every such $\rho$, the polynomial
+\[
+ f'(z)+\lambda=nz^{n-1}+\lambda+Q(z)
+\]
+has exactly one zero inside each disk bounded by $C_k$. Since $f'(z)+\lambda$ has degree $n-1$, these are all
+of its zeros. Denote them by $c_1(\lambda),\dots,c_{n-1}(\lambda)$. In particular,
+\[
+ c_k(\lambda)=\rho\omega_k+O(1)
+\]
+uniformly in $k$ as $|\lambda|\to\infty$.
+
+\indent Now write
+\[
+ f(z)=z^n+b_{n-1}z^{n-1}+\cdots+b_0.
+\]
+Since $f'(c_k(\lambda))+\lambda=0$, we have
+\[
+H_\lambda(c_k(\lambda))=f(c_k(\lambda))+\lambda c_k(\lambda)=f(c_k(\lambda))-c_k(\lambda)f'(c_k(\lambda)).
+\]
+But
+\[
+ f(z)-zf'(z)=-(n-1)z^n+\widetilde Q(z),
+\]
+where $\deg \widetilde Q\le n-1$. Hence
+\[
+H_\lambda(c_k(\lambda))=-(n-1)c_k(\lambda)^n+\widetilde Q(c_k(\lambda)).
+\]
+Since $c_k(\lambda)=\rho\omega_k+O(1)$, it follows that
+\[
+ c_k(\lambda)^n=\rho^n\omega_k^n+O(|\rho|^{n-1})=\rho^n\omega_k+O(|\rho|^{n-1}),
+\]
+because $\omega_k^{n-1}=1$ implies $\omega_k^n=\omega_k$. Also
+\[
+ \widetilde Q(c_k(\lambda))=O(|\rho|^{n-1}).
+\]
+Therefore
+\[
+ H_\lambda(c_k(\lambda))=-(n-1)\rho^n\omega_k+O(|\rho|^{n-1}).
+\]
+If $k\neq \ell$, then
+\[
+ H_\lambda(c_k(\lambda))-H_\lambda(c_\ell(\lambda))=-(n-1)\rho^n(\omega_k-\omega_\ell)+O(|\rho|^{n-1}).
+\]
+Since $\omega_k\neq \omega_\ell$, the leading term has modulus bounded below by $c|\rho|^n$ for some constant $c>0$
+depending only on $n$, whereas the error term is $O(|\rho|^{n-1})$. Consequently, for all sufficiently large
+$|\lambda|$, the critical values $H_\lambda(c_1(\lambda)),\dots,H_\lambda(c_{n-1}(\lambda))$ are pairwise distinct.
+
+\indent Thus $\Delta(\lambda)\neq 0$ for all sufficiently large $|\lambda|$, so $\Delta\not\equiv 0$. Since $\Delta$ is a polynomial, the set $\Sigma_2$
+is finite. Choose a small $\lambda\notin \Sigma_1\cup\Sigma_2$. Then $H_\lambda$ has simple critical points and pairwise distinct
+complex critical values.
+
+\noindent\textit{Step 4: keep all critical values in $K$ above $2\alpha$.} Let
+\[
+ Z_K:=\{\zeta\in K:f'(\zeta)=0\}.
+\]
+Since $f'$ has no zeros on $\partial K$, the set $Z_K$ is finite and contained in $\operatorname{int}(K)$.
+Set
+\[
+M:=\max_{z\in K}|z|.
+\]
+If $Z_K=\varnothing$, then $f'(z)\neq 0$ for every $z\in K$. Since $K$ is compact and
+$|f'|$ is continuous, the minimum
+\[
+\delta_K:=\min_{z\in K}|f'(z)|
+\]
+is strictly positive. Choose $\lambda$ so small that
+\[
+|\lambda|<\frac{\delta_K}{2}.
+\]
+Then for every $z\in K$,
+\[
+|g'(z)|=|f'(z)+\lambda|\ge |f'(z)|-|\lambda|\ge \frac{\delta_K}{2}>0.
+\]
+Hence $g'$ has no zeros on $K$. In particular, $u_g$ has no critical points in $K$,
+so there are no critical values of $u_g$ arising from critical points in $K$. Moreover, any
+zero of $g$ lying in one of the root-disks $D_j$ is a logarithmic singularity of $u_g$, not a
+smooth critical point, and by Step~1 it satisfies $u_g>5\alpha/2$. Therefore such zeros do not
+contribute any level in $[\alpha,2\alpha]$. In particular, no critical value of $u_g$ on $K$
+lies in $[\alpha,2\alpha]$. In this case set
+\[
+\beta_*:=1.
+\]
+
+If $Z_K\neq\varnothing$, then, because $u=-\log|f|$ has no critical values in $[0,4\alpha)$, every $\zeta\in Z_K$ satisfies
+\[
+ |f(\zeta)|\le e^{-4\alpha}.
+\]
+Set
+\[
+M_*:=\max_{\zeta\in Z_K}|f(\zeta)|,\qquad \eta_*:=e^{-2\alpha}-M_*>0.
+\]
+
+Choose pairwise disjoint closed disks $E_\zeta\Subset \operatorname{int}(K)$, one around each
+$\zeta\in Z_K$, so small that
+\[
+|f(z)|\le M_*+\frac{\eta_*}{4}=e^{-2\alpha}-\frac{3\eta_*}{4}
+\qquad
+(z\in E:=\bigcup_{\zeta\in Z_K}E_\zeta),
+\]
+and such that $f'$ has no zeros on $K\setminus E$. Set
+\[
+\delta_E:=\min_{z\in K\setminus E}|f'(z)|>0,
+\qquad
+\delta_*:=\min_{\zeta\in Z_K}\min_{z\in \partial E_\zeta}|f'(z)|>0.
+\]
+
+Shrink $\lambda$ further so that
+\[
+|\lambda|<\min\left\{\frac{\delta_E}{2},\,\frac{\delta_*}{2},\,\frac{\eta_*}{4M}\right\}.
+\]
+Then for every $z\in K\setminus E$,
+\[
+|f'(z)+\lambda|\ge |f'(z)|-|\lambda|>\frac{\delta_E}{2}>0,
+\]
+so $f'+\lambda$ has no zeros on $K\setminus E$.
+
+Moreover, for each $\zeta\in Z_K$ and every $z\in \partial E_\zeta$,
+\[
+|\lambda|<|f'(z)|.
+\]
+Hence, by Rouch\'e's theorem on $\partial E_\zeta$, the functions $f'$ and $f'+\lambda$
+have the same number of zeros in $E_\zeta$, counted with multiplicity. In particular,
+every zero of $f'+\lambda$ lying in $K$ belongs to $E$. Since the critical points of
+$H_\lambda(z):=f(z)+\lambda z$ are precisely the zeros of
+\[
+H_\lambda'(z)=f'(z)+\lambda,
+\]
+it follows that every critical point $c$ of $H_\lambda$ in $K$ lies in $E$. Therefore
+\[
+|f(c)|\le e^{-2\alpha}-\frac{3\eta_*}{4}.
+\]
+Hence
+\[
+|H_\lambda(c)|
+\le |f(c)|+|\lambda|\,|c|
+\le |f(c)|+|\lambda|M
+<
+e^{-2\alpha}-\frac{\eta_*}{2}.
+\]
+
+Now choose $\beta$ so small that
+\[
+|\beta|<\frac{\eta_*}{2}.
+\]
+Then for every critical point $c$ of $H_\lambda$ in $K$,
+\[
+|g(c)|=|H_\lambda(c)+\beta|<e^{-2\alpha}.
+\]
+Equivalently, every critical value of $u_g$ arising from a critical point in $K$ is $>2\alpha$.
+In particular, no critical point of $u_g$ in $K$ has critical value in $[\alpha,2\alpha]$. In this case set
+\[
+\beta_*:=\frac{\eta_*}{2}.
+\]
+
+\noindent\textit{Step 5: make the moduli distinct.} Let $a_1,\dots,a_N$ be the pairwise distinct complex critical
+values of $H_\lambda$ arising from critical points in $K$. After adding $\beta$, they become $a_1+\beta,\dots,a_N+\beta$.
+Their moduli fail to be distinct only if, for some $i\neq j$,
+\[
+ |a_i+\beta|=|a_j+\beta|.
+\]
+Equivalently,
+\[
+ |a_i+\beta|^2-|a_j+\beta|^2=0,
+\]
+that is,
+\[
+ 2\Re\bigl(\beta \overline{(a_i-a_j)}\bigr)+|a_i|^2-|a_j|^2=0.
+\]
+For fixed $i\neq j$, this is a nontrivial affine real linear equation in $\beta\in\mathbb{C}\cong\mathbb{R}^2$, so it defines an affine
+real line. Thus the bad values of $\beta$ lie in a finite union of lines. Fix the previously chosen $\lambda\notin \Sigma_1\cup\Sigma_2$.
+By Step~1 there exists $\beta_1>0$ such that every $\beta$ with $|\beta|<\beta_1$ preserves the zero configuration in
+the disks $D_j$, and by Step~4 every $\beta$ with $|\beta|<\beta_*$ keeps all critical values in $K$ above $2\alpha$. Hence,
+with
+\[
+\beta_0:=\min\{\beta_1,\beta_*\}>0,
+\]
+we may choose $\beta$ with $0<|\beta|<\beta_0$ outside that finite union of lines. Then the critical values of $u_g$
+arising from critical points in $K$ and larger than $2\alpha$ are pairwise distinct.
+
+\indent This proves the lemma. \end{proof}
+
+\begin{remarkplain}
+Lemma~\ref{lem:explicit-perturbation} is only a \emph{local} genericity statement on the fixed compact set $K$. It does not claim anything about critical points of $u_g$ outside $K$. This is sufficient for the argument below, because Lemmas~\ref{lem:component-stability} and~\ref{lem:collar-integral-continuity} show that the relevant perturbed component $V_g$ lies in $K$, so every critical point relevant to Proposition~\ref{prop:generic-spanning-tree} is contained in $K$.
+\end{remarkplain}
+
+
+
+\section{Stability of the collar integral and of the relevant component}
+
+We retain the notation of the previous section.
+
+\medskip
+\begin{lemma}[Component stability]\label{lem:component-stability}
+\emph{Suppose $g\to f$ uniformly on $K$ and that, for all sufficiently
+close $g$,}
+\begin{enumerate}
+\item[(a)] \emph{each $D_j$ contains exactly one zero of $g$;}
+\item[(b)] \emph{$g$ has no zeros on $K\setminus \bigcup_j D_j$.}
+\end{enumerate}
+\emph{Then, for all sufficiently small perturbations, there exists a unique connected component $V_g$ of
+\[
+\{z\in K:-\log|g(z)|>\alpha\}
+\]
+such that
+\[
+L_0\subset V_g\subset \operatorname{int}(K)\subset U,
+\]
+and $V_g$ contains exactly the $m$ zeros of $g$ lying in the disks $D_j$.}
+\end{lemma}
+
+\begin{proof} On $L_0$ one has $u\ge 3\alpha/2$, while on $\partial K$ one has $u=\alpha/2$. Uniform convergence implies
+\[
+ -\log|g|>\alpha \text{ on }L_0,\qquad -\log|g|<\alpha \text{ on }\partial K
+\]
+for all sufficiently small perturbations. Thus the connected set $L_0$ lies in a unique connected component
+\[
+ V_g\subset \operatorname{int}(K)
+\]
+of the open set
+\[
+\{-\log|g|>\alpha\}\cap \operatorname{int}(K).
+\]
+Since $-\log|g|<\alpha$ on $\partial K$, this is equivalently a connected component of
+$\{-\log|g|>\alpha\}\cap K$.
+
+\indent Fix $j$. Since $\partial D_j\subset L_0\subset V_g$, we have $|g|<e^{-\alpha}$ on $\partial D_j$. By the maximum modulus principle,
+\[
+ |g|<e^{-\alpha} \text{ throughout } D_j.
+\]
+Hence $D_j\subset V_g$, so the zero of $g$ inside $D_j$ belongs to $V_g$. There are no other zeros of $g$ in $K$, hence
+$V_g$ contains exactly these $m$ zeros.
+
+\indent We next prove uniqueness. Suppose, for contradiction, that $W$ is another connected
+component of
+\[
+\{-\log|g|>\alpha\}\cap K.
+\]
+Because $-\log|g|<\alpha$ on $\partial K$, every connected component of
+$\{-\log|g|>\alpha\}\cap K$ is contained in $\operatorname{int}(K)$; equivalently, $W$ is a
+connected component of the open set
+\[
+\{-\log|g|>\alpha\}\cap \operatorname{int}(K).
+\]
+Since $V_g$ contains every disk $D_j$, the set $W$ is disjoint from each $D_j$.
+
+We claim that in fact
+\[
+\overline{W}\cap \partial D_j=\varnothing
+\qquad
+(1\le j\le m).
+\]
+Assume otherwise, and choose
+\[
+p\in \overline{W}\cap \partial D_j
+\]
+for some $j$. Because $\partial D_j\subset L_0\subset V_g$, and because
+$L_0\subset \operatorname{int}(K)$ while $-\log|g|>\alpha$ on $L_0$, there exists $r>0$
+such that
+\[
+B(p,r)\subset \{-\log|g|>\alpha\}\cap \operatorname{int}(K).
+\]
+Since $p\in \partial D_j$ and $D_j\subset V_g$, the ball $B(p,r)$ meets $V_g$.
+Because $p\in \overline{W}$, it also meets $W$. This is impossible, since a connected
+subset of the open set $\{-\log|g|>\alpha\}\cap \operatorname{int}(K)$ cannot meet two distinct connected
+components of that set. This proves the claim.
+
+Therefore
+\[
+\overline{W}\subset K\setminus \bigcup_{j=1}^m D_j.
+\]
+By assumption, $g$ has no zeros on $K\setminus \bigcup_j D_j$, so $-\log|g|$ is harmonic
+on an open neighborhood of $K\setminus \bigcup_j D_j$, hence on a neighborhood of $\overline W$.
+
+We claim that
+\[
+\partial W \subset \bigl(K\cap\{-\log|g|=\alpha\}\bigr)\cup \partial K.
+\]
+Indeed, let $p\in \partial W\cap \operatorname{int}(K)$. Since $W$ is a connected
+component of the open set $\{-\log|g|>\alpha\}\cap \operatorname{int}(K)$, the point $p$ cannot satisfy
+$-\log|g(p)|>\alpha$; otherwise, by continuity, some ball $B(p,r)\subset \operatorname{int}(K)$
+would be contained in $\{-\log|g|>\alpha\}\cap \operatorname{int}(K)$ and would meet $W$, forcing
+$B(p,r)\subset W$, contrary to $p\in\partial W$. On the other hand, $p$ is a limit point
+of $W\subset\{-\log|g|>\alpha\}$, so continuity gives $-\log|g(p)|\ge \alpha$. Hence
+$-\log|g(p)|=\alpha$.
+
+If instead $p\in \partial W\cap \partial K$, then the first paragraph of the proof gives
+$-\log|g(p)|<\alpha$. Therefore
+\[
+-\log|g|\le \alpha \qquad \text{on }\partial W.
+\]
+
+Since $W$ is bounded and $-\log|g|$ is harmonic on a neighborhood of $\overline W$,
+the maximum principle yields
+\[
+-\log|g|\le \alpha \qquad \text{throughout }W,
+\]
+contradicting
+\[
+W\subset \{-\log|g|>\alpha\}.
+\]
+Thus $V_g$ is the unique connected component of
+\[
+\{-\log|g|>\alpha\}\cap K.
+\]
+
+Finally, because $-\log|g|<\alpha$ on $\partial K$, a path in $\{-\log|g|>\alpha\}$
+starting in $V_g$ cannot cross $\partial K$. Hence $V_g$ is also a connected component
+of the full superlevel set
+\[
+\{-\log|g|>\alpha\}.
+\]
+\end{proof}
+
+\medskip
+\begin{lemma}[Continuity of the collar integral]\label{lem:collar-integral-continuity}
+\emph{Assume $g\to f$ in $C^1(K)$, and assume that, for all sufficiently close $g$,}
+\begin{enumerate}
+\item[(a)] \emph{each $D_j$ contains exactly one zero of $g$;}
+\item[(b)] \emph{$g$ has no zeros on $K\setminus \bigcup_{j=1}^m D_j$.}
+\end{enumerate}
+\emph{Let $V_g$ be the corresponding component from Lemma~\ref{lem:component-stability}, and define}
+\[
+q_g:=\frac1{2\pi}\int_\alpha^{2\alpha} P_g(t)\,dt,
+\]
+\emph{where}
+\[
+P_g(t):=\mathcal H^1(\{z\in V_g:u_g(z)=t\})
+\qquad\text{for regular }t,
+\]
+\emph{and $u_g:=-\log|g|$. Then}
+\[
+q_g\to q
+\qquad\text{as }g\to f\text{ in }C^1(K).
+\]
+\emph{In particular, for all sufficiently small perturbations,}
+\[
+q_g>\frac q2.
+\]
+\end{lemma}
+
+\begin{proof}
+Because the disks $D_j$ were chosen inside $\{u>5\alpha/2\}$, the compact band
+\[
+B:=\{z\in U:\alpha/2\le u(z)\le 5\alpha/2\}
+\]
+is disjoint from $\bigcup_{j=1}^m D_j$. Since all zeros of $g$ in $K$ lie in the disks
+$D_j$, the function $u_g=-\log|g|$ is well defined on $B$ for all sufficiently small
+perturbations.
+
+Because $f$ has no zeros on
+\[
+C:=K\setminus \bigcup_{j=1}^m \operatorname{int}(D_j),
+\]
+there exists $m_C>0$ such that
+\[
+|f|\ge m_C \qquad\text{on }C.
+\]
+Since $D_j\subset\{u>5\alpha/2\}$ for each $j$, we also have
+\[
+M_D:=\max_{z\in \bigcup_{j=1}^m D_j}|f(z)|\le e^{-5\alpha/2}<e^{-2\alpha}.
+\]
+Choose the perturbation so small that
+\[
+\|g-f\|_{L^\infty(K)}<\min\{m_C/2,\,e^{-2\alpha}-M_D\}.
+\]
+Then $g$ has no zeros on $C$, and in fact
+\[
+|g|\ge m_C/2 \qquad\text{on }C,
+\]
+while on the union of the root disks we have
+\[
+|g|\le M_D+\|g-f\|_{L^\infty(K)}<e^{-2\alpha}.
+\]
+Equivalently,
+\[
+u_g>2\alpha \qquad\text{on }\bigcup_{j=1}^m D_j.
+\]
+Hence the entire collar region $\{\alpha<u_g<2\alpha\}\cap K$ is disjoint from the disks $D_j$.
+
+On the zero-free compact set $C$, the formulas
+\[u=-\log|f|,\qquad u_g=-\log|g|,
+\]
+\[
+\nabla u=-\nabla(\log|f|),\qquad \nabla u_g=-\nabla(\log|g|)
+\]
+and the lower bound $|g|\ge m_C/2$ show that $g\to f$ in $C^1(K)$ implies
+\[u_g\to u \quad\text{uniformly on }C,
+\qquad
+\nabla u_g\to \nabla u \quad\text{uniformly on }C.
+\]
+In particular, since $B\subset C$, we have uniform convergence on $B$ as well. Since $u$
+has no critical points on $B$, there exists $c_0>0$ such that
+\[
+|\nabla u|\ge c_0 \qquad\text{on }B.
+\]
+Hence, for all sufficiently small perturbations,
+\[
+|\nabla u_g|\ge c_0/2 \qquad\text{on }B,
+\]
+so $u_g$ has no critical points on $B$.
+
+We next identify the relevant collar region for $u_g$. By Lemma~\ref{lem:component-stability},
+$V_g\subset K$ and $V_g$ is the unique connected component of $\{u_g>\alpha\}\cap K$.
+Since $u_g\to u$ uniformly on $C$, for all sufficiently small perturbations we have
+\[
+\|u_g-u\|_{L^\infty(C)}<\alpha/2.
+\]
+Therefore, if $z\in K$ satisfies $\alpha<u_g(z)<2\alpha$, then $z\notin \bigcup_j D_j$, so
+$z\in C$, and hence
+\[
+\alpha/2<u(z)<5\alpha/2.
+\]
+Therefore $z\in B$. Also, any such $z$ belongs to $\{u_g>\alpha\}\cap K$, hence to the unique
+component $V_g$. Thus
+\[
+\{z\in V_g:\alpha<u_g(z)<2\alpha\}
+=
+\{z\in K:\alpha<u_g(z)<2\alpha\}
+\subset B.
+\]
+Likewise,
+\[
+\{z\in U:\alpha<u(z)<2\alpha\}
+=
+\{z\in K:\alpha<u(z)<2\alpha\}
+\subset B.
+\]
+
+Applying the coarea formula on the band $B$, we obtain
+\[
+2\pi q=\int_B 1_{\{\alpha<u<2\alpha\}}\,|\nabla u|\,dA,
+\]
+and
+\[
+2\pi q_g=\int_B 1_{\{\alpha<u_g<2\alpha\}}\,|\nabla u_g|\,dA.
+\]
+
+Set
+\[
+E:=\{z\in B:\alpha<u(z)<2\alpha\},
+\qquad
+E_g:=\{z\in B:\alpha<u_g(z)<2\alpha\}.
+\]
+Because $u_g\to u$ uniformly on $B$, we have
+\[
+1_{E_g}(z)\to 1_E(z)
+\]
+for every $z\in B$ such that $u(z)\notin\{\alpha,2\alpha\}$. The exceptional set is
+contained in
+\[
+\{u=\alpha\}\cup\{u=2\alpha\},
+\]
+which has planar measure zero by Lemma~3. Thus $1_{E_g}\to 1_E$ almost everywhere
+on $B$.
+
+Also, for $g$ sufficiently close to $f$, uniform convergence of the gradients gives a
+constant $M_B<\infty$ such that
+\[
+|\nabla u_g|\le M_B \qquad\text{on }B.
+\]
+Therefore the integrands
+\[
+1_{E_g}|\nabla u_g|
+\]
+are dominated by the integrable function $M_B1_B$, and they converge almost
+everywhere on $B$ to
+\[
+1_E|\nabla u|.
+\]
+By dominated convergence,
+\[
+q_g\to q.
+\]
+In particular, $q_g>q/2$ for all sufficiently small perturbations.
+\end{proof}
+
+
+\section{Proof of the main theorem}
+
+We now complete the argument.
+
+\medskip
+\begin{lemma}[A tree lemma]\label{lem:tree-lemma}
+\emph{Let $T$ be a finite tree of total length $L$, and let $x_1,\dots,x_M$ be marked
+points of $T$. Then some pair $x_i,x_j$ is joined by a subpath of length at most $2L/M$.}
+\end{lemma}
+
+\begin{proof} Subdivide edges at the marked points; this does not change the total length and turns the
+marked points into marked vertices. Take the minimal subtree spanning the marked vertices. Every
+leaf of this subtree is marked. Doubling every edge produces an Eulerian graph of total length $2L$.
+Traversing an Euler tour and recording the first appearances of the marked vertices gives a cyclic
+ordering of the $M$ marked vertices. The $M$ gaps between consecutive marked vertices along the
+tour have total length $2L$, so one of them has length at most $2L/M$. The corresponding unique
+path in the original tree has at most that length. \end{proof}
+
+\begin{proof}[Proof of Theorem~1]
+If $n=1$, then the unique root may be joined to itself by the constant curve, so the conclusion is immediate. If $f$ has a multiple zero, the conclusion is also immediate. Thus we may assume that $f$ is squarefree and $n\ge 2$.
+
+\indent By the component lemma, there exists a connected component $U\subset \Lambda_f$ containing exactly
+$m\ge 2$ zeros of $f$. Let $u=-\log|f|$ on $U$, let $\alpha$ and $q$ be as in Section~3, and choose the root disks
+$D_1,\dots,D_m$ as in Section~5, so small that
+\begin{equation}
+\sum_{j=1}^m \operatorname{diam}(D_j)<\frac{q}{4m}.
+\tag{17}
+\end{equation}
+Choose $(\lambda,\beta)$ as in Lemma~\ref{lem:explicit-perturbation} so small that
+\[
+\|g_{\lambda,\beta}-f\|_{C^1(K)}<\varepsilon_0,
+\]
+where $\varepsilon_0>0$ is small enough for Lemmas~14 and~15 to apply, and set
+\[
+g:=g_{\lambda,\beta}.
+\]
+By Lemma~\ref{lem:explicit-perturbation}(1), each disk $D_j$ contains exactly one simple zero $b_j$ of $g$, and
+$g$ has no zeros on
+\[
+K\setminus \bigcup_{j=1}^m D_j.
+\]
+Because the disks $D_j$ lie in $\{u>5\alpha/2\}$, they are disjoint from the fixed band
+\[
+B=\{z\in U:\alpha/2\le u\le 5\alpha/2\},
+\]
+so $g$ has no zeros on $B$ as well. Let $V_g$ be the corresponding component from
+Lemma~\ref{lem:component-stability}. Then $V_g$ is a connected component of the full superlevel set
+\[
+\{-\log|g|>\alpha\},
+\]
+it satisfies $V_g\subset \operatorname{int}(K)\subset U$, it contains exactly the $m$
+perturbed roots $b_1,\dots,b_m$ lying in the disks $D_j$, and by Lemma~\ref{lem:collar-integral-continuity} we have
+\[
+q_g>q/2.
+\]
+
+Applying Corollary~\ref{cor:component-integral-bound} with
+\[
+h=g,
+\qquad
+v=u_g:=-\log|g|,
+\qquad
+c=\alpha,
+\qquad
+W=V_g,
+\]
+gives
+\[
+\frac1{2\pi}\int_\alpha^\infty P_g(t)\,dt\le m.
+\]
+Hence
+\[
+\frac1{2\pi}\int_{2\alpha}^\infty P_g(t)\,dt
+=
+\frac1{2\pi}\int_{\alpha}^\infty P_g(t)\,dt
+-
+\frac1{2\pi}\int_{\alpha}^{2\alpha} P_g(t)\,dt
+\le m-q_g
+<
+m-\frac q2.
+\]
+
+Since all zeros of $g$ in $V_g$ are the simple roots $b_1,\dots,b_m$, Proposition~\ref{prop:generic-spanning-tree} applies to $u_g=-\log|g|$ on $V_g$ with base level $c=\alpha$. By Lemma~\ref{lem:component-stability} we have $V_g\subset K$, so every critical point relevant to Proposition~\ref{prop:generic-spanning-tree} lies in $K$. Therefore Lemma~\ref{lem:explicit-perturbation}(2) gives the absence of critical values in $[\alpha,2\alpha]$, while Lemma~\ref{lem:explicit-perturbation}(3)--(4) give the Morse and distinct-critical-value hypotheses above $2\alpha$. Choose
+\[
+\varepsilon:=\frac q8.
+\]
+Then Proposition~\ref{prop:generic-spanning-tree} yields a finite tree \(G\subset V_g\subset U\) containing the \(m\) perturbed roots
+and satisfying
+\[
+\len(G)\le \frac1{2\pi}\int_{2\alpha}^\infty P_g(t)\,dt+\frac q8
+<
+m-\frac q2+\frac q8
+=
+m-\frac{3q}{8}.
+\]
+
+By Lemma~16, some pair of perturbed roots, say \(b_r\in D_r\) and \(b_s\in D_s\), is joined in \(G\) by
+a subpath of length at most
+\[
+\frac{2}{m}\len(G)
+<
+\frac{2}{m}\left(m-\frac{3q}{8}\right)
+=
+2-\frac{3q}{4m}.
+\tag{18}
+\]
+The indices \(r\neq s\), because the \(m\) perturbed roots are distinct and each disk \(D_j\) contains
+exactly one of them.
+
+Connect \(b_r\) to the original zero \(a_r\in D_r\) and \(b_s\) to the original zero \(a_s\in D_s\) by
+straight line segments. Because each $D_j$ is an ordinary Euclidean disk contained in $U$,
+these straight segments lie in
+\[
+D_r\cup D_s \subset U \subset \Lambda_f.
+\]
+The total additional length is at most
+\[
+\operatorname{diam}(D_r)+\operatorname{diam}(D_s)
+\le
+\sum_{j=1}^m \operatorname{diam}(D_j)
+<
+\frac{q}{4m}
+\]
+by \((17)\). Therefore the resulting curve in \(U\subset \Lambda_f\) joining two zeros of \(f\) has total
+length strictly less than
+\[
+\left(2-\frac{3q}{4m}\right)+\frac{q}{4m}
+=
+2-\frac{q}{2m}
+<2.
+\]
+This proves the theorem.
+\end{proof}
+
+\begin{thebibliography}{9}
+\bibitem{Crane2004}
+E.~Crane, \emph{The area of polynomial images and preimages}, Bull. Lond. Math. Soc. \textbf{36} (2004),
+786--792.
+
+\bibitem{EHP58}
+P.~Erd\H{o}s, F.~Herzog, and G.~Piranian, \emph{Metric properties of polynomials}, J. Analyse Math. \textbf{6}
+(1958), 123--148.
+
+\bibitem{GR2024}
+S.~Ghosh and K.~Ramachandran, \emph{Number of components of polynomial lemniscates: a problem
+of Erd\H{o}s, Herzog, and Piranian}, J. Math. Anal. Appl. \textbf{540} (2024), no.~1, 128571.
+
+\bibitem{Milnor1963}
+J.~Milnor, \emph{Morse Theory}, Annals of Mathematics Studies, No.~51, Princeton University Press,
+Princeton, NJ, 1963.
+\end{thebibliography}
+
+\end{document}
