@@ -1041,23 +1041,65 @@ V_{\ge 2\alpha}:=\{z\in V : u(z)\ge 2\alpha\}
 \]
 is connected.
 
-Let $z\in V$ with $u(z)<2\alpha$, and write $s_z:=u(z)\in(c,2\alpha)$. Set
+Let $z\in V$ with $u(z)<2\alpha$, and write
+\[
+s_z:=u(z)\in(c,2\alpha).
+\]
+Set
 \[
 M_z:=V\cap\{s_z\le u\le 2\alpha\}.
 \]
-Because $V$ is a connected component of the open set $\{u>c\}$, it is relatively closed there; since $s_z>c$, the set $M_z$ is closed in $\mathbb{C}$. It is also bounded because $\Lambda_f$ is bounded, hence compact. As $u$ has no critical points on $M_z$, the vector field
+Because $V$ is a connected component of the open set $\{u>c\}$, it is relatively closed
+in $\{u>c\}$; since $s_z>c$, the set $M_z$ is closed in $\mathbb C$. It is also bounded
+because $\Lambda_f$ is bounded, hence compact.
+
+Moreover, $u$ has no critical points on $M_z$, so the vector field
 \[
-X=\frac{\nabla u}{|\nabla u|^2}
+X:=\frac{\nabla u}{|\nabla u|^2}
 \]
-is smooth on a neighborhood of $M_z$. Along the maximal trajectory $\phi_\tau(z)$ through $z$ one has
+is smooth on a neighborhood of $M_z$. Let $\phi_\tau(z)$ be the maximal trajectory of
+$X$ through $z$. Along this trajectory one has
 \[
-u(\phi_\tau(z))=s_z+\tau,
+\frac{d}{d\tau}u(\phi_\tau(z))
+= \nabla u(\phi_\tau(z)) \cdot X(\phi_\tau(z))
+= 1,
 \]
-so the trajectory stays in $M_z$ for $0\le \tau\le 2\alpha-s_z$ and therefore exists on that whole interval. Thus every point of $V$ flows inside $V$ to a point of $V_{\ge 2\alpha}$. Defining the homotopy by
-flowing each point upward until it reaches level $2\alpha$ (and then keeping it fixed), one obtains,
-by the same continuity argument used in Lemma~10(a) on each compact subslab
-$V\cap\{s\le u\le 2\alpha\}$ with $c<s<2\alpha$, a strong deformation retraction of $V$ onto
-$V_{\ge 2\alpha}$. Since $V$ is connected, $V_{\ge 2\alpha}$ is connected.
+hence, as long as the trajectory is defined,
+\[
+u(\phi_\tau(z)) = s_z + \tau.
+\]
+Therefore, for every $0 \le \tau \le 2\alpha - s_z$, the point $\phi_\tau(z)$ belongs to
+$M_z$. Since $X$ is smooth on a neighborhood of the compact set $M_z$, the standard
+continuation theorem for ODEs implies that the trajectory extends throughout the whole
+interval $[0,2\alpha-s_z]$. In particular,
+\[
+\phi_{2\alpha-s_z}(z) \in V_{\ge 2\alpha}.
+\]
+
+Define
+\[
+H : [0,1]\times V \to V,
+\qquad
+H(\theta,z) :=
+\begin{cases}
+\phi_{\theta(2\alpha-u(z))}(z), & u(z)<2\alpha,\\[1mm]
+z, & u(z)\ge 2\alpha.
+\end{cases}
+\]
+We claim that $H$ is continuous. Fix $s$ with $c<s<2\alpha$. On the compact slab
+\[
+V \cap \{s \le u \le 2\alpha\},
+\]
+the vector field $X$ is smooth on a neighborhood, so its flow depends continuously on
+initial data and time. Hence $H$ is continuous on
+\[
+[0,1]\times \bigl(V\cap\{u\ge s\}\bigr).
+\]
+Since $s\in(c,2\alpha)$ is arbitrary, these local continuity statements patch together to
+show that $H$ is continuous on $[0,1]\times V$.
+
+Thus $H$ is a strong deformation retraction of $V$ onto $V_{\ge 2\alpha}$. Since $V$ is
+connected, $V_{\ge 2\alpha}$ is connected.
 
 Now let $T>2\alpha$ be a sufficiently large regular value such that $\{z\in V:u(z)>T\}$ has exactly $m$ connected components, one near each zero of $f$ in $V$. Since there are no critical values of $u$ in $[2\alpha,T]$, Lemma~10(a) gives a strong deformation retraction of $V_{\ge 2\alpha}$ onto
 \[
@@ -1174,6 +1216,46 @@ contains no critical points of $u$. Hence the flow of
 X=\frac{\nabla u}{|\nabla u|^2}
 \]
 provides the regular continuation of the component determined by $S$ from level $t_1$ up to level $t_2$; in particular, no splitting or merging of this component can occur between these two regular levels. Thus the component of $\{u>t_2\}$ obtained from $C_{t_1}(S)$ by passing through the slab is exactly $C_{t_2}(S)$. Since every zero of $f$ corresponds to the singular level $u=+\infty$, no zero lies in the finite slab $\{t_1\le u\le t_2\}$, and therefore the set of zeros contained in the continued component is the same at levels $t_1$ and $t_2$. Hence the number of zeros in $C_t(S)$ is constant on $(a_S,b_S)$.
+
+\begin{lemma}\label{lem:strip-component-contains-zero}
+For every strip $S$ and every $t \in (a_S,b_S)$, the component $C_t(S)$ contains at
+least one zero of $f$. In particular,
+\[
+k_S \ge 1.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $t \in (a_S,b_S)$ and set
+\[
+W := C_t(S).
+\]
+Since $t$ is a regular value and $W$ is a connected component of
+\[
+\{z \in V : u(z) > t\},
+\]
+we have
+\[
+\partial W \subset \{u=t\}.
+\]
+In particular, no zero of $f$ lies on $\partial W$, because $u=+\infty$ at every zero.
+
+Assume for contradiction that $W$ contains no zero of $f$. Then $f \neq 0$ on
+$\overline W$, so
+\[
+u=-\log|f|
+\]
+is harmonic on an open neighborhood of $\overline W$. Since $u=t$ on $\partial W$,
+the maximum principle yields
+\[
+u \le t \quad \text{throughout } W,
+\]
+contradicting
+\[
+W \subset \{u>t\}.
+\]
+Therefore $W$ contains a zero of $f$, as claimed.
+\end{proof}
 
 Set
 \[
@@ -1310,7 +1392,7 @@ Since $\mu_{s_0}$ is a probability measure, there exists $x\in \Gamma_{s_0}$ suc
 \]
 Fix such an $x$ and denote the corresponding trajectory segment by $\gamma_S$.
 
-\indent Summing over all strips and using $k_S\ge 1$, we obtain
+\indent Summing over all strips and using Lemma~\ref{lem:strip-component-contains-zero}, we obtain
 \[
 \sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt.
 \]
@@ -1389,30 +1471,60 @@ $C_{r,1}^{+}, C_{r,2}^{+}$ are the lower cross-sections of $S_{r,1}^{+}, S_{r,2}
 
 \smallskip
 \noindent\emph{Proof of claim.}
-Fix $r$. Choose Morse coordinates $(x,y)$ on a neighborhood $U_r$ of $p_r$ such that
-\[u=\mu_r+x^2-y^2,
-\]
-and shrink $N_r\Subset U_r$ so that the three cross-sections
+Fix $r$. Choose Morse coordinates $(x,y)$ on a neighborhood $U_r$ of
+$p_r$ such that
 \[
-C_r^- \subset \{u=\mu_r-\delta_r\},\qquad
-C_{r,1}^+,\,C_{r,2}^+\subset \{u=\mu_r+\delta_r\}
+u = \mu_r + x^2 - y^2,
+\]
+and shrink $N_r \Subset U_r$ so that the three cross-sections
+\[
+C_r^- \subset \{u=\mu_r-\delta_r\},
+\qquad
+C_{r,1}^+,\, C_{r,2}^+ \subset \{u=\mu_r+\delta_r\}
 \]
 appear exactly as in the standard saddle picture, with the remainder of $\partial N_r$
 consisting of flow segments of $X$.
 
-In these coordinates, each of the three cross-sections carries a one-sided collar in
-$U_r\setminus N_r$ contained in $\Omega$: the collar adjacent to $C_r^-$ lies on the
-lower side of the saddle, while the collars adjacent to $C_{r,1}^+$ and $C_{r,2}^+$ lie on
-the two upper sides. Each such collar is connected. Therefore each cross-section is
-contained in the boundary of exactly one connected component of $\Omega$; denote these
-components by
+By shrinking $N_r$ further if necessary, we may also arrange that there exist connected
+open collar neighborhoods
 \[
-S_r^-,\qquad S_{r,1}^+,\qquad S_{r,2}^+.
+\mathcal C_r^-,
+\quad
+\mathcal C_{r,1}^+,
+\quad
+\mathcal C_{r,2}^+
+\subset (U_r \setminus N_r)\cap \Omega
 \]
+such that
+\[
+C_r^- \subset \overline{\mathcal C_r^-},
+\qquad
+C_{r,i}^+ \subset \overline{\mathcal C_{r,i}^+} \quad (i=1,2),
+\]
+and every point of $(U_r\setminus N_r)\cap\Omega$ sufficiently close to $C_r^-$
+(respectively to $C_{r,i}^+$) lies in $\mathcal C_r^-$ (respectively in $\mathcal C_{r,i}^+$).
 
-The same local coordinate picture shows that $C_r^-$ is the upper cross-section of
-$S_r^-$, while $C_{r,1}^+$ and $C_{r,2}^+$ are the lower cross-sections of
-$S_{r,1}^+$ and $S_{r,2}^+$, respectively. This proves the claim.
+We first prove uniqueness for $C_r^-$. Suppose that two distinct connected components
+$S_1,S_2$ of $\Omega$ both had $C_r^-$ in their boundary. Choose $q\in C_r^-$. By the
+collar property, there exists $\rho>0$ such that
+\[
+B(q,\rho)\cap\Omega \subset \mathcal C_r^-.
+\]
+Since $q\in \partial S_1 \cap \partial S_2$, the ball $B(q,\rho)$ meets both $S_1$ and
+$S_2$. But $\mathcal C_r^-$ is connected and contained in $\Omega$, so both $S_1$ and
+$S_2$ must contain the connected set $\mathcal C_r^-$. Hence $S_1=S_2$, a contradiction.
+Therefore $C_r^-$ lies on the boundary of exactly one connected component of $\Omega$;
+denote it by $S_r^-$.
+
+The same argument, applied to the collars $\mathcal C_{r,1}^+$ and $\mathcal C_{r,2}^+$,
+shows that each of $C_{r,1}^+$ and $C_{r,2}^+$ lies on the boundary of exactly one
+connected component of $\Omega$, denoted $S_{r,1}^+$ and $S_{r,2}^+$, respectively.
+
+Finally, the local saddle model shows that $\mathcal C_r^-$ lies on the side from which
+the flow enters the saddle, whereas $\mathcal C_{r,1}^+$ and $\mathcal C_{r,2}^+$ lie on
+the two sides from which the flow exits. Hence $C_r^-$ is the upper cross-section of
+$S_r^-$, and $C_{r,1}^+, C_{r,2}^+$ are the lower cross-sections of $S_{r,1}^+, S_{r,2}^+$,
+respectively. This proves the claim.
 \hfill$\triangle$
 \smallskip
 \noindent\emph{Top strips.}
@@ -1430,31 +1542,67 @@ Y_j:=W_j\cap\{u\ge T\}.
 \]
 By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_j\}$. Hence Lemma~9 implies that $W_j$ is a Jordan domain.
 
-We claim that $Y_j$ is connected. Define
+We claim that $Y_j$ is connected.
+
+For $z\in W_j$ with $u(z)<T$, set
 \[
-R_j(z):=
-\begin{cases}
-z, & u(z)\ge T,\\
-\varphi_{T-u(z)}(z), & c_j<u(z)<T,
-\end{cases}
+s_z:=u(z)\in(c_j,T)
 \]
 and
 \[
+M_{j,z}:=W_j\cap\{s_z\le u\le T\}.
+\]
+Because $s_z>c_j$ and $W_j$ is relatively closed in the open set $\{u>c_j\}$, the set
+$M_{j,z}$ is closed in $\mathbb C$. It is also bounded because $\Lambda_f$ is bounded,
+hence compact.
+
+There are no critical points of $u$ on $M_{j,z}$, so the vector field
+\[
+X:=\frac{\nabla u}{|\nabla u|^2}
+\]
+is smooth on a neighborhood of $M_{j,z}$.
+
+Let $\varphi_\tau(z)$ be the maximal trajectory of $X$ through $z$. As long as the
+trajectory is defined,
+\[
+\frac{d}{d\tau}u(\varphi_\tau(z))=1,
+\]
+hence
+\[
+u(\varphi_\tau(z))=u(z)+\tau=s_z+\tau.
+\]
+Therefore, for every
+\[
+0\le \tau\le T-s_z,
+\]
+the point $\varphi_\tau(z)$ lies in $M_{j,z}$. Since $X$ is smooth on a neighborhood of the
+compact set $M_{j,z}$, the continuation theorem for ODEs implies that the trajectory extends
+throughout the whole interval $[0,T-s_z]$.
+
+Define
+\[
+H_j:[0,1]\times W_j\to W_j,
+\qquad
 H_j(\theta,z):=
 \begin{cases}
-z, & u(z)\ge T,\\
-\varphi_{\theta(T-u(z))}(z), & c_j<u(z)<T.
+\varphi_{\theta(T-u(z))}(z),& u(z)<T,\\[1mm]
+z,& u(z)\ge T.
 \end{cases}
 \]
-If $z_0\in W_j\setminus Y_j$, then the trajectory segment
+To prove continuity, fix $s$ with $c_j<s<T$. On the compact slab
 \[
-\{\varphi_\tau(z_0):0\le \tau\le T-u(z_0)\}
+W_j\cap\{s\le u\le T\},
 \]
-stays in the compact set
+the vector field $X$ is smooth on a neighborhood, so its flow depends continuously on
+initial data and time. Hence $H_j$ is continuous on
 \[
-W_j\cap\{u(z_0)\le u\le T\},
+[0,1]\times \bigl(W_j\cap\{u\ge s\}\bigr).
 \]
-on which $X$ is smooth because there are no critical points on $W_j\cap\{c_j<u\le T\}$. Standard continuous dependence for smooth ODEs therefore shows that $H_j$ is continuous on $[0,1]\times W_j$. Thus $H_j$ is a strong deformation retraction of $W_j$ onto $Y_j$, and $Y_j$ is connected.
+Since $s\in(c_j,T)$ is arbitrary, these local continuity statements patch together to show
+that $H_j$ is continuous on $[0,1]\times W_j$.
+
+Thus $H_j$ is a strong deformation retraction of $W_j$ onto $Y_j$, and therefore $Y_j$
+is connected.
 
 Since $T$ is a regular value, the connected components of $V\cap\{u\ge T\}$ are precisely $K_1,\dots,K_m$. The set $Y_j\subset V\cap\{u\ge T\}$ is connected and contains $K_j$, hence $Y_j\subset K_j$. The reverse inclusion is immediate, so $Y_j=K_j$. In particular $Z_j$ is a Jordan domain and $K_j=\overline{Z_j}$. Since
 \[
@@ -2151,7 +2299,38 @@ In particular, no critical point of $u_g$ in $K$ has critical value in $[\alpha,
 \beta_*:=\frac{\eta_*}{2}.
 \]
 
-\noindent\textit{Step 5: make the moduli distinct.} Let $a_1,\dots,a_N$ be the pairwise distinct complex critical
+\noindent\textit{Step 5: make the moduli distinct.} Before comparing moduli, we record that no critical point of $g$ in $K$ is a zero of $g$.
+Indeed, if $c\in K$ satisfies
+\[
+g'(c)=0,
+\]
+then
+\[
+f'(c)+\lambda = 0,
+\]
+so $c$ is a critical point of
+\[
+H_\lambda(z) := f(z)+\lambda z.
+\]
+By Step~4, every critical point of $H_\lambda$ in $K$ lies in
+\[
+E := \bigcup_{\zeta\in Z_K} E_\zeta \subset K \setminus \bigcup_{j=1}^m D_j.
+\]
+By Step~1, $g$ has no zeros on
+\[
+K \setminus \bigcup_{j=1}^m D_j.
+\]
+Hence
+\[
+g(c)\neq 0
+\]
+for every critical point $c$ of $g$ in $K$. Therefore each such $c$ is a genuine smooth
+critical point of $u_g$, and its critical value is
+\[
+u_g(c) = -\log|g(c)| = -\log|H_\lambda(c)+\beta|.
+\]
+
+Let $a_1,\dots,a_N$ be the pairwise distinct complex critical
 values of $H_\lambda$ arising from critical points in $K$. After adding $\beta$, they become $a_1+\beta,\dots,a_N+\beta$.
 Their moduli fail to be distinct only if, for some $i\neq j$,
 \[
@@ -2173,8 +2352,13 @@ with
 \[
 \beta_0:=\min\{\beta_1,\beta_*\}>0,
 \]
-we may choose $\beta$ with $0<|\beta|<\beta_0$ outside that finite union of lines. Then the critical values of $u_g$
-arising from critical points in $K$ and larger than $2\alpha$ are pairwise distinct.
+we may choose $\beta$ with $0<|\beta|<\beta_0$ outside that finite union of lines. Then the numbers
+\[
+|a_1+\beta|,\dots,|a_N+\beta|
+\]
+are pairwise distinct. Since the map $t\mapsto -\log t$ is strictly decreasing on
+$(0,\infty)$, it follows that the critical values of $u_g$ arising from critical points in
+$K$ and larger than $2\alpha$ are pairwise distinct.
 
 \indent This proves the lemma. \end{proof}
 
@@ -2267,8 +2451,21 @@ Therefore
 \[
 \overline{W}\subset K\setminus \bigcup_{j=1}^m D_j.
 \]
-By assumption, $g$ has no zeros on $K\setminus \bigcup_j D_j$, so $-\log|g|$ is harmonic
-on an open neighborhood of $K\setminus \bigcup_j D_j$, hence on a neighborhood of $\overline W$.
+By assumption, $g$ has no zeros on
+\[
+K \setminus \bigcup_{j=1}^m D_j.
+\]
+Since $W$ is disjoint from each $D_j$ and $W \Subset \operatorname{int}(K)$, the compact
+set $\overline W$ is contained in the open zero-free set
+\[
+\operatorname{int}(K)\setminus \bigcup_{j=1}^m D_j.
+\]
+Hence there exists an open neighborhood $N_W$ of $\overline W$ on which $g\neq 0$.
+Therefore
+\[
+-\log|g|
+\]
+is harmonic on $N_W$, and in particular on a neighborhood of $\overline W$.
 
 We claim that
 \[
@@ -2398,32 +2595,78 @@ Hence, for all sufficiently small perturbations,
 \]
 so $u_g$ has no critical points on $B$.
 
-We next identify the relevant collar region for $u_g$. By Lemma~\ref{lem:component-stability},
-$V_g\subset K$ and $V_g$ is the unique connected component of $\{u_g>\alpha\}\cap K$.
-Since $u_g\to u$ uniformly on $C$, for all sufficiently small perturbations we have
+We next identify the relevant collar region for $u_g$.
+
+\medskip
+\noindent
+\emph{Claim.}
 \[
-\|u_g-u\|_{L^\infty(C)}<\alpha/2.
-\]
-Therefore, if $z\in K$ satisfies $\alpha<u_g(z)<2\alpha$, then $z\notin \bigcup_j D_j$, so
-$z\in C$, and hence
-\[
-\alpha/2<u(z)<5\alpha/2.
-\]
-Therefore $z\in B$. Also, any such $z$ belongs to $\{u_g>\alpha\}\cap K$, hence to the unique
-component $V_g$. Thus
-\[
-\{z\in V_g:\alpha<u_g(z)<2\alpha\}
+\{z\in V_g : \alpha<u_g(z)<2\alpha\}
 =
-\{z\in K:\alpha<u_g(z)<2\alpha\}
+\{z\in K : \alpha<u_g(z)<2\alpha\}
 \subset B.
 \]
 Likewise,
 \[
-\{z\in U:\alpha<u(z)<2\alpha\}
+\{z\in U : \alpha<u(z)<2\alpha\}
 =
-\{z\in K:\alpha<u(z)<2\alpha\}
+\{z\in K : \alpha<u(z)<2\alpha\}
 \subset B.
 \]
+
+\smallskip
+\noindent
+\emph{Proof of claim.}
+Let $z\in K$ satisfy
+\[
+\alpha<u_g(z)<2\alpha.
+\]
+Since $u_g>2\alpha$ on each disk $D_j$, the point $z$ cannot belong to
+\[
+\bigcup_{j=1}^m D_j.
+\]
+Hence $z\in C$. Because $u_g\to u$ uniformly on $C$, for all sufficiently small
+perturbations we have
+\[
+\|u_g-u\|_{L^\infty(C)}<\frac{\alpha}{2}.
+\]
+Therefore
+\[
+\frac{\alpha}{2}<u(z)<\frac{5\alpha}{2},
+\]
+so $z\in B$.
+
+Moreover, $u_g(z)>\alpha$, and Lemma~\ref{lem:component-stability} says that $V_g$ is the
+unique connected component of
+\[
+\{u_g>\alpha\}\cap K.
+\]
+Thus $z\in V_g$. We have proved that
+\[
+\{z\in K : \alpha<u_g(z)<2\alpha\}\subset V_g\cap B.
+\]
+The reverse inclusion is immediate, so
+\[
+\{z\in V_g : \alpha<u_g(z)<2\alpha\}
+=
+\{z\in K : \alpha<u_g(z)<2\alpha\}
+\subset B.
+\]
+
+For the unperturbed function $u$, recall that
+\[
+K=\{u\ge \alpha/2\}.
+\]
+Hence any point $z\in U$ with $\alpha<u(z)<2\alpha$ automatically lies in $K$, and
+therefore in $B$. Thus
+\[
+\{z\in U : \alpha<u(z)<2\alpha\}
+=
+\{z\in K : \alpha<u(z)<2\alpha\}
+\subset B.
+\]
+This proves the claim.
+\medskip
 
 Applying the coarea formula on the band $B$, we obtain
 \[

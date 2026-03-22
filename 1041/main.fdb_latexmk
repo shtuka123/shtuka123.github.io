@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774199693.15731 "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" "main.pdf" "main" 1774199693.71367 0
+["pdflatex"] 1774206273.01747 "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" "main.pdf" "main" 1774206273.58979 0
   "C:/Users/anixl/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773980082 194380 8c431b665429ad2d315d3cdf898eea5e ""
   "C:/Users/anixl/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1772483006 13333486 52bef4cd680c5f87e3c6c44beb8fea84 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -106,9 +106,9 @@
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/microtype/mt-msa.cfg" 1752015111 5929 11976688d7d8ed4d0d05efd1b3d5a7e9 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/microtype/mt-msb.cfg" 1752015111 5594 d52d5015abe666fae752ed7674c2dd73 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/tools/calc.sty" 1761901070 10374 2ffd4f27c7f90b8a300608069537743c ""
-  "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" 1774199691 100291 821aaaf1b3980260ddee02cae62d7e1b ""
-  "main.aux" 1774199693 1877 d65dad2ba24d56611aa6077cfe2c640e "pdflatex"
-  "main.tex" 1774199691 100291 821aaaf1b3980260ddee02cae62d7e1b ""
+  "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" 1774206271 105918 7ec2c66b8aaa49b8e0a76fc88a4dd62a ""
+  "main.aux" 1774206273 1948 c99d69c3c162043e6c8840496abdf4eb "pdflatex"
+  "main.tex" 1774206271 105918 7ec2c66b8aaa49b8e0a76fc88a4dd62a ""
   (generated)
   "main.aux"
   "main.log"
