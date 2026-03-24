@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1774334063.23117 "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" "main.pdf" "main" 1774334063.93955 0
+["pdflatex"] 1774376855.89892 "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" "main.pdf" "main" 1774376856.5348 0
   "C:/Users/anixl/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773980082 194380 8c431b665429ad2d315d3cdf898eea5e ""
   "C:/Users/anixl/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1772483006 13333486 52bef4cd680c5f87e3c6c44beb8fea84 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -37,9 +37,6 @@
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmsy6.tfm" 1256929440 1300 b0605d44c16c22d99dc001808e4f24ea ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmsy7.tfm" 1256929440 1304 32f22a15acc296b2a4e15698403dcb88 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmsy8.tfm" 1256929440 1304 cdc9a17df9ef0d2dc320eff37bbab1c4 ""
-  "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmbx12.tfm" 1256929440 11880 ea60d06924270684e6f852f3141c992b ""
-  "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmbx6.tfm" 1256929440 11852 eda7061aa4cc8552ba736dae866e4460 ""
-  "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmbx8.tfm" 1256929440 11868 731e03b24d399279cf9609d002110394 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmr10.tfm" 1256929440 11868 4f81e9b6033c032bdaf9884f4d7ef412 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmr12.tfm" 1256929440 11888 6841b91e46b65cf41a49b160e6e74130 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/rm-lmr5.tfm" 1256929440 11804 aefb10c002e6492c25236524a447f969 ""
@@ -111,9 +108,9 @@
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/microtype/mt-msa.cfg" 1752015111 5929 11976688d7d8ed4d0d05efd1b3d5a7e9 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/microtype/mt-msb.cfg" 1752015111 5594 d52d5015abe666fae752ed7674c2dd73 ""
   "C:/Users/anixl/AppData/Local/Programs/MiKTeX/tex/latex/tools/calc.sty" 1761901070 10374 2ffd4f27c7f90b8a300608069537743c ""
-  "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" 1774334062 114223 815c11f77c9ee749a3735311eeeaeff3 ""
-  "main.aux" 1774334063 2425 ff9a1f40cad376e923bfab036e973b1e "pdflatex"
-  "main.tex" 1774334062 114223 815c11f77c9ee749a3735311eeeaeff3 ""
+  "c:/Users/anixl/projects/shtuka123.github.io/1041/main.tex" 1774376854 119724 baa25815e64e08ceb7f57921f3cb8b83 ""
+  "main.aux" 1774376856 2425 64b0da013e643b0edff4d7f485d5a213 "pdflatex"
+  "main.tex" 1774376854 119724 baa25815e64e08ceb7f57921f3cb8b83 ""
   (generated)
   "main.aux"
   "main.log"

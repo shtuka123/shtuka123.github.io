@@ -1211,12 +1211,12 @@ we find that $V_{\ge \tau_1}$ is connected. Lemma~\ref{lem:regular-slab}(b) appl
 $\{z\in V:u>\tau_0\}$ is connected.
 
 \indent For each $r=1,\dots,s$, let $p_r$ be the unique critical point of $u$ with critical value $\mu_r$. Since $p_r$ is
-nondegenerate and $u$ is harmonic, the Morse normal form gives local coordinates $(x,y)$ centered at
-$p_r$ in which
+nondegenerate and $u$ is harmonic, the Morse normal form gives an open neighborhood $U_r$ of $p_r$ and local coordinates $(x,y)$ on $U_r$, centered at
+$p_r$, in which
 \[
  u=\mu_r+x^2-y^2;
 \]
-see, for example, \cite{Milnor1963}. Choose pairwise disjoint closed neighborhoods $N_r$ of $p_r$ so small that:
+see, for example, \cite{Milnor1963}. Shrinking the $U_r$ if necessary, we may assume that the neighborhoods $U_r$ are pairwise disjoint. Choose pairwise disjoint closed neighborhoods $N_r\Subset U_r$ of $p_r$ so small that:
 \begin{enumerate}
 \item[(i)] $N_r\subset u^{-1}(I_r)$;
 \item[(ii)] $\partial N_r$ is the union of one connected incoming cross-section
@@ -1269,11 +1269,88 @@ and every point of $(U_r\setminus N_r)\cap\{\tau_0<u<T\}$ sufficiently close to 
 (respectively to $C_{r,i}^+$) on the exterior side of $N_r$ lies in $\mathcal C_r^-$
 (respectively in $\mathcal C_{r,i}^+$).
 \end{enumerate}
-Such neighborhoods exist. Fix $r$ and work in Morse coordinates $(x,y)$ centered at $p_r$ with
+We now justify the choice of the neighborhoods $N_r$.
+
+Fix $r$ and work in Morse coordinates $(x,y)$ centered at $p_r$ on a chart $U_r$ in which
 \[
 u=\mu_r+x^2-y^2.
 \]
-Take a sufficiently small standard saddle neighborhood whose boundary consists of one arc on the level $\{u=\mu_r-\delta_r\}$, two arcs on the level $\{u=\mu_r+\delta_r\}$, and four short flow segments, arranged in the usual local saddle picture. For each of the three level arcs, let $q_{r,-},q_{r,1},q_{r,2}$ denote the endpoints of the local separatrix segments meeting those arcs. If
+After relabeling the local sectors, and after possibly replacing $y$ by $-y$, we may assume that,
+for $U_r$ sufficiently small, the part of the component $V$ adjacent to $p_r$ consists of one
+incoming sector
+\[
+S_r^-:=U_r\cap\{y>|x|\},
+\]
+and two outgoing sectors
+\[
+S_{r,1}^+:=U_r\cap\{x>|y|\},
+\qquad
+S_{r,2}^+:=U_r\cap\{-x>|y|\},
+\]
+while the remaining sector
+\[
+U_r\cap\{y<-|x|\}
+\]
+is disjoint from $V$. This is exactly the local saddle picture for the connected component $V$:
+crossing the level $\mu_r$ upward turns one branch into two branches.
+
+Choose $0<\kappa_r\ll \delta_r$ and shrink $U_r$ further so that the following three level arcs are
+compact, pairwise disjoint except for their endpoints on the bounding flow lines, and contained in $V$:
+\[
+C_r^-:=\{x^2-y^2=-\delta_r\}\cap \overline{S_r^-}\cap\{|xy|\le \kappa_r\},
+\]
+\[
+C_{r,1}^+:=\{x^2-y^2=\delta_r\}\cap \overline{S_{r,1}^+}\cap\{|xy|\le \kappa_r\},
+\qquad
+C_{r,2}^+:=\{x^2-y^2=\delta_r\}\cap \overline{S_{r,2}^+}\cap\{|xy|\le \kappa_r\}.
+\]
+
+Recall that
+\[
+X=\frac{\nabla u}{|\nabla u|^2}.
+\]
+In these coordinates the flow lines of $X$ are the same as the gradient trajectories of $u$, hence
+they are the curves $xy=\mathrm{const}$, because
+\[
+X(xy)=\nabla(xy)\cdot \frac{\nabla u}{|\nabla u|^2}=0.
+\]
+Let $N_r$ be the closure of the bounded region of $V\cap U_r$ enclosed by the three arcs
+$C_r^-, C_{r,1}^+, C_{r,2}^+$ together with the finitely many short flow segments through their endpoints.
+
+Then $N_r\Subset U_r$, and after shrinking $U_r$ once more we may ensure that
+\[
+N_r\subset u^{-1}(I_r),
+\]
+which gives property \emph{(i)}. By construction, $\partial N_r$ is the union of one connected arc
+$C_r^-\subset\{u=\mu_r-\delta_r\}$, two connected arcs
+$C_{r,1}^+, C_{r,2}^+\subset\{u=\mu_r+\delta_r\}$, and finitely many flow segments of $X$,
+which gives property \emph{(ii)}.
+
+Property \emph{(iii)} is immediate from the model $u=\mu_r+x^2-y^2$: inside $N_r$, for
+$0<\varepsilon\le \delta_r$, the set
+\[
+N_r\cap\{u>\mu_r-\varepsilon\}
+\]
+is connected, whereas
+\[
+N_r\cap\{u>\mu_r+\varepsilon\}
+\]
+has exactly two connected components, namely the pieces in the two outgoing sectors
+$S_{r,1}^+$ and $S_{r,2}^+$. Thus crossing the level $\mu_r$ upward changes one component into two.
+
+Property \emph{(iv)} holds because $I_r=[\mu_r-\delta_r,\mu_r+\delta_r]$ contains no critical value
+other than $\mu_r$, and $U_r$ was chosen to contain no critical point other than $p_r$.
+
+For property \emph{(v)}, let
+\[
+q_{r,-}\in C_r^-,
+\qquad
+q_{r,1}\in C_{r,1}^+,
+\qquad
+q_{r,2}\in C_{r,2}^+
+\]
+be the three points where the local separatrices through $p_r$ meet the corresponding cross-sections.
+Given arbitrary points
 \[
 x_{r,-}\in C_r^-,
 \qquad
@@ -1281,7 +1358,39 @@ x_{r,1}\in C_{r,1}^+,
 \qquad
 x_{r,2}\in C_{r,2}^+,
 \]
-then each $x_{r,*}$ can be joined inside its cross-section to the corresponding $q_{r,*}$ by a boundary subarc, and the union of these three subarcs with the three separatrix segments from $q_{r,-},q_{r,1},q_{r,2}$ to $p_r$ is an embedded $Y$-shaped tree in $N_r$ with branch point $p_r$ and terminal vertices $x_{r,-},x_{r,1},x_{r,2}$. As the neighborhood is shrunk, both the cross-sections and the separatrix segments shrink to $p_r$, so the total length of this tree tends to $0$ uniformly in the choices of $x_{r,-},x_{r,1},x_{r,2}$; this gives property \emph{(v)} for some $\eta_r>0$. Likewise, the exterior saddle sectors provide the one-sided connected collar neighborhoods required in \emph{(vi)}. Since there are only finitely many critical points, we may choose the neighborhoods $N_r$ small enough that, in addition,
+join each $x_{r,*}$ to $q_{r,*}$ by the shorter boundary subarc of its cross-section, and then join
+each $q_{r,*}$ to $p_r$ by the corresponding separatrix segment. The resulting union is an embedded
+$Y$-shaped tree in $N_r$ with branch point $p_r$ and terminal vertices
+$x_{r,-},x_{r,1},x_{r,2}$. Because the whole construction shrinks to $p_r$ as
+$\delta_r,\kappa_r\to 0$, its total length tends to $0$ uniformly in the choices of the three terminal
+points. Hence, after shrinking $N_r$ if necessary, there exists $\eta_r>0$ such that
+\[
+\operatorname{len}\bigl(T_r(x_{r,-},x_{r,1},x_{r,2})\bigr)\le \eta_r
+\]
+for every such choice. This proves \emph{(v)}.
+
+For property \emph{(vi)}, the three connected components of
+\[
+(V\cap U_r)\setminus N_r
+\]
+adjacent to the cross-sections $C_r^-, C_{r,1}^+, C_{r,2}^+$ are one-sided open sectors.
+Intersecting them with
+\[
+\{\tau_0<u<T\}
+\]
+gives connected open collar neighborhoods
+\[
+\mathcal C_r^-,
+\qquad
+\mathcal C_{r,1}^+,
+\qquad
+\mathcal C_{r,2}^+,
+\]
+and every point of $(U_r\setminus N_r)\cap\{\tau_0<u<T\}$ sufficiently close to the corresponding
+cross-section on the exterior side lies in the corresponding collar. This is exactly property \emph{(vi)}.
+
+Since there are only finitely many critical points, we may choose the neighborhoods $N_r$ pairwise
+disjoint and so small that, in addition,
 \[
 \sum_{r=1}^s \eta_r<\frac{\varepsilon}{2}.
 \]
@@ -1481,7 +1590,11 @@ Therefore the inner integral equals
 =
 \frac{P_S(t)}{2\pi k_S},
 \]
-where $P_S(t):=\mathcal H^1(\Gamma_t)$. Thus
+where $P_S(t):=\mathcal H^1(\Gamma_t)$. For convenience, extend $P_S$ to all $t\in[\tau_0,T]$ by setting
+\[
+P_S(t):=0 \qquad\text{for } t\notin (a_S,b_S).
+\]
+Thus
 \[
 \int_{\Gamma_{s_0}} \operatorname{len}(\gamma_x)\,d\mu_{s_0}(x)
 =
@@ -1495,7 +1608,7 @@ Fix such an $x$ and denote the corresponding trajectory segment by $\gamma_S$.
 
 \indent Summing over all strips and using Lemma~\ref{lem:strip-component-contains-zero}, we obtain
 \[
-\sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt.
+\sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\sum_S\int_{\tau_0}^{T} P_S(t)\,dt.
 \]
 Because $\Omega$ is an open subset of the plane, it has at most countably many connected components, so the family of strips is at most countable. Since every summand is nonnegative, Tonelli's theorem applies. Moreover, because distinct strips are disjoint, for every regular $t\in(\tau_0,T)$ we have
 \[
@@ -1504,8 +1617,7 @@ Because $\Omega$ is an open subset of the plane, it has at most countably many c
 Therefore
 \begin{align}
 \sum_S \operatorname{len}(\gamma_S)
-&\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt \\
-&= \frac{1}{2\pi}\int_{\tau_0}^{T}\sum_S \mathbf 1_{(a_S,b_S)}(t)P_S(t)\,dt \\
+&\le \frac{1}{2\pi}\sum_S\int_{\tau_0}^{T} P_S(t)\,dt \\
 &= \frac{1}{2\pi}\int_{\tau_0}^{T}\sum_S P_S(t)\,dt \\
 &\le \frac{1}{2\pi}\int_{\tau_0}^{T} P_V(t)\,dt \\
 &\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt.
@@ -1513,6 +1625,16 @@ Therefore
 \end{align}
 
 We now prove the uniqueness statements needed for the combinatorics.
+
+\smallskip
+\noindent\emph{Closure across a regular level.}
+If $a$ is a regular value of $u$ and $E\subset\mathbb C$ is open, then
+\[
+\overline{E\cap\{u>a\}}\,\cap E = E\cap\{u\ge a\}.
+\]
+Indeed, the inclusion $\subset$ follows immediately from continuity of $u$. Conversely, if
+$z\in E$ and $u(z)=a$, then $\nabla u(z)\neq 0$, so by the implicit function theorem there are points of
+$\{u>a\}$ arbitrarily close to $z$; since $E$ is open, these points may be chosen in $E$.
 
 \smallskip
 \noindent\emph{Bottom strip.}
@@ -1556,9 +1678,23 @@ and that
 \[
 W_{\tau_0}\setminus \overline{W_1}
 \]
-is an annulus. Since $\partial W_1\subset \{u=\mu_1-\delta_1\}$, we have
+is an annulus. Since $\mu_1-\delta_1$ is a regular value, the closure-across-a-regular-level observation, applied with $E=W_{\tau_0}$ and $a=\mu_1-\delta_1$, gives
 \[
-A_0:=V\cap\{\tau_0<u<\mu_1-\delta_1\}=W_{\tau_0}\setminus \overline{W_1}.
+\overline{W_1}
+=
+\overline{W_{\tau_0}\cap\{u>\mu_1-\delta_1\}}
+=
+W_{\tau_0}\cap\{u\ge \mu_1-\delta_1\}.
+\]
+Hence
+\[
+W_{\tau_0}\setminus \overline{W_1}
+=
+W_{\tau_0}\cap\{u<\mu_1-\delta_1\}
+=
+V\cap\{\tau_0<u<\mu_1-\delta_1\}
+=
+A_0.
 \]
 Therefore $A_0$ is a connected annulus. Since there are no critical points on $A_0$, Lemma~\ref{lem:regular-slab}(c) implies that every connected component of $A_0$ is a regular strip. Because $A_0$ is connected, it is a single regular strip. Hence there is exactly one strip whose lower cross-section lies in $\{u=\tau_0\}$; denote it by $S_0$.
 
@@ -1620,31 +1756,31 @@ respectively. This proves the claim.
 \hfill$\triangle$
 \smallskip
 \noindent\emph{Top strips.}
-Fix $j\in\{1,\dots,m\}$ and set
+Set
 \[
-c_j:=\mu_s+\delta_s.
+c_*:=\mu_s+\delta_s.
 \]
-Let $W_j$ be the connected component of
+Fix $j\in\{1,\dots,m\}$. Let $W_j$ be the connected component of
 \[
-V\cap\{u>c_j\}
+V\cap\{u>c_*\}
 \]
 that contains $K_j$, and set
 \[
 Y_j:=W_j\cap\{u\ge T\}.
 \]
-By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_j\}$. Hence Lemma~\ref{lem:jordan-domain} implies that $W_j$ is a Jordan domain.
+By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_*\}$. Hence Lemma~\ref{lem:jordan-domain} implies that $W_j$ is a Jordan domain.
 
 We claim that $Y_j$ is connected.
 
 For $z\in W_j$ with $u(z)<T$, set
 \[
-s_z:=u(z)\in(c_j,T)
+s_z:=u(z)\in(c_*,T)
 \]
 and
 \[
 M_{j,z}:=W_j\cap\{s_z\le u\le T\}.
 \]
-Because $s_z>c_j$ and $W_j$ is relatively closed in the open set $\{u>c_j\}$, the set
+Because $s_z>c_*$ and $W_j$ is relatively closed in the open set $\{u>c_*\}$, the set
 $M_{j,z}$ is closed in $\mathbb C$. It is also bounded because $\Lambda_f$ is bounded,
 hence compact.
 
@@ -1681,7 +1817,7 @@ H_j(\theta,z):=
 z,& u(z)\ge T.
 \end{cases}
 \]
-To prove continuity, fix $s$ with $c_j<s<T$. On the compact slab
+To prove continuity, fix $s$ with $c_*<s<T$. On the compact slab
 \[
 W_j\cap\{s\le u\le T\},
 \]
@@ -1690,15 +1826,15 @@ initial data and time. Hence $H_j$ is continuous on
 \[
 [0,1]\times \bigl(W_j\cap\{u\ge s\}\bigr).
 \]
-Since $s\in(c_j,T)$ is arbitrary, these local continuity statements patch together to show
+Since $s\in(c_*,T)$ is arbitrary, these local continuity statements patch together to show
 that $H_j$ is continuous on $[0,1]\times W_j$.
 
 Thus $H_j$ is a strong deformation retraction of $W_j$ onto $Y_j$, and therefore $Y_j$
 is connected.
 
-Since $T$ is a regular value, the connected components of $V\cap\{u\ge T\}$ are precisely $K_1,\dots,K_m$. The set $Y_j\subset V\cap\{u\ge T\}$ is connected and contains $K_j$, hence $Y_j\subset K_j$. The reverse inclusion is immediate, so $Y_j=K_j$. In particular $Z_j$ is a Jordan domain and $K_j=\overline{Z_j}$. Since
+Since $T$ is a regular value, the connected components of $V\cap\{u\ge T\}$ are precisely $K_1,\dots,K_m$. The set $Y_j\subset V\cap\{u\ge T\}$ is connected and contains $K_j$, hence $Y_j\subset K_j$. The reverse inclusion is immediate, so $Y_j=K_j$. Since $Z_j$ is a connected component of the regular superlevel set $V\cap\{u>T\}$, Lemma~\ref{lem:jordan-domain} implies that $Z_j$ is a Jordan domain; in particular $K_j=\overline{Z_j}$. Since
 \[
-\partial W_j\subset \{u=c_j\},
+\partial W_j\subset \{u=c_*\},
 \qquad
 \partial Z_j=\partial K_j\subset \{u=T\},
 \]
@@ -1710,9 +1846,19 @@ and
 \[
 W_j\setminus K_j=W_j\setminus \overline{Z_j}
 \]
-is an annulus. Because $\partial K_j\subset \{u=T\}$, we obtain
+is an annulus. Since $T$ is a regular value, the closure-across-a-regular-level observation, applied with $E=W_j$ and $a=T$, gives
 \[
-A_j:=W_j\cap\{c_j<u<T\}=W_j\setminus K_j.
+K_j=\overline{Z_j}=W_j\cap\{u\ge T\}.
+\]
+Therefore
+\[
+W_j\setminus K_j
+=
+W_j\cap\{u<T\}
+=
+W_j\cap\{c_*<u<T\}
+=
+A_j.
 \]
 Therefore $A_j$ is a connected annulus. Since there are no critical points on $A_j$, Lemma~\ref{lem:regular-slab}(c) implies that every connected component of $A_j$ is a regular strip. Because $A_j$ is connected, it is a single regular strip. Hence there is exactly one strip of $\Omega$ whose upper cross-section is $\partial K_j$; denote it by $S_j^{\mathrm{top}}$.
 
@@ -2394,13 +2540,32 @@ Now choose $\beta$ so small that
 \]
 Then for every critical point $c$ of $H_\lambda$ in $K$,
 \[
-|g(c)|=|H_\lambda(c)+\beta|<e^{-2\alpha}.
+|g(c)|=|H_\lambda(c)+\beta|
+\le |H_\lambda(c)|+|\beta|
+<e^{-2\alpha}.
 \]
-Thus every zero $c$ of $g'$ in $K$ satisfies $|g(c)|<e^{-2\alpha}$.
-After proving below that no such $c$ is a zero of $g$, it will follow that every
-critical value of $u_g$ arising from a critical point in $K$ is $>2\alpha$.
-Consequently, once that nonvanishing statement is established, no critical point
-of $u_g$ in $K$ can have critical value in $[\alpha,2\alpha]$.
+Since the zeros of $g'$ are exactly the critical points of $H_\lambda$, we have proved that
+\[
+g'(c)=0,\ c\in K
+\quad\Longrightarrow\quad
+|g(c)|<e^{-2\alpha}.
+\]
+
+At this stage we have not yet shown that such a point $c$ is not also a zero of $g$.
+Accordingly, the preceding inequality does not yet by itself produce a critical value of $u_g$.
+The required nonvanishing statement
+\[
+g'(c)=0,\ c\in K
+\quad\Longrightarrow\quad
+g(c)\neq 0
+\]
+will be proved in Step~5 using the zero exclusion from Step~1. Once that is established,
+every critical point $c$ of $u_g$ in $K$ satisfies
+\[
+u_g(c)=-\log|g(c)|>2\alpha,
+\]
+and therefore $u_g$ has no critical values in $[\alpha,2\alpha]$ on $K$.
+
 In this case set
 \[
 \beta_*:=\frac{\eta_*}{2}.
@@ -2414,43 +2579,71 @@ In that case, by the first part of Step~4 we chose $\lambda$ so small that
 \]
 so $g'$ has no zeros on $K$. Hence $g$ has no critical points on $K$, and therefore
 $u_g$ has no critical values arising from critical points in $K$. In particular,
-conclusion~(4) is vacuous in this case. We may therefore choose any $\beta$ with
+conclusion~(4) is vacuous in this case. For the already fixed $\lambda$, Step~1 yields a number
+$\beta_1(\lambda)>0$ such that the zero configuration in the disks $D_j$ is preserved whenever
 \[
-0<|\beta|<\min\{\beta_1,\beta_*\},
+|\beta|<\beta_1(\lambda).
 \]
-where $\beta_1$ is as in Step~1 and $\beta_*=1$ is the choice made in Step~4, and
-the lemma is proved in this case.
+We may therefore choose any $\beta$ with
+\[
+0<|\beta|<\min\{\beta_1(\lambda),\beta_*\},
+\]
+where here $\beta_*=1$ is the choice made in Step~4. Then conclusion~(1) holds by Step~1,
+conclusion~(2) is already established in the case $Z_K=\varnothing$, and conclusions~(3)--(4)
+are vacuous. This proves the lemma in this case.
 
-Assume from now on that $Z_K\neq\varnothing$. We now verify the deferred claim
-that no critical point of $g$ in $K$ is a zero of $g$. Indeed, if $c\in K$ satisfies
+Assume from now on that $Z_K\neq\varnothing$, and fix the previously chosen
+\[
+\lambda\notin \Sigma_1\cup\Sigma_2.
+\]
+Since $\lambda$ is now fixed, Step~1 yields a number $\beta_1(\lambda)>0$ such that every
+$\beta$ with
+\[
+|\beta|<\beta_1(\lambda)
+\]
+preserves the zero configuration in the disks $D_j$; equivalently,
+\[
+g_{\lambda,\beta}\text{ has exactly one simple zero in each }D_j
+\quad\text{and}\quad
+g_{\lambda,\beta}\text{ has no zeros on }K\setminus\bigcup_{j=1}^m D_j.
+\]
+From this point on, restrict to $\beta$ satisfying
+\[
+|\beta|<\min\{\beta_1(\lambda),\beta_*\}.
+\]
+
+We now verify the deferred claim that no critical point of $g$ in $K$ is a zero of $g$.
+Indeed, if $c\in K$ satisfies
 \[
 g'(c)=0,
 \]
 then
 \[
-f'(c)+\lambda = 0,
+f'(c)+\lambda=0,
 \]
 so $c$ is a critical point of
 \[
-H_\lambda(z) := f(z)+\lambda z.
+H_\lambda(z):=f(z)+\lambda z.
 \]
 By Step~4, every critical point of $H_\lambda$ in $K$ lies in
 \[
-E := \bigcup_{\zeta\in Z_K} E_\zeta \subset K \setminus \bigcup_{j=1}^m D_j.
+E:=\bigcup_{\zeta\in Z_K} E_\zeta \subset K\setminus\bigcup_{j=1}^m D_j.
 \]
-By Step~1, $g$ has no zeros on
+By the choice of $\beta_1(\lambda)$ in Step~1, the function $g$ has no zeros on
 \[
-K \setminus \bigcup_{j=1}^m D_j.
+K\setminus\bigcup_{j=1}^m D_j.
 \]
 Hence
 \[
-g(c)\neq 0
+g(c)\neq 0.
 \]
-for every critical point $c$ of $g$ in $K$. Therefore each such $c$ is a genuine smooth
-critical point of $u_g$, and its critical value is
+
+Therefore each critical point $c$ of $g$ in $K$ is a genuine smooth critical point of $u_g$, and
+its critical value is
 \[
-u_g(c) = -\log|g(c)| = -\log|H_\lambda(c)+\beta|.
+u_g(c)=-\log|g(c)|=-\log|H_\lambda(c)+\beta|.
 \]
+By Step~4, this value is $>2\alpha$.
 
 Let $a_1,\dots,a_N$ be the pairwise distinct complex critical
 values of $H_\lambda$ arising from critical points in $K$. After adding $\beta$, they become $a_1+\beta,\dots,a_N+\beta$.
@@ -2467,21 +2660,22 @@ that is,
  2\Re\bigl(\beta \overline{(a_i-a_j)}\bigr)+|a_i|^2-|a_j|^2=0.
 \]
 For fixed $i\neq j$, this is a nontrivial affine real linear equation in $\beta\in\mathbb{C}\cong\mathbb{R}^2$, so it defines an affine
-real line. Thus the bad values of $\beta$ lie in a finite union of lines. Fix the previously chosen $\lambda\notin \Sigma_1\cup\Sigma_2$.
-By Step~1 there exists $\beta_1>0$ such that every $\beta$ with $|\beta|<\beta_1$ preserves the zero configuration in
-the disks $D_j$, and by Step~4 together with the nonvanishing verification above,
-every $\beta$ with $|\beta|<\beta_*$ keeps all critical values in $K$ above $2\alpha$. Hence,
-with
+real line. The bad values of $\beta$ therefore lie in a finite union of affine real lines in
 \[
-\beta_0:=\min\{\beta_1,\beta_*\}>0,
+\mathbb C\cong \mathbb R^2.
 \]
-we may choose $\beta$ with $0<|\beta|<\beta_0$ outside that finite union of lines. Then the numbers
+The punctured disk
+\[
+0<|\beta|<\min\{\beta_1(\lambda),\beta_*\}
+\]
+cannot be contained in a finite union of affine real lines, so we may choose $\beta$ in that
+disk outside the bad set. Then the numbers
 \[
 |a_1+\beta|,\dots,|a_N+\beta|
 \]
-are pairwise distinct. Since the map $t\mapsto -\log t$ is strictly decreasing on
-$(0,\infty)$, it follows that the critical values of $u_g$ arising from critical points in
-$K$ and larger than $2\alpha$ are pairwise distinct.
+are pairwise distinct. Since the map $t\mapsto -\log t$ is strictly decreasing on $(0,\infty)$,
+it follows that the critical values of $u_g$ arising from critical points in $K$ larger than
+$2\alpha$ are pairwise distinct.
 
 \indent This proves the lemma. \end{proof}
 
@@ -2533,7 +2727,7 @@ $\{-\log|g|>\alpha\}\cap K$.
 \[
  |g|<e^{-\alpha} \text{ throughout } D_j.
 \]
-Hence $D_j\subset V_g$, so the zero of $g$ inside $D_j$ belongs to $V_g$. There are no other zeros of $g$ in $K$, hence
+Thus $D_j\subset \{-\log|g|>\alpha\}\cap K$. Since $\partial D_j\subset V_g$ and $V_g$ is open, the set $D_j\cap V_g$ is nonempty. Because $D_j$ is connected and lies in $\{-\log|g|>\alpha\}\cap K$, it must be contained in the connected component $V_g$. Hence $D_j\subset V_g$, so the zero of $g$ inside $D_j$ belongs to $V_g$. There are no other zeros of $g$ in $K$, hence
 $V_g$ contains exactly these $m$ zeros.
 
 \indent We next prove uniqueness. Suppose, for contradiction, that $W$ is another connected
