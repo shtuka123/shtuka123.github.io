@@ -254,38 +254,50 @@ Then $v_{\varepsilon,t}=0$ on $\partial U_\varepsilon$, $v_{\varepsilon,t}=1$ on
 \nabla v_{\varepsilon,t}=\frac{\nabla u}{t-\varepsilon}
 \qquad\text{on }\Omega_{\varepsilon,t}.
 \]
-Thus $v_{\varepsilon,t}$ belongs to $H_0^1(U_\varepsilon)$, has trace $\ge 1$ on $K_t$, and is therefore admissible in the standard $H^1$-formulation of condenser capacity. By the usual density equivalence between the $C_c^\infty$ and $H_0^1$ admissible classes, this is enough for the capacity computation below.
+Thus $v_{\varepsilon,t}\in H_0^1(U_\varepsilon)$, satisfies $v_{\varepsilon,t}=1$ a.e. on $K_t$, and is therefore admissible in the standard $H^1$-formulation of condenser capacity. By the usual density equivalence between the $C_c^\infty$ and $H_0^1$ admissible classes, this is enough for the capacity computation below.
 
-We now justify directly that $v_{\varepsilon,t}$ minimizes the Dirichlet energy among admissible $H_0^1$-competitors. Let $w\in H_0^1(U_\varepsilon)$ satisfy $w\ge 1$ on $K_t$. Composing with the $1$-Lipschitz clipping map $\phi(s):=\min\{1,\max\{s,0\}\}$ does not increase the Dirichlet energy, so replacing $w$ by $\phi\circ w$ if necessary, we may assume $0\le w\le 1$ a.e. On $\Omega_{\varepsilon,t}$ set
+We now justify directly that $v_{\varepsilon,t}$ minimizes the Dirichlet energy among admissible $H_0^1$-competitors. Let $w\in H_0^1(U_\varepsilon)$ satisfy $w\ge 1$ a.e. on $K_t$. Composing with the $1$-Lipschitz clipping map
 \[
-\eta:=w-v_{\varepsilon,t}.
+\phi(s):=\min\{1,\max\{s,0\}\}
 \]
-Since both $w$ and $v_{\varepsilon,t}$ equal $0$ on $\partial U_\varepsilon$ and equal $1$ on $\partial K_t=\{u=t\}$, the function $\eta$ has zero trace on $\partial\Omega_{\varepsilon,t}$. Because $u$ is harmonic on $\Omega_{\varepsilon,t}$, so is $v_{\varepsilon,t}$. Hence
+does not increase the Dirichlet energy, so after replacing $w$ by $\phi\circ w$ if necessary, we may assume $0\le w\le 1$ a.e. on $U_\varepsilon$. Since also $w\ge 1$ a.e. on $K_t$, it follows that $w=1$ a.e. on $K_t$.
+
+Because $\varepsilon$ and $t$ are regular values of $u$, the boundaries $\partial U_\varepsilon=\{u=\varepsilon\}$ and $\partial K_t=\{u=t\}$ are smooth, and hence $\Omega_{\varepsilon,t}=U_\varepsilon\setminus K_t$ is a Lipschitz domain with
+\[
+\partial\Omega_{\varepsilon,t}=\partial U_\varepsilon\cup \partial K_t.
+\]
+The trace of $w$ on $\partial U_\varepsilon$ is $0$, since $w\in H_0^1(U_\varepsilon)$. Moreover, because $w=1$ a.e. on the interior side $K_t$ and $\partial K_t$ is smooth, the trace of $w|_{\Omega_{\varepsilon,t}}$ on $\partial K_t$ is $1$. The same boundary traces hold for $v_{\varepsilon,t}$: it has trace $0$ on $\partial U_\varepsilon$ and trace $1$ on $\partial K_t$. Therefore
+\[
+\eta:=w-v_{\varepsilon,t}\in H_0^1(\Omega_{\varepsilon,t}).
+\]
+
+Since $u$ is harmonic on a neighborhood of $\Omega_{\varepsilon,t}$, so is $v_{\varepsilon,t}$. Hence, using $\eta$ as a test function in the weak formulation,
+\[
+\int_{\Omega_{\varepsilon,t}} \nabla v_{\varepsilon,t}\cdot \nabla \eta\, dA = 0.
+\]
+Expanding $\nabla w=\nabla v_{\varepsilon,t}+\nabla\eta$, we get
 \[
 \int_{\Omega_{\varepsilon,t}} |\nabla w|^2\,dA
 =
 \int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA
 +
-\int_{\Omega_{\varepsilon,t}} |\nabla\eta|^2\,dA
-+
-2\int_{\Omega_{\varepsilon,t}} \nabla v_{\varepsilon,t}\cdot \nabla\eta\,dA.
-\]
-The last term vanishes by integration by parts:
-\[
-\int_{\Omega_{\varepsilon,t}} \nabla v_{\varepsilon,t}\cdot \nabla\eta\,dA
-=
--\int_{\Omega_{\varepsilon,t}} \eta\,\Delta v_{\varepsilon,t}\,dA
-+
-\int_{\partial\Omega_{\varepsilon,t}} \eta\,\partial_\nu v_{\varepsilon,t}\,ds
-=0,
-\]
-because $\Delta v_{\varepsilon,t}=0$ on $\Omega_{\varepsilon,t}$ and $\eta|_{\partial\Omega_{\varepsilon,t}}=0$. Therefore
-\[
-\int_{\Omega_{\varepsilon,t}} |\nabla w|^2\,dA
+\int_{\Omega_{\varepsilon,t}} |\nabla \eta|^2\,dA
 \ge
 \int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA.
 \]
-Since the total Dirichlet energy of $w$ on $U_\varepsilon$ is at least its energy on $\Omega_{\varepsilon,t}$, it follows that $v_{\varepsilon,t}$ is the capacitary potential of $(K_t,U_\varepsilon)$. With the normalization
+Since $v_{\varepsilon,t}\equiv 1$ on $K_t$, one has $\nabla v_{\varepsilon,t}=0$ a.e. on $K_t$, and therefore
+\[
+\int_{U_\varepsilon} |\nabla v_{\varepsilon,t}|^2\,dA
+=
+\int_{\Omega_{\varepsilon,t}} |\nabla v_{\varepsilon,t}|^2\,dA.
+\]
+Also,
+\[
+\int_{U_\varepsilon} |\nabla w|^2\,dA
+\ge
+\int_{\Omega_{\varepsilon,t}} |\nabla w|^2\,dA.
+\]
+Therefore $v_{\varepsilon,t}$ minimizes the Dirichlet energy among admissible $H_0^1$-competitors, so it is the capacitary potential of $(K_t,U_\varepsilon)$. With the normalization
 \[
 \operatorname{cap}(E,B)
 =
@@ -416,6 +428,17 @@ Combining \((6)\) and \((7)\), we get
 \[
 A(t)\le \pi e^{-2t/m}.
 \]
+For every regular $R>0$, the coarea formula on $U\cap\{u<R\}$ gives
+\[
+\int_{U\cap\{u<R\}} |\nabla u|\,dA
+=
+\int_0^R P(t)\,dt.
+\]
+Since $U\cap\{u<R\}\uparrow U$ as $R\to\infty$, monotone convergence yields
+\begin{equation}
+I(U)=\int_U |\nabla u|\,dA=\int_0^\infty P(t)\,dt.
+\tag{1}
+\end{equation}
 We now record explicitly the regularity of the distribution function
 \[
 A(t)=\operatorname{Area}(K_t).
@@ -1009,7 +1032,7 @@ which is an annulus.
 
 \medskip
 \begin{proposition}\label{prop:generic-spanning-tree}
-\emph{Let $c\ge 0$, and let $V$ be a connected component of $\{u>c\}$ containing exactly $m$
+\emph{Let $0\le c<2\alpha$, and let $V$ be a connected component of $\{u>c\}$ containing exactly $m$
 zeros of $f$. Assume that:}
 \begin{enumerate}
 \item[(a)] \emph{$u$ has no critical values on $V$ in $[c,2\alpha]$;}
@@ -1123,11 +1146,35 @@ This contradiction shows that $s\ge1$.
 \[
  I_r=[\mu_r-\delta_r,\mu_r+\delta_r] \qquad (1\le r\le s)
 \]
-so small that each $I_r$ contains no critical value of $u$ other than $\mu_r$. Choose a regular value
+so small that each $I_r$ contains no critical value of $u$ other than $\mu_r$, and so small that the local Morse neighborhoods constructed below can be chosen with associated length bounds $\eta_r>0$ satisfying
 \[
- \tau_0\in(2\alpha,\mu_1-\delta_1),
+\sum_{r=1}^s \eta_r<\frac{\varepsilon}{2}.
 \]
-and choose a regular value
+Choose a regular value
+\[
+ \tau_0\in(2\alpha,\mu_1-\delta_1).
+\]
+
+For each zero $a_j$, write
+\[
+f(z)=(z-a_j)^{m_j}h_j(z)
+\]
+on a neighborhood $U_j$ of $a_j$, where $h_j(a_j)\neq 0$. Choose pairwise disjoint closed disks
+\[
+B(a_j,r_j)\Subset U_j
+\]
+and a holomorphic branch $q_j$ of $h_j^{1/m_j}$ on $B(a_j,r_j)$. Set
+\[
+\psi_j(z):=(z-a_j)q_j(z).
+\]
+After shrinking $r_j$ if necessary, we may assume that $\psi_j$ is biholomorphic on a neighborhood of $B(a_j,r_j)$ and that
+\[
+f(z)=\psi_j(z)^{m_j}
+\qquad (z\in B(a_j,r_j)).
+\]
+Since $\psi_j^{-1}$ is $C^1$ near $0$, there exist constants $C_j>0$ and $\rho_j>0$ such that, for every $w$ with $|w|\le \rho_j$, the preimage of the radial segment $[0,w]$ under $\psi_j^{-1}$ has length at most $C_j|w|$.
+
+Choose a regular value
 \[
  T>\mu_s+\delta_s
 \]
@@ -1135,7 +1182,12 @@ so large that the connected components
 \[
  Z_1,\dots,Z_m
 \]
-of $\{z\in V:u(z)>T\}$ have pairwise disjoint closures. 
+of $\{z\in V:u(z)>T\}$ have pairwise disjoint closures and, in addition, satisfy
+\begin{enumerate}
+\item[(i)] $\overline{Z_j}\subset B(a_j,r_j)$ for every $j$;
+\item[(ii)] $e^{-T/m_j}\le \rho_j$ for every $j$;
+\item[(iii)] $\sum_{j=1}^m C_j e^{-T/m_j}<\varepsilon/2$.
+\end{enumerate}
 
 For each $j$ set
 \[
@@ -1180,16 +1232,65 @@ and finitely many flow segments of $X$ joining the endpoints of these cross-sect
       upward changes one component into two components;
 \item[(iv)] outside $N_r$, there are no critical points in the slab
 \[
- \mu_r-\delta_r\le u\le \mu_r+\delta_r.
+ \mu_r-\delta_r\le u\le \mu_r+\delta_r;
 \]
+\item[(v)] there exists a number $\eta_r>0$ such that, for every choice of points
+\[
+x_{r,-}\in C_r^-,
+\qquad
+x_{r,1}\in C_{r,1}^+,
+\qquad
+x_{r,2}\in C_{r,2}^+,
+\]
+there is an embedded $Y$-shaped tree
+\[
+T_r(x_{r,-},x_{r,1},x_{r,2})\subset N_r
+\]
+with branch point $p_r$ and terminal vertices $x_{r,-},x_{r,1},x_{r,2}$, and
+\[
+\operatorname{len}\bigl(T_r(x_{r,-},x_{r,1},x_{r,2})\bigr)\le \eta_r;
+\]
+\item[(vi)] there exist connected open collar neighborhoods
+\[
+\mathcal C_r^-,
+\quad
+\mathcal C_{r,1}^+,
+\quad
+\mathcal C_{r,2}^+
+\subset (U_r\setminus N_r)\cap\{\tau_0<u<T\}
+\]
+such that
+\[
+C_r^- \subset \overline{\mathcal C_r^-},
+\qquad
+C_{r,i}^+ \subset \overline{\mathcal C_{r,i}^+} \quad (i=1,2),
+\]
+and every point of $(U_r\setminus N_r)\cap\{\tau_0<u<T\}$ sufficiently close to $C_r^-$
+(respectively to $C_{r,i}^+$) on the exterior side of $N_r$ lies in $\mathcal C_r^-$
+(respectively in $\mathcal C_{r,i}^+$).
 \end{enumerate}
+Such neighborhoods exist. Fix $r$ and work in Morse coordinates $(x,y)$ centered at $p_r$ with
+\[
+u=\mu_r+x^2-y^2.
+\]
+Take a sufficiently small standard saddle neighborhood whose boundary consists of one arc on the level $\{u=\mu_r-\delta_r\}$, two arcs on the level $\{u=\mu_r+\delta_r\}$, and four short flow segments, arranged in the usual local saddle picture. For each of the three level arcs, let $q_{r,-},q_{r,1},q_{r,2}$ denote the endpoints of the local separatrix segments meeting those arcs. If
+\[
+x_{r,-}\in C_r^-,
+\qquad
+x_{r,1}\in C_{r,1}^+,
+\qquad
+x_{r,2}\in C_{r,2}^+,
+\]
+then each $x_{r,*}$ can be joined inside its cross-section to the corresponding $q_{r,*}$ by a boundary subarc, and the union of these three subarcs with the three separatrix segments from $q_{r,-},q_{r,1},q_{r,2}$ to $p_r$ is an embedded $Y$-shaped tree in $N_r$ with branch point $p_r$ and terminal vertices $x_{r,-},x_{r,1},x_{r,2}$. As the neighborhood is shrunk, both the cross-sections and the separatrix segments shrink to $p_r$, so the total length of this tree tends to $0$ uniformly in the choices of $x_{r,-},x_{r,1},x_{r,2}$; this gives property \emph{(v)} for some $\eta_r>0$. Likewise, the exterior saddle sectors provide the one-sided connected collar neighborhoods required in \emph{(vi)}. Since there are only finitely many critical points, we may choose the neighborhoods $N_r$ small enough that, in addition,
+\[
+\sum_{r=1}^s \eta_r<\frac{\varepsilon}{2}.
+\]
 Set
 \[
 \Omega:=\{z\in V:\tau_0<u<T\}\setminus \bigcup_{r=1}^s N_r.
 \]
 
-We shall prove below that, after shrinking the neighborhoods $N_r$ further if
-necessary, each of the cross-sections $C_r^{-}, C_{r,1}^{+}, C_{r,2}^{+}$
+We shall prove below that, for the neighborhoods $N_r$ chosen above, each of the cross-sections $C_r^{-}, C_{r,1}^{+}, C_{r,2}^{+}$
 lies on the boundary of a unique connected component of $\Omega$.
 
 Let $S$ be a connected component of $\Omega$. Since $u$ has no critical points on $S$ and every side-boundary
@@ -1396,15 +1497,20 @@ Fix such an $x$ and denote the corresponding trajectory segment by $\gamma_S$.
 \[
 \sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt.
 \]
-Since the strips are disjoint and
+Because $\Omega$ is an open subset of the plane, it has at most countably many connected components, so the family of strips is at most countable. Since every summand is nonnegative, Tonelli's theorem applies. Moreover, because distinct strips are disjoint, for every regular $t\in(\tau_0,T)$ we have
 \[
-\sum_S P_S(t)=\mathcal H^1(\{u=t\}\cap\Omega)\le P_V(t)
+\sum_S P_S(t)=\mathcal H^1(\{u=t\}\cap\Omega)\le P_V(t).
 \]
-for every regular $t\in(\tau_0,T)$, Fubini's theorem yields
-\begin{equation}
-\sum_S \operatorname{len}(\gamma_S)\le \frac{1}{2\pi}\int_{\tau_0}^{T} P_V(t)\,dt\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt.
+Therefore
+\begin{align}
+\sum_S \operatorname{len}(\gamma_S)
+&\le \frac{1}{2\pi}\sum_S\int_{a_S}^{b_S} P_S(t)\,dt \\
+&= \frac{1}{2\pi}\int_{\tau_0}^{T}\sum_S \mathbf 1_{(a_S,b_S)}(t)P_S(t)\,dt \\
+&= \frac{1}{2\pi}\int_{\tau_0}^{T}\sum_S P_S(t)\,dt \\
+&\le \frac{1}{2\pi}\int_{\tau_0}^{T} P_V(t)\,dt \\
+&\le \frac{1}{2\pi}\int_{2\alpha}^{\infty} P_V(t)\,dt.
 \tag{11}
-\end{equation}
+\end{align}
 
 We now prove the uniqueness statements needed for the combinatorics.
 
@@ -1460,7 +1566,7 @@ Therefore $A_0$ is a connected annulus. Since there are no critical points on $A
 \noindent\emph{Critical neighborhoods.}
 \medskip
 \noindent\emph{Claim.}
-After shrinking the pairwise disjoint neighborhoods $N_r$ further if necessary, each of the cross-sections
+For the pairwise disjoint neighborhoods $N_r$ chosen above, each of the cross-sections
 $C_r^{-}$, $C_{r,1}^{+}$, and $C_{r,2}^{+}$ lies on the boundary of exactly one connected component of
 $\Omega$. More precisely, there exist unique connected components
 \[
@@ -1471,21 +1577,14 @@ $C_{r,1}^{+}, C_{r,2}^{+}$ are the lower cross-sections of $S_{r,1}^{+}, S_{r,2}
 
 \smallskip
 \noindent\emph{Proof of claim.}
-Fix $r$. Choose Morse coordinates $(x,y)$ on a neighborhood $U_r$ of
-$p_r$ such that
-\[
-u = \mu_r + x^2 - y^2,
-\]
-and shrink $N_r \Subset U_r$ so that the three cross-sections
+Fix $r$, and let $U_r$ and $N_r$ be the Morse chart and neighborhood chosen above. By properties \emph{(ii)} and \emph{(iii)}, the three cross-sections
 \[
 C_r^- \subset \{u=\mu_r-\delta_r\},
 \qquad
 C_{r,1}^+,\, C_{r,2}^+ \subset \{u=\mu_r+\delta_r\}
 \]
 appear exactly as in the standard saddle picture, with the remainder of $\partial N_r$
-consisting of flow segments of $X$.
-
-By shrinking $N_r$ further if necessary, we may also arrange that there exist connected
+consisting of flow segments of $X$. By property \emph{(vi)}, there exist connected
 open collar neighborhoods
 \[
 \mathcal C_r^-,
@@ -1493,16 +1592,9 @@ open collar neighborhoods
 \mathcal C_{r,1}^+,
 \quad
 \mathcal C_{r,2}^+
-\subset (U_r \setminus N_r)\cap \Omega
+\subset (U_r \setminus N_r)\cap \{\tau_0<u<T\}.
 \]
-such that
-\[
-C_r^- \subset \overline{\mathcal C_r^-},
-\qquad
-C_{r,i}^+ \subset \overline{\mathcal C_{r,i}^+} \quad (i=1,2),
-\]
-and every point of $(U_r\setminus N_r)\cap\Omega$ sufficiently close to $C_r^-$
-(respectively to $C_{r,i}^+$) lies in $\mathcal C_r^-$ (respectively in $\mathcal C_{r,i}^+$).
+Because the neighborhoods $U_r$ are pairwise disjoint and contain no other $N_k$, these collars are in fact contained in $\Omega$.
 
 We first prove uniqueness for $C_r^-$. Suppose that two distinct connected components
 $S_1,S_2$ of $\Omega$ both had $C_r^-$ in their boundary. Choose $q\in C_r^-$. By the
@@ -1720,33 +1812,28 @@ These points are well defined, because \(S_r^-\) has upper cross-section \(C_r^-
 \[
 C_r^-,\ C_{r,1}^+,\ C_{r,2}^+
 \]
-are disjoint subsets of \(\partial N_r\). Choose a point \(c_r\in \operatorname{int}(N_r)\). Because \(N_r\) is a closed topological disk, there exists an embedded \(Y\)-shaped tree
+are disjoint subsets of \(\partial N_r\). Set
 \[
-T_r\subset N_r
+c_r:=p_r.
 \]
-with branch point \(c_r\) and three terminal vertices \(x_{r,-},x_{r,1},x_{r,2}\). Since the neighborhoods \(N_r\) may be chosen arbitrarily small at the outset and are pairwise disjoint, we may assume in addition that
+By property \((v)\) for the chosen neighborhood $N_r$, there exists an embedded \(Y\)-shaped tree
+\[
+T_r:=T_r(x_{r,-},x_{r,1},x_{r,2})\subset N_r
+\]
+with branch point \(c_r\) and terminal vertices \(x_{r,-},x_{r,1},x_{r,2}\), and
+\[
+\operatorname{len}(T_r)\le \eta_r.
+\]
+Therefore
 \[
 \sum_{r=1}^s \operatorname{len}(T_r)<\frac{\varepsilon}{2}. \tag{12}
 \]
 
-Let \(x_0\) be the lower endpoint of \(\gamma_{S_0}\) on the level \(\{u=\tau_0\}\). For each \(j\), let \(b_j\) be the upper endpoint of \(\gamma_{S_j^{\mathrm{top}}}\) on \(\partial K_j\). Write
-\[
-f(z)=(z-a_j)^{m_j}h_j(z)
-\]
-in a neighborhood of \(a_j\), where \(m_j\ge 1\) and \(h_j\) is holomorphic with \(h_j(a_j)\neq 0\). After shrinking to a sufficiently small closed disk \(B(a_j,r_j)\), choose a holomorphic branch \(q_j\) of \(h_j^{1/m_j}\) there and define
-\[
-\psi_j(z):=(z-a_j)q_j(z).
-\]
-Then \(\psi_j\) is biholomorphic on a neighborhood of \(B(a_j,r_j)\), one has \(\psi_j(a_j)=0\), and
-\[
-f(z)=\psi_j(z)^{m_j}
-\qquad (z\in B(a_j,r_j)).
-\]
-By the choice of $T$, each $K_j$ is contained in $B(a_j,r_j)$ and
+Let \(x_0\) be the lower endpoint of \(\gamma_{S_0}\) on the level \(\{u=\tau_0\}\). For each \(j\), let \(b_j\) be the upper endpoint of \(\gamma_{S_j^{\mathrm{top}}}\) on \(\partial K_j\). By the earlier choice of $B(a_j,r_j)$, $\psi_j$, and $T$, we have
 \[
 Z_j=\psi_j^{-1}\bigl(D(0,e^{-T/m_j})\bigr),
 \qquad
-K_j=\psi_j^{-1}\bigl(\overline{D(0,e^{-T/m_j})}\bigr).
+K_j=\psi_j^{-1}\bigl(\overline{D(0,e^{-T/m_j})}\bigr)\subset B(a_j,r_j).
 \]
 If $w_j:=\psi_j(b_j)$, then $|w_j|=e^{-T/m_j}$, so the radial segment $[0,w_j]$
 is contained in $\overline{D(0,e^{-T/m_j})}$ and its relative interior is contained in
@@ -1754,11 +1841,11 @@ $D(0,e^{-T/m_j})$. Therefore its preimage under $\psi_j^{-1}$ is an embedded arc
 \[
 \sigma_j\subset K_j,\qquad \sigma_j^\circ\subset Z_j,
 \]
-joining $a_j$ to $b_j$. Since $\psi_j^{-1}$ is $C^1$ near $0$, there exists $C_j>0$ such that
+joining $a_j$ to $b_j$. By the choice of $C_j$,
 \[
 \operatorname{len}(\sigma_j)\le C_j e^{-T/m_j}.
 \]
-Hence, by the choice of \(T\),
+Therefore, by the choice of $T$,
 \[
 \sum_{j=1}^m \operatorname{len}(\sigma_j)<\frac{\varepsilon}{2}. \tag{13}
 \]
@@ -1780,7 +1867,15 @@ We verify the hypotheses of Lemma~\ref{lem:geometric-tree-realization} for the f
 \[
 \gamma_S\cap\gamma_{S'}=\varnothing,
 \]
-because distinct strips are disjoint subsets of $\Omega$. Second, for each $r$, the tree $T_r\subset N_r$ meets the rest of the construction only at its terminal points $x_{r,-},x_{r,1},x_{r,2}$: indeed the neighborhoods $N_r$ are pairwise disjoint, each $N_r$ is disjoint from every $Z_j$, and a strip trajectory can meet $\partial N_r$ only at the cross-section belonging to that strip. Third, for each $j$, the arc $\sigma_j\subset K_j\subset Z_j$ meets the rest of the construction only at its endpoint $b_j\in\partial K_j$. Indeed, the sets $Z_1,\dots,Z_m$ are pairwise disjoint and disjoint from all $N_r$, so the arcs $\sigma_j$ are pairwise disjoint and are disjoint from every $T_r$.
+because distinct strips are disjoint subsets of $\Omega$. Second, for each $r$, the tree $T_r\subset N_r$ meets the rest of the construction only at its terminal points $x_{r,-},x_{r,1},x_{r,2}$: indeed the neighborhoods $N_r$ are pairwise disjoint, each $N_r$ is disjoint from every $Z_j$, and a strip trajectory can meet $\partial N_r$ only at the cross-section belonging to that strip. Third, for each $j$, the arc $\sigma_j\subset K_j$ has interior contained in $Z_j$, and it meets the rest of the construction only at its endpoint $b_j\in\partial K_j$. Indeed, the sets $Z_1,\dots,Z_m$ are pairwise disjoint and disjoint from all $N_r$, so the arcs $\sigma_j$ are pairwise disjoint and are disjoint from every $T_r$. Moreover, every strip trajectory $\gamma_S$ is contained in
+\[
+\Omega\subset\{\tau_0<u<T\},
+\]
+whereas
+\[
+\sigma_j^\circ\subset Z_j\subset\{u>T\}.
+\]
+Hence $\gamma_S\cap \sigma_j^\circ=\varnothing$, and the only possible intersection between $\sigma_j$ and the strip part of the construction is the point $b_j$, where $\sigma_j$ attaches to $\gamma_{S_j^{\mathrm{top}}}$.
 
 It follows that the interior of each $A_S$ contains no geometric vertex, the interiors of distinct arcs $A_S$ and $A_{S'}$ are disjoint, and two distinct arcs can meet only at a common geometric endpoint corresponding to a common endpoint of the associated edges of $T$. Hence Lemma~\ref{lem:geometric-tree-realization} applies:
 \[
@@ -2246,11 +2341,11 @@ M_*:=\max_{\zeta\in Z_K}|f(\zeta)|,\qquad \eta_*:=e^{-2\alpha}-M_*>0.
 \]
 
 Choose pairwise disjoint closed disks $E_\zeta\Subset \operatorname{int}(K)$, one around each
-$\zeta\in Z_K$, so small that
+$\zeta\in Z_K$, also disjoint from $\bigcup_{j=1}^m D_j$, so small that
 \[
 |f(z)|\le M_*+\frac{\eta_*}{4}=e^{-2\alpha}-\frac{3\eta_*}{4}
 \qquad
-(z\in E:=\bigcup_{\zeta\in Z_K}E_\zeta),
+\left(z\in E:=\bigcup_{\zeta\in Z_K}E_\zeta\right),
 \]
 and such that $f'$ has no zeros on $K\setminus E$. Set
 \[
@@ -2301,8 +2396,12 @@ Then for every critical point $c$ of $H_\lambda$ in $K$,
 \[
 |g(c)|=|H_\lambda(c)+\beta|<e^{-2\alpha}.
 \]
-Equivalently, every critical value of $u_g$ arising from a critical point in $K$ is $>2\alpha$.
-In particular, no critical point of $u_g$ in $K$ has critical value in $[\alpha,2\alpha]$. In this case set
+Thus every zero $c$ of $g'$ in $K$ satisfies $|g(c)|<e^{-2\alpha}$.
+After proving below that no such $c$ is a zero of $g$, it will follow that every
+critical value of $u_g$ arising from a critical point in $K$ is $>2\alpha$.
+Consequently, once that nonvanishing statement is established, no critical point
+of $u_g$ in $K$ can have critical value in $[\alpha,2\alpha]$.
+In this case set
 \[
 \beta_*:=\frac{\eta_*}{2}.
 \]
@@ -2322,7 +2421,7 @@ conclusion~(4) is vacuous in this case. We may therefore choose any $\beta$ with
 where $\beta_1$ is as in Step~1 and $\beta_*=1$ is the choice made in Step~4, and
 the lemma is proved in this case.
 
-Assume from now on that $Z_K\neq\varnothing$. Before comparing moduli, we record
+Assume from now on that $Z_K\neq\varnothing$. We now verify the deferred claim
 that no critical point of $g$ in $K$ is a zero of $g$. Indeed, if $c\in K$ satisfies
 \[
 g'(c)=0,
@@ -2370,7 +2469,8 @@ that is,
 For fixed $i\neq j$, this is a nontrivial affine real linear equation in $\beta\in\mathbb{C}\cong\mathbb{R}^2$, so it defines an affine
 real line. Thus the bad values of $\beta$ lie in a finite union of lines. Fix the previously chosen $\lambda\notin \Sigma_1\cup\Sigma_2$.
 By Step~1 there exists $\beta_1>0$ such that every $\beta$ with $|\beta|<\beta_1$ preserves the zero configuration in
-the disks $D_j$, and by Step~4 every $\beta$ with $|\beta|<\beta_*$ keeps all critical values in $K$ above $2\alpha$. Hence,
+the disks $D_j$, and by Step~4 together with the nonvanishing verification above,
+every $\beta$ with $|\beta|<\beta_*$ keeps all critical values in $K$ above $2\alpha$. Hence,
 with
 \[
 \beta_0:=\min\{\beta_1,\beta_*\}>0,
@@ -2746,17 +2846,55 @@ We now complete the argument.
 
 \medskip
 \begin{lemma}[A tree lemma]\label{lem:tree-lemma}
-\emph{Let $T$ be a finite tree of total length $L$, and let $x_1,\dots,x_M$ be marked
-points of $T$. Then some pair $x_i,x_j$ is joined by a subpath of length at most $2L/M$.}
+\emph{Let $T$ be a finite tree of total length $L$, and let $x_1,\dots,x_M$ be
+pairwise distinct marked points of $T$, with $M\ge 2$. Then there exist
+distinct indices $i\neq j$ such that the unique subpath joining $x_i$ to $x_j$
+has length at most $2L/M$.}
 \end{lemma}
 
-\begin{proof} Subdivide edges at the marked points; this does not change the total length and turns the
-marked points into marked vertices. Take the minimal subtree spanning the marked vertices. Every
-leaf of this subtree is marked. Doubling every edge produces an Eulerian graph of total length $2L$.
-Traversing an Euler tour and recording the first appearances of the marked vertices gives a cyclic
-ordering of the $M$ marked vertices. The $M$ gaps between consecutive marked vertices along the
-tour have total length $2L$, so one of them has length at most $2L/M$. The corresponding unique
-path in the original tree has at most that length. \end{proof}
+\begin{proof}
+Subdivide edges at the marked points; this does not change the total length and
+turns the marked points into marked vertices. Let $T'\subseteq T$ be the minimal
+subtree spanning the marked vertices, and let $L'=\len(T')$. Then $L'\le L$,
+and every leaf of $T'$ is marked.
+
+Doubling every edge of $T'$ produces an Eulerian graph of total length $2L'$.
+Choose an Euler tour that starts at a marked vertex, and let
+\[
+y_1,\dots,y_M
+\]
+be the marked vertices listed in the order of their first appearance along the
+tour. Let
+\[
+0=t_1<t_2<\cdots<t_M<2L'
+\]
+be their first-appearance times, and set
+\[
+t_{M+1}:=2L'.
+\]
+Then
+\[
+\sum_{r=1}^M (t_{r+1}-t_r)=2L'.
+\]
+
+For each $r=1,\dots,M-1$, the portion of the Euler tour between times $t_r$ and
+$t_{r+1}$ is a walk in $T'$ joining $y_r$ to $y_{r+1}$, so
+\[
+d_{T'}(y_r,y_{r+1})\le t_{r+1}-t_r.
+\]
+Likewise, the final portion of the tour from time $t_M$ to time $2L'$ joins
+$y_M$ back to $y_1$, so
+\[
+d_{T'}(y_M,y_1)\le 2L'-t_M=t_{M+1}-t_M.
+\]
+Hence
+\[
+\sum_{r=1}^{M-1} d_{T'}(y_r,y_{r+1}) + d_{T'}(y_M,y_1)
+\le 2L' \le 2L.
+\]
+Therefore at least one of these $M$ distances is at most $2L/M$, which proves
+the lemma.
+\end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 If $n=1$, then the unique root may be joined to itself by the constant curve, so the conclusion is immediate. If $f$ has a multiple zero, the conclusion is also immediate. Thus we may assume that $f$ is squarefree and $n\ge 2$.
@@ -2836,8 +2974,10 @@ m-\frac q2+\frac q8
 m-\frac{3q}{8}.
 \]
 
-By Lemma~\ref{lem:tree-lemma}, some pair of perturbed roots, say \(b_r\in D_r\) and \(b_s\in D_s\), is joined in \(G\) by
-a subpath of length at most
+By Lemma~\ref{lem:tree-lemma}, since the $m$ perturbed roots are pairwise
+distinct and $m\ge 2$, there exist distinct indices $r\neq s$ such that
+the points \(b_r\in D_r\) and \(b_s\in D_s\) are joined in \(G\) by a subpath of
+length at most
 \[
 \frac{2}{m}\len(G)
 <
@@ -2846,8 +2986,6 @@ a subpath of length at most
 2-\frac{3q}{4m}.
 \tag{18}
 \]
-The indices \(r\neq s\), because the \(m\) perturbed roots are distinct and each disk \(D_j\) contains
-exactly one of them.
 
 Connect \(b_r\) to the original zero \(a_r\in D_r\) and \(b_s\) to the original zero \(a_s\in D_s\) by
 straight line segments. Because each $D_j$ is an ordinary Euclidean disk contained in $U$,
@@ -2863,14 +3001,25 @@ The total additional length is at most
 <
 \frac{q}{4m}
 \]
-by \((17)\). Therefore the resulting curve in \(U\subset \Lambda_f\) joining two zeros of \(f\) has total
-length strictly less than
+by \((17)\). Let \(\Gamma\) be the union of the subpath of \(G\) joining \(b_r\) to \(b_s\) and the two straight
+segments \([a_r,b_r]\) and \([b_s,a_s]\). Then \(\Gamma\) is a connected finite graph contained in
 \[
+U\subset \Lambda_f.
+\]
+Hence \(\Gamma\) contains a simple arc \(\gamma\) joining \(a_r\) to \(a_s\), and
+\[
+\len(\gamma)\le \len(\Gamma).
+\]
+Therefore
+\[
+\len(\gamma)
+<
 \left(2-\frac{3q}{4m}\right)+\frac{q}{4m}
 =
 2-\frac{q}{2m}
 <2.
 \]
+Thus \(\gamma\subset \Lambda_f\) is a curve joining two zeros of \(f\) and having length \(<2\).
 This proves the theorem.
 \end{proof}
 
