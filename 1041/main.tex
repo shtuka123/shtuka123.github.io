@@ -14,6 +14,8 @@
 \setlength{\belowdisplayshortskip}{6pt plus 2pt minus 3pt}
 \DeclareMathOperator{\len}{len}
 \linespread{1.01}
+\title{A Short Path Joining Two Zeros Inside a Polynomial Lemniscate}
+
 
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
@@ -27,10 +29,6 @@
 \newtheorem*{remarkplain}{Remark}
 
 \begin{document}
-
-\begin{center}
-{\Large\bfseries A Short Path Joining Two Zeros Inside a Polynomial Lemniscate}
-\end{center}
 
 \begin{abstract}
 Let
@@ -48,6 +46,8 @@ contains at least two zeros of $f$, we prove that there exist two roots of $f$ w
  that makes the critical-level structure above a fixed base level Morse and excellent on a fixed
  collar, and a spanning-tree construction in the resulting Reeb decomposition.
 \end{abstract}
+
+\maketitle
 
 \section{Introduction}
 
@@ -97,7 +97,7 @@ Some connected component of $\Lambda_f$ contains at least two zeros of $f$.
 \noindent
 This is known due to work of Erd\H{o}s, Herzog, and Piranian; see \cite{EHP58} and the later references listed below. 
 In addition, we use standard results from planar potential theory, planar topology, and Morse theory: Carleman's inequality, P\'olya's inequality, the Jordan--Schoenflies theorem, and the local Morse normal form for a nondegenerate saddle.
-\noindent The proof of Theorem~1 has three parts.
+\noindent The proof of Theorem~\ref{thm:main} has three parts.
 \begin{enumerate}
 \item For any component $U\subset \Lambda_f$ containing $m$ zeros of $f$, we prove the sharp integral estimate
 \[
@@ -130,7 +130,7 @@ We also set
 \]
 
 \medskip
-\begin{lemma}
+\begin{lemma}\label{lem:level-set-measure-zero}
 \emph{Let $p$ be a nonconstant polynomial and let $r>0$. Then the level set
 \[
  \{z\in\mathbb{C}: |p(z)|=r\}
@@ -220,7 +220,7 @@ Letting $\rho\downarrow 0$ yields
 \]
 which is exactly the stated identity. \end{proof}
 \medskip
-\begin{proposition}
+\begin{proposition}\label{prop:basic-integral-bound}
 \emph{With the notation above,}
 \[
 I(U)\le 2\pi m.
@@ -254,9 +254,9 @@ Then $v_{\varepsilon,t}=0$ on $\partial U_\varepsilon$, $v_{\varepsilon,t}=1$ on
 \nabla v_{\varepsilon,t}=\frac{\nabla u}{t-\varepsilon}
 \qquad\text{on }\Omega_{\varepsilon,t}.
 \]
-Thus $v_{\varepsilon,t}$ is admissible for the condenser $(K_t,U_\varepsilon)$.
+Thus $v_{\varepsilon,t}$ belongs to $H_0^1(U_\varepsilon)$, has trace $\ge 1$ on $K_t$, and is therefore admissible in the standard $H^1$-formulation of condenser capacity. By the usual density equivalence between the $C_c^\infty$ and $H_0^1$ admissible classes, this is enough for the capacity computation below.
 
-We now justify directly that $v_{\varepsilon,t}$ minimizes the Dirichlet energy. Let $w$ be any admissible competitor for $(K_t,U_\varepsilon)$. Replacing $w$ by $\min\{1,\max\{w,0\}\}$ if necessary, we may assume $0\le w\le 1$. On $\Omega_{\varepsilon,t}$ set
+We now justify directly that $v_{\varepsilon,t}$ minimizes the Dirichlet energy among admissible $H_0^1$-competitors. Let $w\in H_0^1(U_\varepsilon)$ satisfy $w\ge 1$ on $K_t$. Composing with the $1$-Lipschitz clipping map $\phi(s):=\min\{1,\max\{s,0\}\}$ does not increase the Dirichlet energy, so replacing $w$ by $\phi\circ w$ if necessary, we may assume $0\le w\le 1$ a.e. On $\Omega_{\varepsilon,t}$ set
 \[
 \eta:=w-v_{\varepsilon,t}.
 \]
@@ -291,7 +291,7 @@ Since the total Dirichlet energy of $w$ on $U_\varepsilon$ is at least its energ
 =
 \frac1{4\pi}\inf \int |\nabla v|^2\,dA,
 \]
-we obtain
+where the infimum is taken over all $v\in H_0^1(B)$ with trace $v\ge 1$ on $E$, we obtain
 \[
 \operatorname{cap}(K_t,U_\varepsilon)
 =
@@ -399,7 +399,7 @@ has logarithmic capacity \(1\). Hence, by monotonicity of logarithmic capacity,
 \[
 \operatorname{cap}_{\log}(\overline U)\le 1.
 \]
-By Lemma~3, \(\partial U\subset \{|f|=1\}\) has planar measure zero, so
+By Lemma~\ref{lem:level-set-measure-zero}, \(\partial U\subset \{|f|=1\}\) has planar measure zero, so
 \[
 \operatorname{Area}(U)=\operatorname{Area}(\overline U).
 \]
@@ -517,11 +517,11 @@ Then $W$ is a connected component of
 \]
 and $W$ contains exactly $M$ zeros of $\widetilde h$.
 
-The proof of Proposition~4 applies verbatim to $\widetilde h$ on $W$. The only place where monicity was used there was the bound $\operatorname{Area}(W)\le \pi$, obtained via P\'olya's inequality. Here the leading coefficient of $\widetilde h$ is $e^c$, so the filled lemniscate $\{|\widetilde h|\le 1\}$ has logarithmic capacity $e^{-c/\deg h}\le 1$. Since $W\subset \{|\widetilde h|<1\}$, monotonicity gives
+The proof of Proposition~\ref{prop:basic-integral-bound} applies verbatim to $\widetilde h$ on $W$. The only place where monicity was used there was the bound $\operatorname{Area}(W)\le \pi$, obtained via P\'olya's inequality. Here the leading coefficient of $\widetilde h$ is $e^c$, so the filled lemniscate $\{|\widetilde h|\le 1\}$ has logarithmic capacity $e^{-c/\deg h}\le 1$. Since $W\subset \{|\widetilde h|<1\}$, monotonicity gives
 \[
 \operatorname{cap}_{\log}(W)=\operatorname{cap}_{\log}(\overline W)\le 1.
 \]
-By Lemma~3, the boundary $\partial W\subset \{|\widetilde h|=1\}$ has planar measure zero, so
+By Lemma~\ref{lem:level-set-measure-zero}, the boundary $\partial W\subset \{|\widetilde h|=1\}$ has planar measure zero, so
 \[
 \operatorname{Area}(W)=\operatorname{Area}(\overline W).
 \]
@@ -549,7 +549,7 @@ Let $U\subset \Lambda_f$ be a connected component containing exactly $m\ge 2$ ze
 \]
 
 \medskip
-\begin{lemma}
+\begin{lemma}\label{lem:first-positive-critical-value}
 \emph{The function $u$ has at least one critical point in $U$. Consequently the set of positive
 critical values of $u$ is nonempty, and it has a smallest element. Denote that smallest positive critical
 value by $\lambda_*$ .}
@@ -640,7 +640,7 @@ $\lambda_*$. \end{proof}
 Then $u$ has no critical values in $[0,4\alpha)$.
 
 \medskip
-\begin{lemma}
+\begin{lemma}\label{lem:superlevel-connected}
 \emph{For every $t\in [0,\lambda_*)$, the superlevel set $K_t:=\{u\ge t\}$ is connected. In particular,}
 \[
  K:=\{u\ge \alpha/2\},\qquad L:=\{u\ge 3\alpha/2\}
@@ -653,7 +653,7 @@ $z\in U\setminus K_t$ write $s:=u(z)\in(0,t)$, and set
 \[
  M_s:=U\cap\{e^{-t}\le |f|\le e^{-s/2}\}.
 \]
-As in the proof of Lemma~6, $M_s$ is compact and contained in $\{s/2\le u\le t\}$, so the vector field
+As in the proof of Lemma~\ref{lem:first-positive-critical-value}, $M_s$ is compact and contained in $\{s/2\le u\le t\}$, so the vector field
 \[
  X=\frac{\nabla u}{|\nabla u|^2}
 \]
@@ -675,7 +675,7 @@ z, & z\in K_t,\\
 \varphi_{\sigma(t-u(z))}(z), & z\in U\setminus K_t.
 \end{cases}
 \]
-As in Lemma~6, the trajectory segments remain in the compact slab $M_s$, so standard
+As in Lemma~\ref{lem:first-positive-critical-value}, the trajectory segments remain in the compact slab $M_s$, so standard
 continuous dependence for smooth ODEs implies that $H$ is continuous. Thus $H$ is a strong
 deformation retraction of $U$ onto $K_t$. Since $U$ is connected, $K_t$ is connected. The
 case $t=0$ is immediate.
@@ -700,7 +700,7 @@ Since $P(t)>0$ for $\alpha<t<2\alpha$, we have $q>0$. By Corollary~\ref{cor:comp
 
 \section{A generic spanning tree above the base level}
 
-\begin{lemma}[Connected regular regions are strips]
+\begin{lemma}[Connected regular regions are strips]\label{lem:regular-strip}
 \emph{Let $0<a<b$, and let $V\subset U$ be a connected
 open set such that:}
 \begin{enumerate}
@@ -810,7 +810,7 @@ V_\varepsilon^+:=V\cap\{b-\varepsilon<u<b\}.
 \end{proof}
 
 \medskip
-\begin{lemma}[Regular lemniscate components are Jordan domains]
+\begin{lemma}[Regular lemniscate components are Jordan domains]\label{lem:jordan-domain}
 \emph{Let $c$ be a regular value of
 $u=-\log|f|$, and let $W$ be a connected component of
 \[
@@ -844,7 +844,7 @@ $v\equiv -c$ on $H$. Thus $|f|$ is constant on $H$, impossible for a nonconstant
 compact $1$-manifold, it is a single smooth Jordan curve. Therefore $W$ is simply connected. \end{proof}
 
 \medskip
-\begin{lemma}[Regular-slab deformation and connectivity]
+\begin{lemma}[Regular-slab deformation and connectivity]\label{lem:regular-slab}
 \emph{Let $V$ be a connected component of
 $\{u>c\}$, and let $c<a<b$. Assume that $u$ has no critical points on
 \[
@@ -867,7 +867,7 @@ is a well-defined strong deformation retraction;}
 \item[(b)] \emph{if $V_{\ge b}$ is connected, then $V_{>a}$ is connected. More precisely, every point of $V_{>a}$ can be joined to
 $V_{\ge b}$ by a trajectory segment of $X=\nabla u/|\nabla u|^2$ lying entirely in $V_{>a}$;}
 \item[(c)] \emph{if moreover $a$ and $b$ are regular values, then every connected component of $V\cap\{a<u<b\}$ is
- a regular strip in the sense of Lemma~8.}
+ a regular strip in the sense of Lemma~\ref{lem:regular-strip}.}
 \end{enumerate}
 \end{lemma}
 
@@ -917,7 +917,7 @@ every boundary point of $S$ lying in $V$ belongs to one of the levels $\{u=a\}$ 
 \[
 \partial S\setminus \bigl(\{u=a\}\cup\{u=b\}\bigr)=\varnothing,
 \]
-so the side-boundary hypothesis of Lemma~8 is vacuous. Applying Lemma~8 to $S$ gives the desired
+so the side-boundary hypothesis of Lemma~\ref{lem:regular-strip} is vacuous. Applying Lemma~\ref{lem:regular-strip} to $S$ gives the desired
 strip structure. \end{proof}
 
 
@@ -936,7 +936,7 @@ and meets the connected component \(V\) of \(\{u>c\}\), we must have \(D\subset 
 \(D\subset V\cap\{u>d\}\), and by maximality of \(C\) inside \(V\cap\{u>d\}\) we get \(D=C\).
 
 \medskip
-\begin{lemma}[Geometric realization of a finite tree]
+\begin{lemma}[Geometric realization of a finite tree]\label{lem:geometric-tree-realization}
 \emph{Let $T$ be a finite tree with vertex set $V(T)$ and
 edge set $E(T)$. Suppose that to each vertex $v\in V(T)$ there is assigned a point $p_v\in U$, and to each
 edge $e=\{v,w\}\in E(T)$ there is assigned an embedded arc
@@ -1101,7 +1101,7 @@ show that $H$ is continuous on $[0,1]\times V$.
 Thus $H$ is a strong deformation retraction of $V$ onto $V_{\ge 2\alpha}$. Since $V$ is
 connected, $V_{\ge 2\alpha}$ is connected.
 
-Now let $T>2\alpha$ be a sufficiently large regular value such that $\{z\in V:u(z)>T\}$ has exactly $m$ connected components, one near each zero of $f$ in $V$. Since there are no critical values of $u$ in $[2\alpha,T]$, Lemma~10(a) gives a strong deformation retraction of $V_{\ge 2\alpha}$ onto
+Now let $T>2\alpha$ be a sufficiently large regular value such that $\{z\in V:u(z)>T\}$ has exactly $m$ connected components, one near each zero of $f$ in $V$. Since there are no critical values of $u$ in $[2\alpha,T]$, Lemma~\ref{lem:regular-slab}(a) gives a strong deformation retraction of $V_{\ge 2\alpha}$ onto
 \[
 V_{\ge T}:=\{z\in V:u(z)\ge T\}.
 \]
@@ -1149,13 +1149,13 @@ the absence of critical points on $V\cap\{c<u\le t_0\}$ gives a strong deformati
 \[
 V_{\ge t_0}:=\{z\in V:u\ge t_0\},
 \]
-so $V_{\ge t_0}$ is connected. Since there are no critical points in $\{z\in V:t_0\le u\le \tau_0\}$, Lemma~10(a) shows
+so $V_{\ge t_0}$ is connected. Since there are no critical points in $\{z\in V:t_0\le u\le \tau_0\}$, Lemma~\ref{lem:regular-slab}(a) shows
 that
 \[
 V_{\ge \tau_0}:=\{z\in V:u\ge \tau_0\}
 \]
-is connected. Next choose a regular value $\tau_1\in(\tau_0,\mu_1-\delta_1)$. Applying Lemma~10(a) on $[\tau_0,\tau_1]$,
-we find that $V_{\ge \tau_1}$ is connected. Lemma~10(b) applied with $a=\tau_0$ and $b=\tau_1$ now gives that
+is connected. Next choose a regular value $\tau_1\in(\tau_0,\mu_1-\delta_1)$. Applying Lemma~\ref{lem:regular-slab}(a) on $[\tau_0,\tau_1]$,
+we find that $V_{\ge \tau_1}$ is connected. Lemma~\ref{lem:regular-slab}(b) applied with $a=\tau_0$ and $b=\tau_1$ now gives that
 $\{z\in V:u>\tau_0\}$ is connected.
 
 \indent For each $r=1,\dots,s$, let $p_r$ be the unique critical point of $u$ with critical value $\mu_r$. Since $p_r$ is
@@ -1193,7 +1193,7 @@ necessary, each of the cross-sections $C_r^{-}, C_{r,1}^{+}, C_{r,2}^{+}$
 lies on the boundary of a unique connected component of $\Omega$.
 
 Let $S$ be a connected component of $\Omega$. Since $u$ has no critical points on $S$ and every side-boundary
-component of $S$ is a flow line of $X$, Lemma~8 applies: $S$ is a regular strip, with one connected lower
+component of $S$ is a flow line of $X$, Lemma~\ref{lem:regular-strip} applies: $S$ is a regular strip, with one connected lower
 cross-section and one connected upper cross-section, and every level section
 \[
 \Gamma_t:=S\cap\{u=t\}
@@ -1267,7 +1267,7 @@ We claim that
 \]
 
 Since $t$ is a regular value and $C_t(S)$ is a connected component of $\{u>t\}\cap V$,
-Lemma~9 implies that $\partial C_t(S)$ is a smooth Jordan curve contained in
+Lemma~\ref{lem:jordan-domain} implies that $\partial C_t(S)$ is a smooth Jordan curve contained in
 $\{u=t\}\cap V$.
 
 Because $t\in (a_S,b_S)\subset (\tau_0,T)\setminus \bigcup_{r=1}^s I_r$, the level
@@ -1311,7 +1311,7 @@ on $\Gamma_t$ are probability measures preserved by the flow.
 \[
 \widetilde\gamma_x(t):=\Phi_{s_0}(x,t),\qquad t\in(a_S,b_S),
 \]
-where $\Phi_{s_0}$ is the strip diffeomorphism from Lemma~8. We claim that $\widetilde\gamma_x$ extends continuously to
+where $\Phi_{s_0}$ is the strip diffeomorphism from Lemma~\ref{lem:regular-strip}. We claim that $\widetilde\gamma_x$ extends continuously to
 $[a_S,b_S]$, with endpoint values on the lower and upper cross-sections of $S$. Indeed, let $K_x^-$ and $K_x^+$
 be the closures in $\mathbb{C}$ of the sets
 \[
@@ -1418,7 +1418,7 @@ We already know that $W_{\tau_0}$ is connected. Since there are no critical poin
 \[
 V\cap\{\tau_0\le u\le \mu_1-\delta_1\},
 \]
-Lemma~10(a), applied on $[\tau_0,\mu_1-\delta_1]$, shows that
+Lemma~\ref{lem:regular-slab}(a), applied on $[\tau_0,\mu_1-\delta_1]$, shows that
 \[
 V^{\ge \mu_1-\delta_1}:=V\cap\{u\ge \mu_1-\delta_1\}
 \]
@@ -1426,8 +1426,8 @@ is connected because $V^{\ge \tau_0}$ is connected. Choose a regular value
 \[
 \tau_1\in(\mu_1-\delta_1,\mu_1).
 \]
-Applying Lemma~10(a) on $[\mu_1-\delta_1,\tau_1]$ shows that
-$V^{\ge \tau_1}$ is connected. Then Lemma~10(b), applied with
+Applying Lemma~\ref{lem:regular-slab}(a) on $[\mu_1-\delta_1,\tau_1]$ shows that
+$V^{\ge \tau_1}$ is connected. Then Lemma~\ref{lem:regular-slab}(b), applied with
 $a=\mu_1-\delta_1$ and $b=\tau_1$, implies that
 \[
 W_1:=V\cap\{u>\mu_1-\delta_1\}
@@ -1436,7 +1436,7 @@ is connected.
 
 By the component-inheritance paragraph above, both $W_{\tau_0}$ and $W_1$ are connected
 components of the global regular superlevel sets $\{u>\tau_0\}$ and $\{u>\mu_1-\delta_1\}$,
-respectively. Hence Lemma~9 applies to both of them, so each is a Jordan domain. Since
+respectively. Hence Lemma~\ref{lem:jordan-domain} applies to both of them, so each is a Jordan domain. Since
 \[
 \partial W_{\tau_0}\subset \{u=\tau_0\},
 \qquad
@@ -1454,7 +1454,7 @@ is an annulus. Since $\partial W_1\subset \{u=\mu_1-\delta_1\}$, we have
 \[
 A_0:=V\cap\{\tau_0<u<\mu_1-\delta_1\}=W_{\tau_0}\setminus \overline{W_1}.
 \]
-Therefore $A_0$ is a connected annulus. Since there are no critical points on $A_0$, Lemma~10(c) implies that every connected component of $A_0$ is a regular strip. Because $A_0$ is connected, it is a single regular strip. Hence there is exactly one strip whose lower cross-section lies in $\{u=\tau_0\}$; denote it by $S_0$.
+Therefore $A_0$ is a connected annulus. Since there are no critical points on $A_0$, Lemma~\ref{lem:regular-slab}(c) implies that every connected component of $A_0$ is a regular strip. Because $A_0$ is connected, it is a single regular strip. Hence there is exactly one strip whose lower cross-section lies in $\{u=\tau_0\}$; denote it by $S_0$.
 
 \smallskip
 \noindent\emph{Critical neighborhoods.}
@@ -1540,7 +1540,7 @@ that contains $K_j$, and set
 \[
 Y_j:=W_j\cap\{u\ge T\}.
 \]
-By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_j\}$. Hence Lemma~9 implies that $W_j$ is a Jordan domain.
+By the component-inheritance paragraph above, $W_j$ is also a connected component of the global regular superlevel set $\{u>c_j\}$. Hence Lemma~\ref{lem:jordan-domain} implies that $W_j$ is a Jordan domain.
 
 We claim that $Y_j$ is connected.
 
@@ -1622,7 +1622,7 @@ is an annulus. Because $\partial K_j\subset \{u=T\}$, we obtain
 \[
 A_j:=W_j\cap\{c_j<u<T\}=W_j\setminus K_j.
 \]
-Therefore $A_j$ is a connected annulus. Since there are no critical points on $A_j$, Lemma~10(c) implies that every connected component of $A_j$ is a regular strip. Because $A_j$ is connected, it is a single regular strip. Hence there is exactly one strip of $\Omega$ whose upper cross-section is $\partial K_j$; denote it by $S_j^{\mathrm{top}}$.
+Therefore $A_j$ is a connected annulus. Since there are no critical points on $A_j$, Lemma~\ref{lem:regular-slab}(c) implies that every connected component of $A_j$ is a regular strip. Because $A_j$ is connected, it is a single regular strip. Hence there is exactly one strip of $\Omega$ whose upper cross-section is $\partial K_j$; denote it by $S_j^{\mathrm{top}}$.
 
 \medskip
 \noindent\textbf{Exhaustion lemma for the strips.}
@@ -1642,7 +1642,7 @@ $S_j^{\mathrm{top}}$.
 
 \smallskip
 \noindent\emph{Proof.}
-Let $S$ be a connected component of $\Omega$. By Lemma~8, $S$ is a regular strip,
+Let $S$ be a connected component of $\Omega$. By Lemma~\ref{lem:regular-strip}, $S$ is a regular strip,
 so it has exactly one lower cross-section and exactly one upper cross-section, both lying
 on boundary components of $\Omega$ contained in level sets of $u$.
 Now $\partial\Omega$ consists of:
@@ -1696,8 +1696,16 @@ h(v_0)=\tau_0,\qquad h(w_r)=\mu_r,\qquad h(\ell_j)=T+1.
 Every oriented edge goes from a vertex of smaller height to a vertex of larger height.
 Hence there is no directed cycle. Moreover, iterating the unique predecessor map from
 any non-root vertex strictly decreases height, so after finitely many steps one reaches
-$v_0$. Thus every vertex is connected to $v_0$, and the graph is connected and acyclic.
-Therefore $T$ is a finite rooted tree.
+$v_0$. Thus every vertex is joined to $v_0$ by an undirected path, and the underlying
+graph is connected.
+
+We now show that the underlying graph is acyclic. By the construction above, every
+non-root vertex has exactly one incoming edge, while $v_0$ has none. Therefore
+\[
+|E(T)| = |V(T)| - 1.
+\]
+Since the underlying graph is finite and connected, this implies that it is a tree. Hence
+the underlying graph of $T$ is acyclic, and therefore $T$ is a finite rooted tree.
 
 We now realize \(T\) geometrically. The neighborhoods \(N_r\) and the value \(T\) have already been fixed, and hence so have \(\Omega\), its strips \(S\), and the trajectory segments \(\gamma_S\).
 
@@ -1768,13 +1776,13 @@ The geometric vertices are
 \[
  p_{v_0}=x_0,\qquad p_{w_r}=c_r,\qquad p_{\ell_j}=a_j.
 \]
-We verify the hypotheses of Lemma~11 for the family of arcs $\{A_S\}$. First, if $S\neq S'$, then
+We verify the hypotheses of Lemma~\ref{lem:geometric-tree-realization} for the family of arcs $\{A_S\}$. First, if $S\neq S'$, then
 \[
 \gamma_S\cap\gamma_{S'}=\varnothing,
 \]
 because distinct strips are disjoint subsets of $\Omega$. Second, for each $r$, the tree $T_r\subset N_r$ meets the rest of the construction only at its terminal points $x_{r,-},x_{r,1},x_{r,2}$: indeed the neighborhoods $N_r$ are pairwise disjoint, each $N_r$ is disjoint from every $Z_j$, and a strip trajectory can meet $\partial N_r$ only at the cross-section belonging to that strip. Third, for each $j$, the arc $\sigma_j\subset K_j\subset Z_j$ meets the rest of the construction only at its endpoint $b_j\in\partial K_j$. Indeed, the sets $Z_1,\dots,Z_m$ are pairwise disjoint and disjoint from all $N_r$, so the arcs $\sigma_j$ are pairwise disjoint and are disjoint from every $T_r$.
 
-It follows that the interior of each $A_S$ contains no geometric vertex, the interiors of distinct arcs $A_S$ and $A_{S'}$ are disjoint, and two distinct arcs can meet only at a common geometric endpoint corresponding to a common endpoint of the associated edges of $T$. Hence Lemma~11 applies:
+It follows that the interior of each $A_S$ contains no geometric vertex, the interiors of distinct arcs $A_S$ and $A_{S'}$ are disjoint, and two distinct arcs can meet only at a common geometric endpoint corresponding to a common endpoint of the associated edges of $T$. Hence Lemma~\ref{lem:geometric-tree-realization} applies:
 \[
  H:=\bigcup_S A_S
 \]
@@ -1799,7 +1807,7 @@ number $\alpha$ introduced above. Define the compact collars
 \[
 K:=\{z\in U:u(z)\ge \alpha/2\},\qquad L:=\{z\in U:u(z)\ge 3\alpha/2\}.
 \]
-Then $K$ and $L$ are compact and connected by Lemma~7.
+Then $K$ and $L$ are compact and connected by Lemma~\ref{lem:superlevel-connected}.
 
 \indent Set
 \[
@@ -1826,9 +1834,9 @@ $u>c$ lie arbitrarily close to $p$, so again $p\in\bigcup_i \overline{W_i}$. The
 \[
 L=\bigcup_{i=1}^r \overline{W_i}.
 \]
-Since $L$ is connected by Lemma~7 and the $\overline{W_i}$ are pairwise disjoint closed subsets of $L$, it follows
+Since $L$ is connected by Lemma~\ref{lem:superlevel-connected} and the $\overline{W_i}$ are pairwise disjoint closed subsets of $L$, it follows
 that $r=1$. Let $W:=W_1$. Because $W\subset U\subset\{u>0\}$ and $c>0$, the set $W$ is also a connected
-component of the global superlevel set $\{u>c\}$. Hence Lemma~9 implies that $W$ is a Jordan domain and
+component of the global superlevel set $\{u>c\}$. Hence Lemma~\ref{lem:jordan-domain} implies that $W$ is a Jordan domain and
 \[
 L=\overline W.
 \]
@@ -1842,8 +1850,8 @@ closures are pairwise disjoint and
 \[
 K=\{u\ge d\}=\bigcup_{i=1}^s \overline{Y_i}.
 \]
-Since $K$ is connected by Lemma~7, we must have $s=1$. Let $Y:=Y_1$. Because $d>0$ and $Y\subset U\subset\{u>0\}$,
-this set $Y$ is a connected component of the global superlevel set $\{u>d\}$. Hence Lemma~9 implies that $Y$
+Since $K$ is connected by Lemma~\ref{lem:superlevel-connected}, we must have $s=1$. Let $Y:=Y_1$. Because $d>0$ and $Y\subset U\subset\{u>0\}$,
+this set $Y$ is a connected component of the global superlevel set $\{u>d\}$. Hence Lemma~\ref{lem:jordan-domain} implies that $Y$
 is a Jordan domain and
 \[
 K=\overline Y.
@@ -2299,8 +2307,23 @@ In particular, no critical point of $u_g$ in $K$ has critical value in $[\alpha,
 \beta_*:=\frac{\eta_*}{2}.
 \]
 
-\noindent\textit{Step 5: make the moduli distinct.} Before comparing moduli, we record that no critical point of $g$ in $K$ is a zero of $g$.
-Indeed, if $c\in K$ satisfies
+\noindent\textit{Step 5: make the moduli distinct.} We first dispose of the case $Z_K=\varnothing$.
+In that case, by the first part of Step~4 we chose $\lambda$ so small that
+\[
+|g'(z)| = |f'(z)+\lambda| \ge \delta_K/2 > 0
+\qquad (z\in K),
+\]
+so $g'$ has no zeros on $K$. Hence $g$ has no critical points on $K$, and therefore
+$u_g$ has no critical values arising from critical points in $K$. In particular,
+conclusion~(4) is vacuous in this case. We may therefore choose any $\beta$ with
+\[
+0<|\beta|<\min\{\beta_1,\beta_*\},
+\]
+where $\beta_1$ is as in Step~1 and $\beta_*=1$ is the choice made in Step~4, and
+the lemma is proved in this case.
+
+Assume from now on that $Z_K\neq\varnothing$. Before comparing moduli, we record
+that no critical point of $g$ in $K$ is a zero of $g$. Indeed, if $c\in K$ satisfies
 \[
 g'(c)=0,
 \]
@@ -2692,7 +2715,7 @@ contained in
 \[
 \{u=\alpha\}\cup\{u=2\alpha\},
 \]
-which has planar measure zero by Lemma~3. Thus $1_{E_g}\to 1_E$ almost everywhere
+which has planar measure zero by Lemma~\ref{lem:level-set-measure-zero}. Thus $1_{E_g}\to 1_E$ almost everywhere
 on $B$.
 
 Also, for $g$ sufficiently close to $f$, uniform convergence of the gradients gives a
@@ -2735,7 +2758,7 @@ ordering of the $M$ marked vertices. The $M$ gaps between consecutive marked ver
 tour have total length $2L$, so one of them has length at most $2L/M$. The corresponding unique
 path in the original tree has at most that length. \end{proof}
 
-\begin{proof}[Proof of Theorem~1]
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
 If $n=1$, then the unique root may be joined to itself by the constant curve, so the conclusion is immediate. If $f$ has a multiple zero, the conclusion is also immediate. Thus we may assume that $f$ is squarefree and $n\ge 2$.
 
 \indent By the component lemma, there exists a connected component $U\subset \Lambda_f$ containing exactly
@@ -2749,7 +2772,7 @@ Choose $(\lambda,\beta)$ as in Lemma~\ref{lem:explicit-perturbation} so small th
 \[
 \|g_{\lambda,\beta}-f\|_{C^1(K)}<\varepsilon_0,
 \]
-where $\varepsilon_0>0$ is small enough for Lemmas~14 and~15 to apply, and set
+where $\varepsilon_0>0$ is small enough for Lemmas~\ref{lem:component-stability} and~\ref{lem:collar-integral-continuity} to apply, and set
 \[
 g:=g_{\lambda,\beta}.
 \]
@@ -2813,7 +2836,7 @@ m-\frac q2+\frac q8
 m-\frac{3q}{8}.
 \]
 
-By Lemma~16, some pair of perturbed roots, say \(b_r\in D_r\) and \(b_s\in D_s\), is joined in \(G\) by
+By Lemma~\ref{lem:tree-lemma}, some pair of perturbed roots, say \(b_r\in D_r\) and \(b_s\in D_s\), is joined in \(G\) by
 a subpath of length at most
 \[
 \frac{2}{m}\len(G)
