@@ -1,34 +1,41 @@
 # Teaching — courses, with semester, role, and materials.
 
 - semester: "Spring 2026"
-  course: "Math 245"
-  title: "Riemann Surfaces"
-  role: "Instructor"
-  description: "Graduate course. Sheaf cohomology, divisors, Riemann–Roch, theta functions, and uniformization."
+  course: "Math 254b"
+  title: "Alegbraic Number Theory II"
+  role: "T.A"
+  description: "Graduate course. Statements and proofs of (local and global) class field theory, complex multiplication of elliptic curves"
   links:
     - name: syllabus
       url: "#"
-    - name: notes
+
+- semester: "Spring 2026"
+  course: "Math 256b"
+  title: "Alegbraic Geometry II"
+  role: "T.A"
+  description: "Graduate course. Sheaf cohomology, divisors, intersection theory, curves and surfaces."
+  links:
+    - name: syllabus
       url: "#"
 
 - semester: "Fall 2025"
-  course: "Math 132"
-  title: "Complex Analysis"
-  role: "Instructor"
-  description: "Undergraduate course. Holomorphic functions, contour integration, conformal mapping, with an excursion into modular forms at the end."
+  course: "Math 256a"
+  title: "Alegbraic Geometry I"
+  role: "T.A"
+  description: "Graduate course. Sheaves, schemes, morphisms of schemes, sheaf cohomology."
   links:
     - name: syllabus
       url: "#"
-    - name: notes
-      url: "#"
-    - name: psets
+
+
+- semester: "Fall 2025, Spring 2025, Fall 2024"
+  course: "Math 174"
+  title: "Introduction to Category Theory"
+  role: "Lead Instructor"
+  description: "Student-led course. Covers categories, functors, natural transformations, universal properties, (co)limits, and adjunctions."
+  links:
+    - name: syllabus
       url: "#"
 
-- semester: "Spring 2025"
-  course: "Math 51"
-  title: "Linear Algebra and Multivariable Calculus"
-  role: "Teaching Assistant"
-  description: "Section instructor and grader. Prepared weekly worksheets on changes of basis and the spectral theorem."
-  links:
-    - name: worksheets
-      url: "#"
+
+
