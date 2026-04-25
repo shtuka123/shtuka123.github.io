@@ -2,7 +2,7 @@
 
 - semester: "Spring 2026"
   course: "Math 254b"
-  title: "Alegbraic Number Theory II"
+  title: "Algebraic Number Theory II"
   role: "T.A"
   description: "Graduate course. Statements and proofs of (local and global) class field theory, complex multiplication of elliptic curves"
   links:
@@ -11,7 +11,7 @@
 
 - semester: "Spring 2026"
   course: "Math 256b"
-  title: "Alegbraic Geometry II"
+  title: "Algebraic Geometry II"
   role: "T.A"
   description: "Graduate course. Sheaf cohomology, divisors, intersection theory, curves and surfaces."
   links:
@@ -20,7 +20,7 @@
 
 - semester: "Fall 2025"
   course: "Math 256a"
-  title: "Alegbraic Geometry I"
+  title: "Algebraic Geometry I"
   role: "T.A"
   description: "Graduate course. Sheaves, schemes, morphisms of schemes, sheaf cohomology."
   links:
