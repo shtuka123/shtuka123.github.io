@@ -87,7 +87,7 @@ $$
 H^1_{\mathrm{\acute et}}
 \!\left(Y_K\otimes \overline{\mathbb Q},\mathcal V_\ell\right)_{\pi_f}
 \;\approx\;
-\rho_{f,\ell}\otimes \pi_f^K.
+\bigoplus \rho_{f,\ell}\otimes \pi_f^K.
 $$
 
 Here $Y_K$ is a modular curve, $\mathcal V_\ell$ is the relevant
@@ -101,7 +101,7 @@ simultaneously under both actions produces the Langlands correspondence.
 ## Why Shimura varieties are powerful but selective
 
 Modular curves are the simplest Shimura varieties. Higher-dimensional
-Shimura varieties extend the same idea: they are moduli spaces whose
+Shimura varieties extend the same idea: they are moduli spaces {% include sn.html id=3 content="Technically I'm lying here: conjecturally all Shimura varieties are moduli spaces of some sort of motivic object, but in practice, the best thing we can say are that some Shimura varieties are moduli spaces of Hodge structures."} whose
 cohomology carries Hecke actions and Galois actions at the same time.
 
 But Shimura varieties have a built-in limitation. Their cohomology sees
@@ -170,7 +170,7 @@ $$
 (\operatorname{id}_X\times \operatorname{Frob}_S)^*\mathcal E.
 $$
 
-The points $x_i$ are called the **legs** of the shtuka.{% include sn.html id=3 content="A leg is a point of the curve where the bundle is allowed to change. Away from the legs, the bundle and its Frobenius pullback are identified." %}
+The points $x_i$ are called the **legs** of the shtuka.{% include sn.html id=4 content="A leg is a point of the curve where the bundle is allowed to change. Away from the legs, the bundle and its Frobenius pullback are identified." %}
 
 Thus a shtuka is a vector bundle which is modified at finitely many
 points and then closed up by Frobenius.
@@ -247,7 +247,7 @@ $$
 For $GL_n$, traces determine semisimple Galois representations. This is
 why Drinfeld's shtukas for $GL_2$, and Laurent Lafforgue's higher-rank
 shtukas for $GL_n$, are powerful enough to prove the global Langlands
-correspondence over function fields.{% include sn.html id=4 content="Strictly speaking, Vincent Lafforgue's general excursion formalism uses arbitrary finite sets of legs. But for $GL_n$, two-legged Drinfeld shtukas already capture the classical trace/pseudocharacter mechanism." %}
+correspondence over function fields.{% include sn.html id=5 content="Strictly speaking, Vincent Lafforgue's general excursion formalism uses arbitrary finite sets of legs. But for $GL_n$, two-legged Drinfeld shtukas already capture the classical trace/pseudocharacter mechanism." %}
 
 ## Excursion operators
 
