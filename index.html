@@ -1,18 +1,16 @@
 ---
 layout: page
 ---
-<h1>ani</h1>
+<h1>Aniruddh V.</h1>
 
 <p>
-  I work on mathematics — mostly where analysis, geometry, and algebra
-  meet. Lately I have been thinking about the heat equation on moduli
-  of elliptic curves, the Weil representation as monodromy, and what
-  any of it means.
+ Hi! I am currently an undergraduate at Berkeley studying math and physics. I am interested in special cycles and their connections to the (relative) Langlands program. More recently, I have 
+ also been interested and increasing and benchmarking frontier reasoning models' mathemtical reasoning capabiltiies. 
 </p>
 
 <p>
   You can reach me at
-  <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
+  <a href="mailto:{{ site.email }}"> "aniruddhv" + "@" school.edu </a>.
 </p>
 
 <h2>research</h2>
@@ -21,7 +19,7 @@ layout: page
   <li>
     <span class="date">{{ item.year }}</span>
     <div>
-      <div class="title"><a href="{{ '/research.html' | relative_url }}">{{ item.title }}</a></div>
+      <div class="title"><a href="{{ '/research/' | relative_url }}">{{ item.title }}</a></div>
       <div class="excerpt">{{ item.venue }}{%- for link in item.links -%} · <a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}</div>
     </div>
   </li>
@@ -34,7 +32,7 @@ layout: page
   <li>
     <span class="date">{{ item.semester }}</span>
     <div>
-      <div class="title"><a href="{{ '/teaching.html' | relative_url }}">{{ item.course }} · {{ item.title }}</a></div>
+      <div class="title"><a href="{{ '/teaching/' | relative_url }}">{{ item.course }} · {{ item.title }}</a></div>
       <div class="excerpt"><em>{{ item.role }}</em></div>
     </div>
   </li>
@@ -60,7 +58,7 @@ layout: page
   <li>
     <span class="date">{{ item.year }}</span>
     <div>
-      <div class="title"><a href="{{ '/misc.html' | relative_url }}">{{ item.title | markdownify | remove: '<p>' | remove: '</p>' }}</a></div>
+      <div class="title"><a href="{{ '/misc/' | relative_url }}">{{ item.title | markdownify | remove: '<p>' | remove: '</p>' }}</a></div>
       {%- if item.links -%}
       <div class="excerpt">
       {%- for link in item.links -%}{% unless forloop.first %} · {% endunless %}<a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}

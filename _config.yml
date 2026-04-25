@@ -1,5 +1,5 @@
-title: ani
-description: Personal site.
+title: Aniruddh V.
+description: 
 url: ""
 baseurl: ""
 author: ani
@@ -19,7 +19,13 @@ kramdown:
   # untouched and MathJax handles them directly.
   math_engine: null
 
-permalink: /blog/:title/
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      permalink: /blog/:slug/
 
 exclude:
   - Gemfile
