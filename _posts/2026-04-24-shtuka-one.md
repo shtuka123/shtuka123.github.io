@@ -2,7 +2,7 @@
 layout: post
 title: Shtukas: Part I
 date: 2026-04-24
-description: How Frobenius-modified bundles turn the Langlands correspondence into geometry.
+description: What is a shtuka?
 ---
 
 For my first post, I want to explain the mathematical object that inspired the naming of this website: shtukas. 
