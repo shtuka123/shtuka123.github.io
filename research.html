@@ -1,0 +1,27 @@
+---
+layout: page
+title: research
+---
+<h1>research</h1>
+<p class="byline">papers, preprints, and notes.</p>
+
+<ul class="post-list">
+{%- for item in site.data.research -%}
+  <li>
+    <span class="date">{{ item.year }}</span>
+    <div>
+      <div class="title">
+        {%- if item.links and item.links[0] -%}
+          <a href="{{ item.links[0].url }}">{{ item.title }}</a>
+        {%- else -%}
+          {{ item.title }}
+        {%- endif -%}
+      </div>
+      <div class="excerpt">{{ item.description | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+      <div class="excerpt">{{ item.venue | markdownify | remove: '<p>' | remove: '</p>' }}{%- for link in item.links -%} · <a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}</div>
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<a href="{{ '/' | relative_url }}" class="back">← home</a>

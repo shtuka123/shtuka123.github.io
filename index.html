@@ -1,26 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>shtuka123 — Files</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
-    h1 { font-size: 1.4em; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 8px 0; }
-    a { color: #0366d6; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <h1>Writing</h1>
-  <ul>
-    <!-- Add your PDFs here. For each file, copy this pattern: -->
-    <!-- <li><a href="your-file.pdf">Your File Name</a></li> -->
+---
+layout: page
+---
+<h1>ani</h1>
 
-    <li><a href="gk_writeup.pdf">Erdos 1095 (partial)</a></li>
-    <li><a href="1041/main.pdf">Erdos 1041</a></li>
-  </ul>
-</body>
-</html>
+<p>
+  I work on mathematics — mostly where analysis, geometry, and algebra
+  meet. Lately I have been thinking about the heat equation on moduli
+  of elliptic curves, the Weil representation as monodromy, and what
+  any of it means.
+</p>
+
+<p>
+  You can reach me at
+  <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
+</p>
+
+<h2>research</h2>
+<ul class="post-list">
+{%- for item in site.data.research limit: 2 -%}
+  <li>
+    <span class="date">{{ item.year }}</span>
+    <div>
+      <div class="title"><a href="{{ '/research.html' | relative_url }}">{{ item.title }}</a></div>
+      <div class="excerpt">{{ item.venue }}{%- for link in item.links -%} · <a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}</div>
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<h2>teaching</h2>
+<ul class="post-list wide-date">
+{%- for item in site.data.teaching limit: 2 -%}
+  <li>
+    <span class="date">{{ item.semester }}</span>
+    <div>
+      <div class="title"><a href="{{ '/teaching.html' | relative_url }}">{{ item.course }} · {{ item.title }}</a></div>
+      <div class="excerpt"><em>{{ item.role }}</em></div>
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<h2>blog</h2>
+<ul class="post-list">
+{%- for post in site.posts limit: 3 -%}
+  <li>
+    <span class="date">{{ post.date | date: "%b&nbsp;%Y" }}</span>
+    <div>
+      <div class="title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></div>
+      {%- if post.description -%}<div class="excerpt">{{ post.description }}</div>{%- endif -%}
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<h2>miscellaneous</h2>
+<ul class="post-list">
+{%- for item in site.data.misc limit: 2 -%}
+  <li>
+    <span class="date">{{ item.year }}</span>
+    <div>
+      <div class="title"><a href="{{ '/misc.html' | relative_url }}">{{ item.title | markdownify | remove: '<p>' | remove: '</p>' }}</a></div>
+      {%- if item.links -%}
+      <div class="excerpt">
+      {%- for link in item.links -%}{% unless forloop.first %} · {% endunless %}<a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </li>
+{%- endfor -%}
+</ul>

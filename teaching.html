@@ -1,0 +1,31 @@
+---
+layout: page
+title: teaching
+---
+<h1>teaching</h1>
+<p class="byline">courses I have taught or assisted.</p>
+
+<ul class="post-list wide-date">
+{%- for item in site.data.teaching -%}
+  <li>
+    <span class="date">{{ item.semester }}</span>
+    <div>
+      <div class="title">
+        {%- if item.links and item.links[0] -%}
+          <a href="{{ item.links[0].url }}">{{ item.course }} · {{ item.title }}</a>
+        {%- else -%}
+          {{ item.course }} · {{ item.title }}
+        {%- endif -%}
+      </div>
+      <div class="excerpt"><em>{{ item.role }}.</em> {{ item.description | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+      {%- if item.links -%}
+      <div class="excerpt">
+      {%- for link in item.links -%}{% unless forloop.first %} · {% endunless %}<a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<a href="{{ '/' | relative_url }}" class="back">← home</a>

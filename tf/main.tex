@@ -1,0 +1,296 @@
+\documentclass[leqno,12pt,a4paper, openany]{amsbook}
+\pdfoutput=1
+%-------------------------------------------------------------------------------
+\usepackage[full]{textcomp}
+\usepackage{newpxtext}
+\usepackage{comment}
+\usepackage{cabin} % sans serif
+\usepackage[varqu,varl]{inconsolata} % sans serif typewriter
+\usepackage[bigdelims,vvarbb]{newpxmath} % bb from STIX
+\usepackage[cal=cm,bb=esstix,bbscaled=1.05]{mathalfa} % mathcal
+\usepackage[margin=2.395cm]{geometry}
+\usepackage{savesym}
+\let\savedegree\bigtimes
+\let\bigtimes\relax
+\usepackage{mathabx}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\let\bigtimes\savedegree
+
+\usepackage{hyperref}
+\hypersetup{
+ colorlinks,
+ linkcolor={blue!90!black},
+ citecolor={red!80!black},
+ urlcolor={blue!50!black}
+}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{cite}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{cleveref}
+
+\newcommand{\ani}[1]{{\color{blue} \sf
+    $\spadesuit\spadesuit\spadesuit$ ANI: [#1]}}
+
+%-------------------------------------------------------------------------------
+\renewcommand{\baselinestretch}{1.1}
+\setlist[enumerate]{labelsep=*, leftmargin=1.5pc}
+\setlist[enumerate]{label=\normalfont(\roman*), ref=\roman*}
+%-------------------------------------------------------------------------------
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+
+
+
+\newtheorem{innercustomthm}{Theorem}
+\newenvironment{customthm}[1]
+  {\renewcommand\theinnercustomthm{#1}\innercustomthm}
+  {\endinnercustomthm}
+
+\newtheorem{innercustomcor}{Corollary}
+\newenvironment{customcor}[1]
+  {\renewcommand\theinnercustomcor{#1}\innercustomcor}
+  {\endinnercustomcor}  
+ 
+\newtheorem{innercustomprop}{Proposition}
+\newenvironment{customprop}[1]
+  {\renewcommand\theinnercustomprop{#1}\innercustomprop}
+  {\endinnercustomprop}  
+ 
+ 
+\newtheorem{innercustomconj}{Conjecture}
+\newenvironment{customconj}[1]
+  {\renewcommand\theinnercustomconj{#1}\innercustomconj}
+  {\endinnercustomconj}
+
+
+%-------------------------------------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{example}[thm]{Example}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{notation*}{Notation}
+\newtheorem*{organization*}{Organization}
+\newtheorem*{theorem*}{Theorem}
+\numberwithin{equation}{section}
+%-------------------------------------------------------------------------------
+
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\Gr}{\mathbf{Gr}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\lex}{\text{lex}}
+\newcommand{\inn}{\text{in}}
+\newcommand{\reg}{\text{reg}}
+\newcommand{\rad}{\text{rad}}
+\newcommand{\sat}{\text{sat}}
+\newcommand{\GL}{\text{GL}}
+
+
+\newcommand{\afrak}{\mathfrak{a}}
+\newcommand{\bfrak}{\mathfrak{b}}
+\newcommand{\cfrak}{\mathfrak{c}}
+\newcommand{\dfrak}{\mathfrak{d}}
+\newcommand{\efrak}{\mathfrak{e}}
+\newcommand{\ffrak}{\mathfrak{f}}
+\newcommand{\gfrak}{\mathfrak{g}}
+\newcommand{\hfrak}{\mathfrak{h}}
+\newcommand{\ifrak}{\mathfrak{i}}
+\newcommand{\jfrak}{\mathfrak{j}}
+\newcommand{\kfrak}{\mathfrak{k}}
+\newcommand{\lfrak}{\mathfrak{l}}
+\newcommand{\mfrak}{\mathfrak{m}}
+\newcommand{\nfrak}{\mathfrak{n}}
+\newcommand{\ofrak}{\mathfrak{o}}
+\newcommand{\pfrak}{\mathfrak{p}}
+\newcommand{\qfrak}{\mathfrak{q}}
+\newcommand{\rfrak}{\mathfrak{r}}
+\newcommand{\sfrak}{\mathfrak{s}}
+\newcommand{\tfrak}{\mathfrak{t}}
+\newcommand{\ufrak}{\mathfrak{u}}
+\newcommand{\vfrak}{\mathfrak{v}}
+\newcommand{\wfrak}{\mathfrak{w}}
+\newcommand{\xfrak}{\mathfrak{x}}
+\newcommand{\yfrak}{\mathfrak{y}}
+\newcommand{\zfrak}{\mathfrak{z}}
+
+\newcommand{\BA}{\mathbf{A}}
+\newcommand{\BB}{\mathbf{B}}
+\newcommand{\BC}{\mathbf{C}}
+\newcommand{\BD}{\mathbf{D}}
+\newcommand{\BE}{\mathbf{E}}
+\newcommand{\BF}{\mathbf{F}}
+\newcommand{\BG}{\mathbf{G}}
+\newcommand{\BH}{\mathbf{H}}
+\newcommand{\BI}{\mathbf{I}}
+\newcommand{\BJ}{\mathbf{J}}
+\newcommand{\BK}{\mathbf{K}}
+\newcommand{\BL}{\mathbf{L}}
+\newcommand{\BM}{\mathbf{M}}
+\newcommand{\BN}{\mathbf{N}}
+\newcommand{\BO}{\mathbf{O}}
+\newcommand{\BP}{\mathbf{P}}
+\newcommand{\BQ}{\mathbf{Q}}
+\newcommand{\BR}{\mathbf{R}}
+\newcommand{\BS}{\mathbf{S}}
+\newcommand{\BT}{\mathbf{T}}
+\newcommand{\BU}{\mathbf{U}}
+\newcommand{\BV}{\mathbf{V}}
+\newcommand{\BW}{\mathbf{W}}
+\newcommand{\BX}{\mathbf{X}}
+\newcommand{\BY}{\mathbf{Y}}
+\newcommand{\BZ}{\mathbf{Z}}
+
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Ical}{\mathcal{I}}
+\newcommand{\Jcal}{\mathcal{J}}
+\newcommand{\Kcal}{\mathcal{K}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Qcal}{\mathcal{Q}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Ucal}{\mathcal{U}}
+\newcommand{\Vcal}{\mathcal{V}}
+\newcommand{\Wcal}{\mathcal{W}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Spv}{Spv}
+\DeclareMathOperator{\Spa}{Spa}
+\DeclareMathOperator{\Cont}{Cont}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Sh}{Sh}
+\DeclareMathOperator{\MSpec}{MSpec}
+\DeclareMathOperator{\et}{\text{\'et}}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Pro}{Pro}
+\DeclareMathOperator{\proet}{\text{pro\'et}}
+\DeclareMathOperator{\profet}{\text{prof\'et}}
+\DeclareMathOperator{\proetqc}{\text{pro\'etqc}}
+\DeclareMathOperator{\fet}{\text{f\'et}}
+\DeclareMathOperator{\dR}{dR}
+\DeclareMathOperator{\HT}{HT}
+\DeclareMathOperator{\Fil}{Fil}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\an}{an}
+\DeclareMathOperator{\FinSet}{FinSet}
+\DeclareMathOperator{\ProFinSet}{ProFinSet}
+\DeclareMathOperator{\PSh}{PSh}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Mod}{Mod}
+\DeclareMathOperator{\alHom}{alHom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Perf}{Perf}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\Ab}{Ab}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\vol}{vol}
+\begin{document}
+
+
+
+
+\title{The Trace Formula}
+\date{\today}
+\frontmatter
+\maketitle{}
+
+% 3. Abstract Page
+% \cleardoublepage ensures it starts on a right-hand page (odd number)
+
+\chapter*{Abstract} 
+The goal of these notes is to understand (relative/stable) trace formulae, with an eye towards how \emph{comparisons} of such formulae can be used to prove interesting results, such as the Jacquet-Langlands correspondence, Waldspurger's formula, or even more recent work of Yuan-Zhang-Zhang on the Gross-Zagier formula for Shimura curves and of Yun-Zhang on moduli of shtukas.
+
+We first understand the basics of how trace formula behave by studying them for finite groups and compact quotients, culminating in a proof of Frobenius reciprocity and the Poisson Summation formula. Then we briefly discuss functoriality, before discussing difficulties that arise in non-compact settings. Then we specialize to the case of $\GL_2$, and prove the Jacquet-Langlands correspondence using 
+the trace formula for $\GL_2$. From here, we move on to comparisons of trace formulae, with an eye towards the Gross-Zagier-Yuan-Zhang-Zhang theorem and Waldspurger's formula. We conclude by discussing some results of Yun-Zhang in the function field setting, where using a comparison of trace formula approach, they are able to compute \emph{all} derivatives of an automorphic $L$-function in terms of 
+intersection theory on the moduli stack of shtukas. 
+
+% 4. Acknowledgments Page
+
+
+\tableofcontents{}
+
+
+
+\mainmatter
+
+\chapter{Introduction}
+
+\section{What is a trace formula?}
+
+Let $G$ be a unimodular (i.e that the left and right Haar measures coincide) locally compact group, and $\Gamma$ a discrete subgroup of $G$. Upon fixing a Haar measure on $dg$ on $G$, we can form thw Hilbert space \[ L^2(\Gamma \backslash G) := \left\{ f \colon \Gamma \backslash G \to \BC : \int_{\Gamma \backslash G} |f(g)|^2 dg < \infty  \right\} \]
+
+This space naturally becomes a representation of $G$ via right translation: if for $\phi \in L^2(\Gamma \backslash G)$ and $x, g \in G$, we define \[ (R(g) \phi)(x) = \phi(xg) \] then $R$ is the \emph{right-regular} representation of $G$. Our fundamental goal is to understand this representation. We will mostly be interested in the case where $G$ is a real Lie group and $\Gamma$ is a lattice in $G$, or $G$ (resp $\Gamma$) is the adelic (resp rational) points of some reductive 
+group over $\BQ$. 
+
+When studying such representations, it is natural to study the trace of $R(g)$. This can work well for finite groups, but begins to fail once the quotient $\Gamma \backslash G$ is infinite. To remedy this, we view $L^2(\Gamma \backslash G)$ as a representation of the 
+algebra $C_c(G)$ of compactly supported functions on $G$. Given $f \in C_c(g)$, we obtain a representation $R(f)$ by right convolution: For $ \phi \in L^2(\Gamma \backslash G)$ and $x \in G$, we define \[ (R(f)\phi )(x) = \int_G f(y) \phi(xy) dy \] 
+The goal of the trace formula is to compute $ \tr R(f)$. In general, this doesn't need to make sense, however if the quotient is compact then it always makes sense. 
+
+We can write:
+\begin{align*}
+    (R(f) \phi)(x) &= \int_G f(y) \phi(xy) dy \\ 
+    &= \int_G f(x^{-1}y \phi(y)) dy \\ 
+    &= \int_{\Gamma \backslash G} \sum_{\gamma \in \Gamma} f(x^{-1} \gamma y) \phi(\gamma y) dy \\ 
+    &= \int_{\Gamma \backslash G} \left( \sum_{\gamma \in \Gamma} f(x^{-1} \gamma y) \right) \phi(y) dy 
+\end{align*}
+
+The above computation shows that $R(f)$ is an integral operator, with kernel \[ K_f(x, y) = \sum_{\gamma \in \Gamma} f(x^{-1} \gamma y) \] Hence its trace can be computed as 
+\[ \tr R(f) = \int_{\Gamma \backslash G} K_g(x, x) dx \] Now let's compute this trace. Let $\{ \Gamma \}$ denote a set of representatives of conjugacy classes in $\Gamma$, and for $\gamma \in \Gamma$ let $G_\gamma$ (resp $\Gamma_\gamma$) denote the elements of $G$ (resp $\Gamma$) conjugate to $\gamma$. Then we can write:
+
+\begin{align*}
+    \tr R(f) &= \int_{\Gamma \backslash G} \sum_{\gamma \in \Gamma} f(x^{-1} \gamma x ) dx \\ 
+    &= \int_{\Gamma \backslash G} \sum_{\gamma \in \{\Gamma\}} \sum_{\delta \in \Gamma_\gamma \backslash \Gamma} f(x^{-1} \delta^{-1}\gamma \delta x ) dx \\ 
+    &= \sum_{\gamma \in \{ \Gamma \}} \int_{\Gamma_\gamma \backslash G} f(x^{-1} \gamma x ) dx \\ 
+    &= \sum_{\gamma \in \{ \Gamma\}} \vol (\Gamma_\gamma \backslash G_\gamma) \int_{G_\gamma \backslash G} f(x^{-1} \gamma x) dx 
+\end{align*}
+
+On the other hand, we can decompose the representation $R$ into irreducibles, giving an isomorphism 
+\[ L^2(\Gamma \backslash G) \cong \bigoplus_{\pi} m_\pi \pi \] This allows us to write \[ \tr R(f) = \sum_\pi m_\pi \tr \pi(f)\] The trace formula is then the equality of these two expressions:
+\begin{thm}[Trace Formula]\label{traceformula}
+    \[ \sum_{\gamma \in \{ \Gamma\}} \vol (\Gamma_\gamma \backslash G_\gamma) \int_{G_\gamma \backslash G} f(x^{-1} \gamma x) dx = \sum_\pi m_\pi \tr \pi(f) \] 
+\end{thm}
+
+The left hand side of the above equality is called the geometric side, while the right side is called the spectral side. Typically, the left side is the explicit side which one can compute, while the right side is the mysterious and hence interesting side of the formula. 
+
+We will see that one can deduce all sorts of things from this trace formula. For example, we can compute dimensions of spaces of automorphic forms, closed formulas for traces of Hecke operators, and even show the existence of cusp forms. On the other hand, \emph{comparing} trace formulas for different groups leads to all sorts of interesting applications: Jacquet-Langlands, Waldspurger's formula, the Gross-Zagier-(Yuan-Zhang-Zhang)
+formula, and even some function-field theoretic results of Yun-Zhang. So studying these trace formulas is very fruitful.
+
+\section{Finite Groups}
+
+As a toy example, let's see what \Cref{traceformula} looks like when $G$ is a finite group. 
+
+
+
+\end{document}

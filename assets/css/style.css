@@ -1,0 +1,399 @@
+/* ============================================================
+   Personal site — minimal typography-first theme
+   Newsreader body + Tufte-style numbered sidenotes.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Palette — warm paper, soft ink */
+  --bg:          #fbfaf6;
+  --bg-code:     #f1ede4;
+  --ink:         #1a1816;
+  --ink-soft:    #3a3633;
+  --ink-muted:   #7a726a;
+  --rule:        #e6e0d5;
+  --accent:      #7a2e1f;
+  --accent-soft: #a64a33;
+
+  /* Type */
+  --font-serif: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Measure & rhythm — asymmetric: content left, sidenotes right */
+  --measure: 28rem;   /* main text column */
+  --gutter:   9rem;   /* right margin for sidenotes */
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.65;
+  font-feature-settings: "onum" 1, "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  counter-reset: sidenote;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(169, 140, 93, 0.04), transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(90, 60, 40, 0.03), transparent 50%);
+}
+
+/* ---------- Layout ---------- */
+.page {
+  max-width: calc(var(--measure) + var(--gutter) + 4rem);
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  position: relative;
+}
+.content  { max-width: var(--measure); }
+.masthead { max-width: var(--measure); }
+
+/* ---------- Masthead ---------- */
+.masthead {
+  margin: 0 0 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead .site-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.005em;
+}
+.masthead a { color: var(--ink); text-decoration: none; border: none; }
+.masthead nav a {
+  margin-left: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  transition: color 120ms ease;
+}
+.masthead nav a:hover { color: var(--accent); }
+
+/* ---------- Headings ---------- */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 2.4em 0 0.6em;
+}
+h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0.3em;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 36;
+}
+h2 {
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-top: 2.6em;
+  letter-spacing: 0.005em;
+  font-variation-settings: "opsz" 24;
+}
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.byline {
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 0 0 3rem;
+}
+
+/* ---------- Body text ---------- */
+p {
+  margin: 0 0 1.2em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+a:hover {
+  color: var(--accent-soft);
+  border-bottom-color: var(--accent-soft);
+}
+
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+blockquote {
+  border-left: 2px solid var(--rule);
+  margin: 1.5em 0;
+  padding: 0.2em 1.2em;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+ul, ol { padding-left: 1.4em; }
+li { margin: 0.3em 0; }
+
+/* ============================================================
+   Sidenotes — Tufte style, numbered, in the right margin.
+   Markup:
+     Text<label for="sn-1" class="sn-ref"></label>
+     <input type="checkbox" id="sn-1" class="sn-check">
+     <span class="sidenote">Note content.</span> rest.
+   ============================================================ */
+
+.sn-check { display: none; }
+
+.sn-ref {
+  counter-increment: sidenote;
+  cursor: pointer;
+  display: inline;
+}
+.sn-ref::after {
+  content: counter(sidenote);
+  vertical-align: super;
+  font-size: 0.7em;
+  font-style: normal;
+  color: var(--accent);
+  line-height: 1;
+  padding: 0 0.1em;
+  font-family: var(--font-serif);
+  font-feature-settings: "lnum" 1;
+}
+.sn-ref:hover::after { color: var(--accent-soft); }
+
+.sidenote {
+  float: right;
+  clear: right;
+  width: calc(var(--gutter) - 0.5rem);
+  margin-right: calc(var(--gutter) * -1 - 0.5rem);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  font-style: italic;
+  padding-left: 0.7em;
+  border-left: 1px solid var(--rule);
+  margin-top: 0.15em;
+  margin-bottom: 0.6em;
+  position: relative;
+}
+.sidenote::before {
+  content: counter(sidenote);
+  font-size: 0.82em;
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+  margin-right: 0.35em;
+  font-feature-settings: "lnum" 1;
+}
+
+/* Below ~640px: content goes full-width, sidenotes collapse.
+   Tap the number to reveal a highlighted inline note. */
+@media (max-width: 40rem) {
+  :root {
+    --measure: 100%;
+    --gutter: 0px;
+  }
+  .page {
+    max-width: none;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .content, .masthead { max-width: none; }
+  .sidenote { display: none; }
+  .sn-check:checked + .sidenote {
+    display: block;
+    float: none;
+    width: auto;
+    margin: 0.6em 0 0.8em;
+    padding: 0.6em 0.9em;
+    font-size: 0.88rem;
+    background: rgba(122, 46, 31, 0.05);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 3px 3px 0;
+  }
+  .sn-ref::after {
+    padding: 0 0.25em;
+    border-radius: 2px;
+    background: rgba(122, 46, 31, 0.08);
+  }
+}
+
+/* ---------- Code ---------- */
+code, pre {
+  font-family: var(--font-mono);
+  font-feature-settings: "liga" 0;
+}
+:not(pre) > code {
+  background: var(--bg-code);
+  padding: 0.08em 0.35em;
+  border-radius: 3px;
+  font-size: 0.83em;
+  color: var(--ink-soft);
+}
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 1.5em 0;
+}
+pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+
+/* Rouge syntax highlighting — palette-matched.
+   Rouge wraps code in nested divs; we neutralize those and style the <pre>. */
+div.highlighter-rouge,
+div.highlighter-rouge > div.highlight,
+figure.highlight {
+  background: transparent;
+  padding: 0;
+  margin: 1.5em 0;
+  border: 0;
+}
+figure.highlight pre, .highlighter-rouge pre, pre.highlight {
+  background: var(--bg-code);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1em 1.2em;
+  margin: 0;
+  overflow-x: auto;
+}
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cp,
+.highlight .sd { color: #9c9284; font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .kp,
+.highlight .kc { color: #7a2e1f; font-weight: 500; }
+.highlight .kt { color: #1c4a6b; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc,
+.highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr,
+.highlight .ss { color: #3f6b3a; }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mo, .highlight .mh,
+.highlight .mb, .highlight .il { color: #8a5a1f; }
+.highlight .nf, .highlight .nc, .highlight .nn { color: #1c4a6b; font-weight: 500; }
+.highlight .nb, .highlight .bp { color: #7a2e1f; }
+.highlight .no { color: #8a5a1f; }
+.highlight .o, .highlight .ow, .highlight .p,
+.highlight .n, .highlight .na, .highlight .nv { color: var(--ink); }
+.highlight .err { color: #7a2e1f; }
+
+/* ---------- Math (MathJax v3 SVG output) ---------- */
+mjx-container {
+  font-size: 1em !important;
+  color: var(--ink);
+}
+mjx-container[display="true"] {
+  margin: 1.4em 0 !important;
+  padding: 0.1em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+mjx-container svg { vertical-align: -0.07em; }
+
+/* ---------- Post listing ---------- */
+.post-list { list-style: none; padding: 0; margin: 0; }
+.post-list li {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1.3rem;
+  align-items: baseline;
+  padding: 0.9em 0;
+  border-bottom: 1px solid var(--rule);
+}
+.post-list.wide-date li { grid-template-columns: 7.5rem 1fr; }
+.post-list li:last-child { border-bottom: none; }
+.post-list .date {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  font-style: italic;
+}
+.post-list .title { font-size: 1.05rem; }
+.post-list .title a { color: var(--ink); border-bottom: none; }
+.post-list .title a:hover { color: var(--accent); }
+.post-list .excerpt {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+}
+
+/* ---------- Back link ---------- */
+.back {
+  display: inline-block;
+  margin-top: 4rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  font-size: 0.95rem;
+  border-bottom: none;
+}
+.back:hover { color: var(--accent); border-bottom: none; }
+
+/* ---------- Utilities ---------- */
+.smallcaps { font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
+.dinkus {
+  text-align: center;
+  color: var(--ink-muted);
+  margin: 2.5rem 0;
+  letter-spacing: 0.8em;
+  font-size: 0.9rem;
+}
+.dinkus::after { content: "* * *"; }
+
+/* ---------- Footer ---------- */
+footer.foot {
+  max-width: var(--measure);
+  margin: 5rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+footer.foot a { color: var(--ink-muted); border-bottom: none; }
+footer.foot a:hover { color: var(--accent); }
+
+/* ---------- Print ---------- */
+@media print {
+  body { background: white; color: black; }
+  .masthead nav, .back, footer.foot { display: none; }
+  .sidenote {
+    float: none;
+    display: block;
+    margin: 0.6em 0 0.6em 1.5em;
+    width: auto;
+    font-size: 0.85em;
+    border-left: 1px solid #aaa;
+    padding-left: 0.8em;
+  }
+}

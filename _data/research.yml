@@ -1,0 +1,31 @@
+# Research items — edit this file to add, remove, or reorder entries.
+# Each entry needs: year, title, description, venue.
+# Links are optional and can be any combination of arxiv/pdf/code/slides/doi.
+
+- year: 2026
+  title: "On the Weil Representation and Abelian Chern–Simons Theory"
+  description: "A construction of the Weil representation as the monodromy of the Hitchin connection on the moduli of elliptic curves, avoiding a choice of framing."
+  venue: "preprint"
+  links:
+    - name: arxiv
+      url: "#"
+    - name: pdf
+      url: "#"
+
+- year: 2025
+  title: "Heat Operators and Theta Functions on Moduli of Elliptic Curves"
+  description: "With *[Coauthor]*. A study of the projectively flat heat connection and its relation to the KZB connection at genus one."
+  venue: "to appear in *Journal*"
+  links:
+    - name: arxiv
+      url: "#"
+    - name: pdf
+      url: "#"
+
+- year: 2024
+  title: "Notes on the Hitchin Connection"
+  description: "Expository lecture notes covering geometric quantization of the Jacobian, half-form cocycles, and the framing anomaly."
+  venue: "lecture notes"
+  links:
+    - name: pdf
+      url: "#"

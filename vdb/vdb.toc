@@ -1,0 +1,63 @@
+\contentsline {section}{\numberline {1}Introduction and Motivation}{3}{section.1}%
+\contentsline {section}{\numberline {2}Distance and Similarity Metrics}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Euclidean ($L^2$) Distance}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Cosine Similarity and Angular Distance}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Inner Product (Maximum Inner Product Search --- MIPS)}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Manhattan ($L^1$) and Chebyshev ($L^\infty $) Distances}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Hamming Distance}{4}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Flat (Brute-Force) Search}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Algorithm}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Complexity}{5}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Tree-Based Methods}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}$k$-d Trees}{5}{subsection.4.1}%
+\contentsline {paragraph}{Query.}{5}{algorithm.2}%
+\contentsline {paragraph}{Complexity.}{5}{algorithm.2}%
+\contentsline {subsection}{\numberline {4.2}Ball Trees}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Randomised Partition Trees (Annoy)}{6}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Locality-Sensitive Hashing (LSH)}{6}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Formal Framework}{6}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}LSH for Angular Distance (SimHash / Hyperplane LSH)}{6}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}LSH for Euclidean Distance (E2LSH)}{7}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Complexity}{7}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Multi-Probe LSH}{7}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Quantisation Methods}{7}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Scalar Quantisation (SQ)}{7}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Product Quantisation (PQ)}{7}{subsection.6.2}%
+\contentsline {paragraph}{Asymmetric Distance Computation (ADC).}{8}{definition.6.2}%
+\contentsline {subsection}{\numberline {6.3}Optimised Product Quantisation (OPQ)~\cite {ge2013opq}}{8}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Additive Quantisation (AQ) and Residual Quantisation (RQ)}{8}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Binary Quantisation}{9}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Inverted File Index (IVF)}{9}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Core Idea}{9}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}IVF-PQ: Combining IVF with Product Quantisation}{9}{subsection.7.2}%
+\contentsline {paragraph}{Complexity.}{9}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}IVF-Flat}{9}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Graph-Based Methods}{9}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Navigable Small World (NSW)}{10}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Hierarchical Navigable Small World (HNSW)}{10}{subsection.8.2}%
+\contentsline {paragraph}{Neighbour Selection Heuristic.}{10}{algorithm.7}%
+\contentsline {paragraph}{Complexity.}{11}{algorithm.7}%
+\contentsline {section}{\numberline {9}Vamana and DiskANN}{11}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Motivation}{11}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Vamana Graph Construction}{11}{subsection.9.2}%
+\contentsline {paragraph}{Robust Prune.}{11}{algorithm.8}%
+\contentsline {subsection}{\numberline {9.3}DiskANN Query}{11}{subsection.9.3}%
+\contentsline {section}{\numberline {10}ScaNN: Score-Aware Quantisation}{12}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Anisotropic Loss}{12}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Architecture}{12}{subsection.10.2}%
+\contentsline {section}{\numberline {11}Hybrid and Filtered Search}{12}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Pre-Filtering vs.\ Post-Filtering}{12}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Filtered Graph Search}{12}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Hybrid IVF}{12}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Multi-Vector Search and Late Interaction}{12}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Dimensionality Reduction Techniques}{13}{section.12}%
+\contentsline {subsection}{\numberline {12.1}PCA (Principal Component Analysis)}{13}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Random Projection (Johnson--Lindenstrauss)}{13}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Matryoshka Representation Learning (MRL)}{15}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Practical System Design Considerations}{16}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Index Selection Guidelines}{16}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Recall--Throughput Trade-off}{16}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Sharding and Replication}{16}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Streaming / Real-Time Updates}{16}{subsection.13.4}%
+\contentsline {section}{\numberline {14}Evaluation Metrics}{16}{section.14}%
+\contentsline {section}{\numberline {15}Summary and Outlook}{16}{section.15}%

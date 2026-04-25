@@ -1,0 +1,1299 @@
+\documentclass[11pt,a4paper]{article}
+
+%% ── Packages ──────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{multicol}
+
+\geometry{margin=1in}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  citecolor=green!50!black,
+  urlcolor=blue!60!black
+}
+
+%% ── Theorem environments ──────────────────────────────────────────────────
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+
+%% ── Custom commands ───────────────────────────────────────────────────────
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\argmin}{\operatorname{arg\,min}}
+\newcommand{\argmax}{\operatorname{arg\,max}}
+
+%% ── Header / Footer ──────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Mathematics and Algorithms of Vector Databases}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%% ── Title ─────────────────────────────────────────────────────────────────
+\title{
+  \vspace{-1cm}
+  \textbf{\LARGE Mathematics and Algorithms Behind\\[4pt]
+  Vector Database Models}\\[10pt]
+}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Introduction and Motivation}
+%% ══════════════════════════════════════════════════════════════════════════
+
+The ``curse of dimensionality'' makes exact nearest-neighbour search
+intractable in high-dimensional spaces: given $n$ points in $\R^d$ and a
+query $q\in\R^d$, na\"ive linear scan requires $\calO(nd)$ time.  When
+$n$ is in the hundreds of millions and $d$ ranges from 128 to 1536 (as
+is common with modern neural embeddings), this cost is prohibitive.
+
+\begin{definition}[Nearest Neighbour Search --- NNS]
+Given a dataset $X = \{x_1, x_2, \ldots, x_n\} \subset \R^d$, a
+distance function $\delta: \R^d \times \R^d \to \R_{\geq 0}$, and a
+query point $q \in \R^d$, the \emph{nearest neighbour} of $q$ in $X$ is
+\[
+  \mathrm{NN}(q) = \argmin_{x \in X}\; \delta(q, x).
+\]
+The $k$-nearest neighbour variant ($k$-NN) returns the $k$ points with
+smallest distance.
+\end{definition}
+
+\begin{definition}[$c$-Approximate Nearest Neighbour --- $c$-ANN]
+For $c \geq 1$, a data structure solves $c$-ANN if, for any query $q$,
+it returns a point $x^*$ such that
+\[
+  \delta(q, x^*) \;\leq\; c \cdot \delta\bigl(q, \mathrm{NN}(q)\bigr).
+\]
+\end{definition}
+
+Vector databases implement $c$-ANN (often with $c$ very close to 1) by
+combining clever indexing with optional lossy compression.  The remainder
+of this document is organised as follows: Section~\ref{sec:metrics}
+formalises distance metrics; Section~\ref{sec:flat} covers brute-force
+search; Sections~\ref{sec:tree}--\ref{sec:hybrid} treat progressively
+more sophisticated algorithms; and Section~\ref{sec:practical} discusses
+practical system design.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Distance and Similarity Metrics}\label{sec:metrics}
+%% ══════════════════════════════════════════════════════════════════════════
+
+The choice of metric $\delta$ profoundly impacts both correctness and
+efficiency.
+
+\subsection{Euclidean ($L^2$) Distance}
+
+\begin{definition}
+For $u, v \in \R^d$,
+\[
+  \delta_{L^2}(u,v) = \norm{u - v}_2 = \sqrt{\sum_{i=1}^{d}(u_i - v_i)^2}.
+\]
+\end{definition}
+
+Properties: a true metric (non-negativity, identity of indiscernibles,
+symmetry, triangle inequality).  Squared Euclidean distance
+$\delta_{L^2}^2$ is often used to avoid the square root while preserving
+ranking.
+
+\subsection{Cosine Similarity and Angular Distance}
+
+\begin{definition}
+\[
+  \mathrm{sim}_{\cos}(u,v) = \frac{\inner{u}{v}}{\norm{u}_2\;\norm{v}_2}
+  = \frac{\sum_{i=1}^d u_i v_i}{\sqrt{\sum_i u_i^2}\;\sqrt{\sum_i v_i^2}}.
+\]
+\end{definition}
+
+The corresponding \emph{cosine distance} is $\delta_{\cos}(u,v) = 1 -
+\mathrm{sim}_{\cos}(u,v)$.  Note that cosine distance is \emph{not} a
+metric in the strict sense (it violates the triangle inequality), but the
+\emph{angular distance}
+\[
+  \delta_{\mathrm{ang}}(u,v) = \frac{1}{\pi}\arccos\!\bigl(\mathrm{sim}_{\cos}(u,v)\bigr)
+\]
+is a valid metric on the unit sphere.
+
+\begin{remark}
+When all vectors are $L^2$-normalised, Euclidean distance and cosine
+distance are monotonically related:
+\[
+  \norm{u-v}_2^2 = 2\bigl(1 - \mathrm{sim}_{\cos}(u,v)\bigr)
+  = 2\,\delta_{\cos}(u,v).
+\]
+This identity is exploited in many systems to reduce cosine search to
+Euclidean search after a normalisation pre-processing step.
+\end{remark}
+
+\subsection{Inner Product (Maximum Inner Product Search --- MIPS)}
+
+\begin{definition}
+\[
+  \mathrm{MIPS}(q) = \argmax_{x \in X}\; \inner{q}{x}.
+\]
+\end{definition}
+
+MIPS is not directly a metric search problem.  A well-known reduction
+transforms MIPS into NNS by appending an extra dimension:
+\[
+  \tilde{x} = \bigl(x;\; \sqrt{1 - \norm{x}^2_2}\bigr), \qquad
+  \tilde{q} = (q;\; 0).
+\]
+Then $\norm{\tilde{q} - \tilde{x}}^2_2 = \norm{q}^2_2 - 2\inner{q}{x}
++ 1$, so minimising Euclidean distance on the augmented vectors is
+equivalent to maximising the inner product.
+
+\subsection{Manhattan ($L^1$) and Chebyshev ($L^\infty$) Distances}
+
+\begin{align}
+  \delta_{L^1}(u,v) &= \sum_{i=1}^d |u_i - v_i|, \\
+  \delta_{L^\infty}(u,v) &= \max_{1\le i\le d} |u_i - v_i|.
+\end{align}
+
+These are less common in embedding search but appear in specialised
+domains (e.g., $L^1$ in sparse feature spaces).
+
+\subsection{Hamming Distance}
+
+\begin{definition}
+For binary vectors $u, v \in \{0,1\}^d$,
+\[
+  \delta_H(u,v) = \sum_{i=1}^{d} \mathbf{1}[u_i \neq v_i]
+  = \mathrm{popcount}(u \oplus v).
+\]
+\end{definition}
+
+Hamming distance is critical for binary hash codes produced by LSH and
+binary quantisation schemes.  Modern CPUs compute \texttt{POPCNT} in a
+single instruction, making Hamming comparisons extremely fast.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Flat (Brute-Force) Search}\label{sec:flat}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Algorithm}
+
+The simplest approach scans all $n$ vectors and maintains a max-heap of
+size $k$.
+
+\begin{algorithm}[H]
+\caption{Flat $k$-NN Search}
+\begin{algorithmic}[1]
+\Require Dataset $X = \{x_1,\ldots,x_n\}\subset\R^d$, query $q\in\R^d$, integer $k$
+\Ensure $k$ nearest neighbours of $q$
+\State $H \gets$ empty max-heap of capacity $k$ \Comment{keyed by distance}
+\For{$i = 1$ \textbf{to} $n$}
+  \State $d_i \gets \delta(q, x_i)$
+  \If{$|H| < k$}
+    \State $H.\text{push}(x_i, d_i)$
+  \ElsIf{$d_i < H.\text{top}().\text{key}$}
+    \State $H.\text{pop}()$;\; $H.\text{push}(x_i, d_i)$
+  \EndIf
+\EndFor
+\State \Return $H$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Complexity}
+
+\begin{itemize}[nosep]
+  \item \textbf{Time:} $\calO(nd + n\log k)$ per query.
+  \item \textbf{Space:} $\calO(nd)$ for storage.
+  \item \textbf{Preprocessing:} $\calO(1)$ (no index built).
+\end{itemize}
+
+Although asymptotically poor, flat search provides \emph{perfect recall}
+and is surprisingly competitive for small datasets ($n < 10^4$), especially
+with SIMD-accelerated distance computation.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Tree-Based Methods}\label{sec:tree}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{$k$-d Trees}
+
+\begin{definition}[$k$-d Tree~\cite{bentley1975kdtree}]
+A $k$-d tree is a binary space-partitioning tree in which each internal
+node stores a splitting hyperplane orthogonal to one of the $d$
+coordinate axes.  At depth $\ell$, the splitting dimension is
+$\ell \bmod d$.
+\end{definition}
+
+\begin{algorithm}[H]
+\caption{$k$-d Tree Construction}
+\begin{algorithmic}[1]
+\Function{Build}{$P$, $\mathrm{depth}$}
+  \If{$|P| = 0$} \Return \textsc{Nil} \EndIf
+  \State $\mathrm{axis} \gets \mathrm{depth} \bmod d$
+  \State Sort $P$ by coordinate $\mathrm{axis}$
+  \State $m \gets \lfloor |P|/2 \rfloor$ \Comment{median index}
+  \State $\mathrm{node.point} \gets P[m]$
+  \State $\mathrm{node.left} \gets \Call{Build}{P[0..m{-}1],\;\mathrm{depth}+1}$
+  \State $\mathrm{node.right} \gets \Call{Build}{P[m{+}1..|P|{-}1],\;\mathrm{depth}+1}$
+  \State \Return $\mathrm{node}$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Query.} Nearest-neighbour search descends the tree, pruning
+sub-trees whose bounding boxes are farther than the current best
+candidate.
+
+\paragraph{Complexity.}
+\begin{itemize}[nosep]
+  \item Build: $\calO(n\log n)$.
+  \item Query (best case): $\calO(\log n)$ for low $d$.
+  \item Query (worst case): $\calO(n^{1-1/d})$ --- exponential
+    degradation in $d$.
+\end{itemize}
+
+Due to the curse of dimensionality, $k$-d trees are effective only for
+$d \lesssim 20$.
+
+\subsection{Ball Trees}
+
+Ball trees use hyper-spheres instead of axis-aligned hyperplanes.
+
+\begin{definition}[Ball Tree~\cite{omohundro1989balltree}]
+Each internal node $v$ stores a centre $c_v \in \R^d$ and a radius
+$r_v \geq 0$ such that all descendant points lie within the ball
+$B(c_v, r_v)$.  The children partition the points into two clusters.
+\end{definition}
+
+Pruning rule: a ball $B(c_v, r_v)$ can be pruned if
+$\delta(q, c_v) - r_v > d_{\text{best}}$, where $d_{\text{best}}$ is
+the current best distance.
+
+Ball trees handle general metrics (not just $L^2$) and are more
+resilient to moderate dimensionality than $k$-d trees, but still
+suffer at very high $d$.
+
+\subsection{Randomised Partition Trees (Annoy)}
+
+The \emph{Approximate Nearest Neighbours Oh Yeah} (Annoy) library~\cite{bernhardsson2015annoy} builds
+a forest of randomised binary trees~\cite{dasgupta2008random}.  Each split is defined by a random
+hyperplane passing through the midpoint of two randomly selected data
+points.
+
+\begin{definition}[Random Projection Split]
+Given two points $a, b \in \R^d$, the splitting hyperplane has normal
+$w = a - b$ and passes through the midpoint $\frac{a+b}{2}$.  A point
+$x$ goes to the left child if $\inner{w}{x - \frac{a+b}{2}} \leq 0$.
+\end{definition}
+
+At query time, Annoy explores multiple trees simultaneously using a
+priority queue, merging candidate sets.  Building $T$ trees on $n$
+points costs $\calO(Tn\log n)$; querying has empirical complexity
+$\calO(T\,d\,\log n)$ per query.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Locality-Sensitive Hashing (LSH)}\label{sec:lsh}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Formal Framework}
+
+The LSH framework was introduced by Indyk and Motwani~\cite{indyk1998lsh}
+and later refined by Datar et al.~\cite{datar2004e2lsh}.
+
+\begin{definition}[$(r, cr, p_1, p_2)$-Sensitive Hash Family~\cite{indyk1998lsh}]
+A family $\mathcal{H}$ of functions $h: \R^d \to \mathcal{U}$ is
+$(r, cr, p_1, p_2)$-sensitive for distance $\delta$ if for any
+$u, v \in \R^d$:
+\begin{align}
+  \delta(u,v) \leq r   &\;\Longrightarrow\; \Pr[h(u) = h(v)] \geq p_1, \\
+  \delta(u,v) \geq cr  &\;\Longrightarrow\; \Pr[h(u) = h(v)] \leq p_2,
+\end{align}
+with $p_1 > p_2$ and $c > 1$.
+\end{definition}
+
+The \emph{LSH exponent} $\rho = \frac{\ln p_1}{\ln p_2} \in (0,1)$
+governs the space--time trade-off.
+
+\subsection{LSH for Angular Distance (SimHash / Hyperplane LSH)}
+
+SimHash was introduced by Charikar~\cite{charikar2002simhash}.
+
+\begin{definition}[SimHash~\cite{charikar2002simhash}]
+Draw $r \sim \mathcal{N}(0, I_d)$.  Define
+\[
+  h_r(x) = \mathrm{sign}\bigl(\inner{r}{x}\bigr) \in \{+1, -1\}.
+\]
+Then $\Pr[h_r(u) = h_r(v)] = 1 - \frac{\theta(u,v)}{\pi}$, where
+$\theta(u,v) = \arccos(\mathrm{sim}_{\cos}(u,v))$.
+\end{definition}
+
+By concatenating $K$ independent hash bits to form a \emph{signature} and
+using $L$ independent hash tables, the query procedure becomes:
+
+\begin{algorithm}[H]
+\caption{LSH Query ($L$ tables, $K$ bits each)}
+\begin{algorithmic}[1]
+\Require Query $q$, hash functions $\{h_{l,1},\ldots,h_{l,K}\}_{l=1}^L$, hash tables $\{T_l\}_{l=1}^L$
+\State $\mathrm{candidates} \gets \emptyset$
+\For{$l = 1$ \textbf{to} $L$}
+  \State $g \gets \bigl(h_{l,1}(q), \ldots, h_{l,K}(q)\bigr)$ \Comment{$K$-bit signature}
+  \State $\mathrm{candidates} \gets \mathrm{candidates} \cup T_l[g]$
+\EndFor
+\State \Return $k\text{-NN}(q, \mathrm{candidates})$ via brute-force
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{LSH for Euclidean Distance (E2LSH)}
+
+\begin{definition}[E2LSH Hash~\cite{datar2004e2lsh}]
+Let $a \sim \mathcal{N}(0, I_d)$ and $b \sim \mathrm{Uniform}[0, w)$
+for bucket width $w > 0$.  Then
+\[
+  h_{a,b}(x) = \left\lfloor \frac{\inner{a}{x} + b}{w} \right\rfloor.
+\]
+\end{definition}
+
+The collision probability depends on $\delta_{L^2}(u,v)/w$ and has a
+closed-form expression involving the Gaussian CDF.
+
+\subsection{Complexity}
+
+\begin{theorem}
+For an $(r, cr, p_1, p_2)$-sensitive family with $\rho = \frac{\ln
+p_1}{\ln p_2}$, there exists an LSH data structure solving $c$-ANN with:
+\begin{itemize}[nosep]
+  \item Space: $\calO(n^{1+\rho} + nd)$.
+  \item Query time: $\calO(n^{\rho}\,d)$.
+  \item Preprocessing: $\calO(n^{1+\rho}\,d)$.
+\end{itemize}
+\end{theorem}
+
+For SimHash on angular distance with approximation ratio $c$,
+$\rho = 1/c$.
+
+\subsection{Multi-Probe LSH}
+
+Standard LSH requires many tables.  Multi-probe LSH~\cite{lv2007multiprobe} reduces this by
+probing \emph{neighbouring} buckets---those obtained by flipping one or
+more hash bits---using a perturbation scheme ranked by expected distance.
+This can reduce $L$ by an order of magnitude while maintaining recall.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Quantisation Methods}\label{sec:quant}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Scalar Quantisation (SQ)}
+
+\begin{definition}[Scalar Quantisation]
+Each floating-point coordinate $x_i \in \R$ is independently mapped to
+one of $2^b$ levels.  For uniform quantisation with $b$ bits:
+\[
+  \hat{x}_i = \mathrm{round}\!\left(
+    \frac{x_i - x_{\min}}{x_{\max} - x_{\min}} \cdot (2^b - 1)
+  \right).
+\]
+\end{definition}
+
+Common choices are $b \in \{4, 8\}$.  With $b=8$, storage shrinks from
+$4d$ bytes (float32) to $d$ bytes per vector.  Distance computation uses
+look-up tables or integer SIMD.
+
+\subsection{Product Quantisation (PQ)}\label{subsec:pq}
+
+Product quantisation, introduced by J\'egou et al.~\cite{jegou2011pq}, is the
+workhorse compression scheme for large-scale vector search.
+
+\begin{definition}[Product Quantisation~\cite{jegou2011pq}]
+Decompose $\R^d$ into $M$ disjoint sub-spaces of dimension $d/M$ each:
+\[
+  x = \bigl(x^{(1)}, x^{(2)}, \ldots, x^{(M)}\bigr), \qquad
+  x^{(m)} \in \R^{d/M}.
+\]
+In each sub-space, learn a codebook $C^{(m)} = \{c^{(m)}_1, \ldots,
+c^{(m)}_{K_s}\}$ via $k$-means (typically $K_s = 256$).  A vector $x$
+is encoded as
+\[
+  \mathrm{PQ}(x) = \bigl(q^{(1)}(x), \ldots, q^{(M)}(x)\bigr),
+  \quad q^{(m)}(x) = \argmin_{j}\; \norm{x^{(m)} - c^{(m)}_j}_2.
+\]
+Each code $q^{(m)}(x) \in \{1,\ldots,K_s\}$ requires $\lceil\log_2
+K_s\rceil = 8$ bits for $K_s=256$, so the total code is $M$ bytes.
+\end{definition}
+
+\paragraph{Asymmetric Distance Computation (ADC).}
+At query time, we compute exact sub-space distances between $q$ and each
+centroid, then approximate the full distance:
+\[
+  \hat{\delta}(q, x)^2 = \sum_{m=1}^{M}
+  \norm{q^{(m)} - c^{(m)}_{q^{(m)}(x)}}_2^2.
+\]
+The $M \times K_s$ distance table is precomputed in $\calO(MK_s \cdot
+d/M) = \calO(K_s d)$ time.  Then each vector comparison costs only
+$\calO(M)$ look-ups.
+
+\begin{algorithm}[H]
+\caption{PQ Search with ADC}
+\begin{algorithmic}[1]
+\Require Codebooks $\{C^{(m)}\}_{m=1}^M$, codes $\{\mathrm{PQ}(x_i)\}_{i=1}^n$, query $q$
+\For{$m = 1$ \textbf{to} $M$} \Comment{Build distance table}
+  \For{$j = 1$ \textbf{to} $K_s$}
+    \State $D[m][j] \gets \norm{q^{(m)} - c^{(m)}_j}_2^2$
+  \EndFor
+\EndFor
+\For{$i = 1$ \textbf{to} $n$} \Comment{Scan all codes}
+  \State $\hat{d}_i \gets \sum_{m=1}^M D\bigl[m\bigr]\bigl[\mathrm{PQ}(x_i)_m\bigr]$
+\EndFor
+\State \Return top-$k$ by smallest $\hat{d}_i$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Optimised Product Quantisation (OPQ)~\cite{ge2013opq}}
+
+Standard PQ assumes the sub-spaces are axis-aligned.  OPQ~\cite{ge2013opq} learns a
+rotation matrix $R \in \R^{d \times d}$ such that the rotated data
+$Rx$ has minimised quantisation error when partitioned into sub-spaces:
+\[
+  R^* = \argmin_{R \in O(d)} \sum_{i=1}^n
+  \norm{Rx_i - \widetilde{Rx_i}}_2^2,
+\]
+where $\widetilde{Rx_i}$ is the PQ reconstruction of $Rx_i$.  This is
+solved by alternating between codebook updates (standard $k$-means) and
+rotation updates (Procrustes).
+
+\subsection{Additive Quantisation (AQ) and Residual Quantisation (RQ)}
+
+\begin{definition}[Additive Quantisation~\cite{babenko2014aq}]
+Represent each vector as a sum of codewords from $M$ codebooks (which
+now span the \emph{full} $d$-dimensional space):
+\[
+  \hat{x} = \sum_{m=1}^{M} c^{(m)}_{j_m}, \qquad c^{(m)}_{j_m} \in \R^d.
+\]
+The codes $(j_1, \ldots, j_M)$ are chosen jointly to minimise
+$\norm{x - \hat{x}}_2^2$.
+\end{definition}
+
+This is more expressive than PQ (since codebooks interact across
+dimensions) but encoding is NP-hard; beam search is used in practice.
+
+\begin{definition}[Residual Quantisation~\cite{chen2010rq}]
+A greedy special case of AQ: quantise $x$ with the first codebook to
+get residual $r_1 = x - c^{(1)}_{j_1}$, then quantise $r_1$ with the
+second codebook, and so on:
+\[
+  r_0 = x, \qquad j_m = \argmin_j \norm{r_{m-1} - c^{(m)}_j}, \qquad
+  r_m = r_{m-1} - c^{(m)}_{j_m}.
+\]
+\end{definition}
+
+RQ often achieves better distortion than PQ at the same code length,
+especially when combined with a learnt rotation (RQ with OPQ).
+
+\subsection{Binary Quantisation}
+
+The simplest quantisation: $\hat{x}_i = \mathrm{sign}(x_i)$.  Reduces
+$d$-dimensional float32 vectors to $d$-bit strings.  Distances are
+approximated via Hamming distance, enabling extremely fast comparison
+($\sim$1 clock cycle per 64 bits via \texttt{POPCNT}).  However,
+the information loss is severe; binary quantisation is typically used
+only as a \emph{re-ranking filter}~\cite{aguerrebere2024similarity}: retrieve a large candidate set via
+Hamming, then re-rank with exact distances.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Inverted File Index (IVF)}\label{sec:ivf}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Core Idea}
+
+Partition the dataset into $C$ Voronoi cells via $k$-means clustering
+with centroids $\mu_1, \ldots, \mu_C$.  Each vector $x$ is assigned to
+its closest centroid.  At query time, only the $n_{\text{probe}}$ closest
+cells are searched.
+
+\begin{definition}[IVF Assignment]
+\[
+  \mathrm{cell}(x) = \argmin_{c \in \{1,\ldots,C\}}\; \delta(x, \mu_c).
+\]
+\end{definition}
+
+\begin{algorithm}[H]
+\caption{IVF Search}
+\begin{algorithmic}[1]
+\Require Centroids $\{\mu_c\}_{c=1}^C$, inverted lists $\{L_c\}_{c=1}^C$, query $q$, $n_{\mathrm{probe}}$
+\State $S \gets n_{\mathrm{probe}}$ closest centroids to $q$
+\State $\mathrm{candidates} \gets \bigcup_{c \in S} L_c$
+\State \Return $k\text{-NN}(q, \mathrm{candidates})$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{IVF-PQ: Combining IVF with Product Quantisation}
+
+Store PQ codes instead of full vectors in each inverted list.  The
+residual $r_x = x - \mu_{\mathrm{cell}(x)}$ is quantised, improving
+distortion.  This is the backbone of the \textsc{Faiss} library's~\cite{johnson2019faiss} most
+widely-used index (\texttt{IVF$C$,PQ$M$}).
+
+\paragraph{Complexity.}
+\begin{itemize}[nosep]
+  \item Index build: $\calO(n d C_{\text{iter}})$ for $k$-means +
+    $\calO(nd)$ for PQ encoding.
+  \item Query: $\calO(Cd + n_{\text{probe}} \cdot
+    \frac{n}{C} \cdot M)$ (centroid comparison + PQ scan).
+  \item Space: $\calO(Cd + nM)$.
+\end{itemize}
+
+By varying $n_{\text{probe}}$, one tunes the recall/speed trade-off
+continuously.
+
+\subsection{IVF-Flat}
+
+Same as IVF but stores full vectors.  Higher memory but exact distances
+within each probed cell.  Useful when $n$ is moderate ($10^5$--$10^6$).
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Graph-Based Methods}\label{sec:graph}
+%% ══════════════════════════════════════════════════════════════════════════
+
+Graph-based indices construct a proximity graph $G = (V, E)$ where
+$V = X$ and edges connect nearby points.  Queries are answered by a
+greedy walk from an entry point, following edges that decrease the
+distance to $q$.
+
+\subsection{Navigable Small World (NSW)}
+
+The NSW graph construction was proposed by Malkov et al.~\cite{malkov2014nsw}.
+
+\begin{definition}[NSW Graph~\cite{malkov2014nsw}]
+An NSW graph is built by inserting points one at a time.  When inserting
+point $x$, a greedy search from a random entry point finds the current
+approximate nearest neighbours; edges are added between $x$ and these
+neighbours.
+\end{definition}
+
+The graph exhibits small-world properties: short-range edges ensure local
+accuracy while long-range edges (created by early insertions) provide
+logarithmic routing.
+
+\subsection{Hierarchical Navigable Small World (HNSW)}\label{subsec:hnsw}
+
+HNSW, proposed by Malkov and Yashunin~\cite{malkov2018hnsw}, layers multiple NSW graphs
+at different resolutions.
+
+\begin{definition}[HNSW Structure]
+An HNSW index has $L_{\max}$ layers, $\ell = 0, 1, \ldots, L_{\max}$.
+Each point is assigned a random maximum layer
+\[
+  l(x) = \lfloor -\ln(\mathrm{Uniform}(0,1)) \cdot m_L \rfloor,
+\]
+where $m_L = 1/\ln(M)$ and $M$ is a construction parameter.
+Point $x$ appears in all layers $0, 1, \ldots, l(x)$.  Layer 0
+(the bottom) contains all points; upper layers are exponentially
+sparser.
+\end{definition}
+
+\begin{algorithm}[H]
+\caption{HNSW Search}
+\begin{algorithmic}[1]
+\Require HNSW graph $G$, query $q$, $k$, $\mathrm{ef}$ (beam width)
+\State $\mathrm{ep} \gets$ entry point (top layer node)
+\For{$\ell = L_{\max}$ \textbf{downto} $1$} \Comment{Greedy descent}
+  \State $\mathrm{ep} \gets \text{GreedySearch}(q, \mathrm{ep}, 1, \ell)$
+\EndFor
+\State $W \gets \text{BeamSearch}(q, \mathrm{ep}, \mathrm{ef}, 0)$
+  \Comment{Layer 0: beam search}
+\State \Return closest $k$ elements from $W$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{HNSW Insertion}
+\begin{algorithmic}[1]
+\Require New point $x$, HNSW graph $G$, parameters $M$, $M_{\max}$, $\mathrm{efConstruction}$
+\State $l \gets \lfloor -\ln(\mathrm{Uniform}(0,1)) / \ln(M) \rfloor$
+\State $\mathrm{ep} \gets$ current entry point
+\For{$\ell = L_{\max}$ \textbf{downto} $l+1$}
+  \State $\mathrm{ep} \gets \text{GreedySearch}(x, \mathrm{ep}, 1, \ell)$
+\EndFor
+\For{$\ell = \min(l, L_{\max})$ \textbf{downto} $0$}
+  \State $W \gets \text{BeamSearch}(x, \mathrm{ep}, \mathrm{efConstruction}, \ell)$
+  \State Select $M$ neighbours from $W$ (heuristic or simple nearest)
+  \State Add bidirectional edges; prune if degree exceeds $M_{\max}$
+  \State $\mathrm{ep} \gets$ closest element in $W$
+\EndFor
+\If{$l > L_{\max}$}
+  \State Set $x$ as new entry point; $L_{\max} \gets l$
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Neighbour Selection Heuristic.}
+Rather than selecting the $M$ closest points, HNSW uses a heuristic
+that promotes \emph{diverse} connections.  Candidates are processed in
+order of distance; a candidate is added only if it is closer to $x$ than
+to any already-selected neighbour.  This ensures edges span gaps in the
+data distribution, improving connectivity and recall.
+
+\paragraph{Complexity.}
+\begin{itemize}[nosep]
+  \item Construction: $\calO(n \cdot \log n \cdot M \cdot d)$ amortised.
+  \item Query: $\calO(\mathrm{ef} \cdot M \cdot d \cdot \log n)$
+    empirically; $\mathrm{ef}$ controls the recall/speed trade-off.
+  \item Space: $\calO(nMd + nM\log n)$ for edges and vectors.
+\end{itemize}
+
+HNSW achieves state-of-the-art recall at high throughput and is the
+default index in libraries such as \textsc{hnswlib}, \textsc{Faiss}~\cite{douze2024faiss},
+\textsc{Milvus}, \textsc{Weaviate}, and \textsc{Qdrant}.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Vamana and DiskANN}\label{sec:diskann}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Motivation}
+
+HNSW requires the entire graph and all vectors in RAM.  For billion-scale
+datasets this can require terabytes of memory.  \emph{DiskANN}~\cite{jayaram2019diskann} stores the graph on SSD while keeping a
+compressed representation in memory.
+
+\subsection{Vamana Graph Construction}
+
+Vamana builds a single-layer directed graph with bounded out-degree $R$.
+
+\begin{algorithm}[H]
+\caption{Vamana Index Construction}
+\begin{algorithmic}[1]
+\Require Dataset $X$, max degree $R$, beam width $L$, parameter $\alpha \geq 1$
+\State Initialise $G$ with random $R$-regular graph
+\State $s \gets$ medoid of $X$ \Comment{entry point}
+\For{each $x \in X$ (random order, two passes)}
+  \State $\mathcal{V} \gets \text{GreedySearch}(x, s, L)$ \Comment{visited list}
+  \State $N \gets \text{RobustPrune}(x, \mathcal{V}, \alpha, R)$
+  \State Set out-neighbours of $x$ to $N$
+  \For{each $p \in N$}
+    \If{$|\text{out}(p)| > R$}
+      \State $\text{out}(p) \gets \text{RobustPrune}(p, \text{out}(p) \cup \{x\}, \alpha, R)$
+    \Else
+      \State $\text{out}(p) \gets \text{out}(p) \cup \{x\}$
+    \EndIf
+  \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Robust Prune.}
+The \textsc{RobustPrune} procedure generalises HNSW's heuristic
+neighbour selection.  Given a candidate set $\mathcal{V}$ and a distance
+threshold factor $\alpha$, it iteratively selects the closest
+unprocessed candidate $p^*$ and removes all candidates $p$ satisfying
+$\alpha \cdot \delta(p^*, p) \leq \delta(x, p)$.  The parameter
+$\alpha > 1$ encourages long-range edges, improving navigability.
+
+\subsection{DiskANN Query}
+
+\begin{enumerate}[nosep]
+  \item Maintain a PQ-compressed copy of all vectors in memory.
+  \item Greedy search on the graph using PQ distances (fast, approximate).
+  \item For the most promising candidates, issue SSD reads to fetch full
+    vectors and re-rank with exact distances.
+\end{enumerate}
+
+With NVMe SSDs providing $\sim$500K random 4\,KB reads/sec, DiskANN
+achieves sub-millisecond query latency on billion-point datasets using
+only 64\,GB of RAM + SSD.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{ScaNN: Score-Aware Quantisation}\label{sec:scann}
+%% ══════════════════════════════════════════════════════════════════════════
+
+Google's \emph{ScaNN} (Scalable Nearest Neighbours)~\cite{guo2020scann}
+introduces \emph{anisotropic vector quantisation}, which accounts for the
+direction of the query during codebook learning.
+
+\subsection{Anisotropic Loss}
+
+Standard PQ minimises the \emph{reconstruction error}:
+$\sum_i \norm{x_i - \hat{x}_i}^2$.  ScaNN instead minimises a loss
+that weights errors along the query direction more heavily:
+\[
+  \mathcal{L}_{\mathrm{ScaNN}} = \sum_{i=1}^n \left[
+    \bigl(\inner{x_i}{\hat{x}_i} - \norm{x_i}^2\bigr)^2
+    + \lambda \norm{x_i - \hat{x}_i}_{\perp}^2
+  \right],
+\]
+where $\norm{\cdot}_{\perp}$ denotes the component orthogonal to $x_i$
+and $\lambda < 1$ down-weights it.  This yields quantised codes that
+better preserve inner products (relevant for MIPS).
+
+\subsection{Architecture}
+
+ScaNN combines three stages:
+\begin{enumerate}[nosep]
+  \item \textbf{Partitioning}: $k$-means (IVF-style) coarse quantiser.
+  \item \textbf{Scoring}: Anisotropic PQ for fast approximate scoring.
+  \item \textbf{Re-ranking}: Exact distance computation on the top
+    candidates.
+\end{enumerate}
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Hybrid and Filtered Search}\label{sec:hybrid}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Pre-Filtering vs.\ Post-Filtering}
+
+In many applications, queries carry metadata predicates (e.g., ``find
+similar images \emph{uploaded after 2023}'').  Two strategies:
+
+\begin{itemize}[nosep]
+  \item \textbf{Post-filter}: Run ANN, then discard results failing the
+    predicate.  Fast but recall degrades when the predicate is selective.
+  \item \textbf{Pre-filter}: Identify the subset satisfying the
+    predicate, then search within it.  Exact but may invalidate index
+    structure.
+\end{itemize}
+
+\subsection{Filtered Graph Search}
+
+Modern systems (e.g., Qdrant, Weaviate) integrate filtering into the
+graph traversal itself.  During greedy search on HNSW, a visited
+neighbour that fails the predicate is \emph{not added to the result set}
+but \emph{is still used for navigation} (its neighbours are explored).
+This preserves the connectivity of the graph while enforcing the filter.
+
+\subsection{Hybrid IVF}
+
+Partition vectors into cells \emph{and} maintain per-cell metadata
+bitmaps.  At query time, intersect the bitmap with the predicate before
+scanning each cell.
+
+\subsection{Multi-Vector Search and Late Interaction}
+
+Models like ColBERT~\cite{khattab2020colbert} represent a document as a \emph{set} of token-level
+vectors.  The relevance score uses \emph{MaxSim}:
+\[
+  \mathrm{score}(q, d) = \sum_{i=1}^{|q|} \max_{j=1}^{|d|}
+  \inner{q_i}{d_j}.
+\]
+Vector databases supporting multi-vector search index individual token
+vectors and aggregate scores at query time.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Dimensionality Reduction Techniques}\label{sec:dimred}
+%% ══════════════════════════════════════════════════════════════════════════
+
+Reducing $d$ before indexing accelerates all downstream operations.
+
+\subsection{PCA (Principal Component Analysis)}
+
+Project onto the top-$k$ eigenvectors of the covariance matrix:
+\[
+  \hat{x} = W_k^\top (x - \bar{x}), \qquad W_k \in \R^{d \times k},
+\]
+where $W_k$ consists of the $k$ eigenvectors with largest eigenvalues
+of $\frac{1}{n}\sum_i (x_i - \bar{x})(x_i - \bar{x})^\top$.
+
+PCA preserves the maximum variance and is optimal for Euclidean
+reconstruction error under a linear map.
+
+\subsection{Random Projection (Johnson--Lindenstrauss)}
+
+\begin{theorem}[Johnson--Lindenstrauss Lemma~\cite{johnson1984extensions}]
+For any $\epsilon \in (0,1)$ and any set of $n$ points in $\R^d$, there
+exists a linear map $f: \R^d \to \R^k$ with
+$k = \calO(\epsilon^{-2} \log n)$ such that for all pairs $(u, v)$:
+\[
+  (1 - \epsilon)\norm{u-v}_2^2 \leq \norm{f(u) - f(v)}_2^2
+  \leq (1+\epsilon)\norm{u-v}_2^2.
+\]
+Moreover, $f$ can be a random matrix with i.i.d.\ $\mathcal{N}(0,1/k)$
+entries.
+\end{theorem}
+
+We now give a complete proof, following the standard approach via
+sub-Gaussian concentration.  The argument proceeds in three stages:
+(1)~analyse a single projected squared norm, (2)~obtain a two-sided
+tail bound, and (3)~take a union bound over all pairs.
+
+\begin{proof}
+\textbf{Setup.}\;
+Let $A \in \R^{k \times d}$ be a random matrix whose entries are
+i.i.d.\ $A_{ij} \sim \mathcal{N}(0, 1/k)$.  Define the projection
+$f(x) = Ax$ for $x \in \R^d$.  By linearity it suffices to show that
+for any \emph{fixed} unit vector $u \in \R^d$ (we will later set
+$u = (v_1 - v_2)/\norm{v_1 - v_2}_2$ for each pair),
+\[
+  \Pr\!\Bigl[\bigl|\norm{Au}_2^2 - 1\bigr| > \epsilon\Bigr]
+  \;\leq\; 2\exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right).
+  \tag{$\star$}
+\]
+
+\medskip
+\textbf{Step 1: Distribution of the projected squared norm.}\;
+Write $Y = Au \in \R^k$.  Because $u$ is a fixed unit vector and the
+rows of $A$ are independent,
+\[
+  Y_i = \sum_{j=1}^{d} A_{ij}\, u_j, \qquad i = 1, \ldots, k.
+\]
+Each $Y_i$ is a linear combination of independent Gaussians with
+variance $\sum_j u_j^2 / k = 1/k$.  Hence $Y_i \sim
+\mathcal{N}(0, 1/k)$ and the $Y_i$ are mutually independent.
+Therefore
+\[
+  \norm{Au}_2^2 = \sum_{i=1}^{k} Y_i^2
+  = \frac{1}{k}\sum_{i=1}^{k} Z_i^2,
+\]
+where $Z_i = \sqrt{k}\, Y_i \sim \mathcal{N}(0,1)$ are i.i.d.\ standard
+normals, so $\sum_i Z_i^2 \sim \chi^2_k$.  Define
+$W = \norm{Au}_2^2 = \frac{1}{k}\chi^2_k$.  We have $\mathbb{E}[W] = 1$.
+
+\medskip
+\textbf{Step 2: Sub-exponential tail bound via the moment-generating
+function.}\;
+For the upper tail, let $t > 0$.  By Markov's inequality applied to the
+MGF:
+\[
+  \Pr[W > 1 + \epsilon]
+  = \Pr\!\bigl[e^{tW} > e^{t(1+\epsilon)}\bigr]
+  \leq \frac{\mathbb{E}[e^{tW}]}{e^{t(1+\epsilon)}}.
+\]
+Since $W = \frac{1}{k}\sum_i Z_i^2$ and the $Z_i$ are independent,
+\[
+  \mathbb{E}[e^{tW}]
+  = \prod_{i=1}^{k} \mathbb{E}\!\left[e^{t Z_i^2 / k}\right].
+\]
+For $Z \sim \mathcal{N}(0,1)$ and $s < 1/2$,
+\[
+  \mathbb{E}[e^{sZ^2}] = \frac{1}{\sqrt{1-2s}}.
+\]
+Setting $s = t/k$ (requiring $t < k/2$):
+\[
+  \mathbb{E}[e^{tW}] = (1 - 2t/k)^{-k/2}.
+\]
+Hence
+\[
+  \Pr[W > 1+\epsilon]
+  \leq (1 - 2t/k)^{-k/2}\, e^{-t(1+\epsilon)}.
+\]
+Optimising over $t$: set $t = \frac{k\epsilon}{2(1+\epsilon)}$ (which
+satisfies $t < k/2$).  Substituting:
+\begin{align}
+  \ln\Pr[W > 1+\epsilon]
+  &\leq \frac{k}{2}\left[
+    \epsilon - \ln(1+\epsilon)
+  \right] \notag\\
+  &\leq \frac{k}{2}\left[
+    \epsilon - \epsilon + \tfrac{\epsilon^2}{2} - \tfrac{\epsilon^3}{3} + \cdots
+  \right] \cdot (-1) \notag\\
+  &= -\frac{k}{2}\left[
+    \ln(1+\epsilon) - \epsilon
+  \right]. \label{eq:jl-upper}
+\end{align}
+Using the elementary inequality $\ln(1+\epsilon) \geq \epsilon -
+\epsilon^2/2$ for $\epsilon \in (0,1)$, we get
+\[
+  \Pr[W > 1+\epsilon] \leq \exp\!\left(-\frac{k\epsilon^2}{4}\right).
+\]
+
+For a tighter bound that will be useful for the final constant, we use
+$\ln(1+\epsilon) \geq \epsilon - \epsilon^2/2 + \epsilon^3/3$ (valid
+for $0 < \epsilon < 1$), yielding the refinement:
+\[
+  \Pr[W > 1+\epsilon] \leq \exp\!\left(-\frac{k(\epsilon^2/2 - \epsilon^3/3)}{2}\right)
+  = \exp\!\left(-\frac{k(\epsilon^2 - 2\epsilon^3/3)}{4}\right).
+\]
+
+\medskip
+\textbf{Lower tail.}\;
+For the lower tail $\Pr[W < 1 - \epsilon]$, an analogous calculation
+with $t < 0$ (or equivalently, using $\mathbb{E}[e^{-tW}]$) gives
+\begin{align}
+  \Pr[W < 1-\epsilon]
+  &\leq \exp\!\left(-\frac{k}{2}\bigl[-\epsilon - \ln(1-\epsilon)\bigr]\right) \notag\\
+  &\leq \exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right),
+  \label{eq:jl-lower}
+\end{align}
+where we used $-\ln(1-\epsilon) \geq \epsilon + \epsilon^2/2$ and retained
+a cubic correction.  (The lower tail bound is slightly weaker because
+$(1-\epsilon)$ is farther from the mode than $(1+\epsilon)$ in relative
+terms.)
+
+Combining the two tails via a union bound:
+\[
+  \Pr\!\bigl[\bigl|\norm{Au}_2^2 - 1\bigr| > \epsilon\bigr]
+  \leq 2\exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right).
+\]
+This establishes $(\star)$.
+
+\medskip
+\textbf{Step 3: Union bound over all pairs.}\;
+There are $\binom{n}{2} < n^2/2$ pairs among $n$ points.  For a fixed
+pair $(v_1, v_2)$, setting $u = (v_1-v_2)/\norm{v_1-v_2}_2$:
+\[
+  \norm{f(v_1) - f(v_2)}_2^2 = \norm{v_1 - v_2}_2^2 \cdot \norm{Au}_2^2,
+\]
+so the event $\bigl|\norm{Au}_2^2 - 1\bigr| \leq \epsilon$ is
+equivalent to
+\[
+  (1-\epsilon)\norm{v_1-v_2}_2^2
+  \leq \norm{f(v_1)-f(v_2)}_2^2
+  \leq (1+\epsilon)\norm{v_1-v_2}_2^2.
+\]
+By the union bound, the probability that \emph{any} pair violates this
+is at most
+\[
+  \binom{n}{2} \cdot 2\exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right)
+  < n^2 \exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right).
+\]
+Setting this less than a target failure probability $\delta > 0$:
+\[
+  n^2 \exp\!\left(-\frac{k(\epsilon^2 - \epsilon^3)}{4}\right) < \delta
+  \quad\Longleftrightarrow\quad
+  k > \frac{4(\,2\ln n - \ln \delta\,)}{\epsilon^2 - \epsilon^3}.
+\]
+For $\epsilon \in (0, 1/2]$ we have $\epsilon^2 - \epsilon^3 \geq
+\epsilon^2/2$, so
+\[
+  k = \left\lceil \frac{8(\,2\ln n - \ln\delta\,)}{\epsilon^2} \right\rceil
+  = \calO\!\left(\frac{\log n}{\epsilon^2}\right)
+\]
+suffices (with $\delta$ taken as any fixed constant, e.g.\ $\delta = 1/n$).
+
+\medskip
+\textbf{Conclusion.}\;
+With probability at least $1 - \delta$, the random linear map
+$f(x) = Ax$ with $A \in \R^{k \times d}$, \;$A_{ij} \sim
+\mathcal{N}(0,1/k)$, and
+$k = \calO(\epsilon^{-2}\log n)$
+satisfies
+\[
+  (1-\epsilon)\norm{u-v}_2^2 \leq \norm{f(u)-f(v)}_2^2
+  \leq (1+\epsilon)\norm{u-v}_2^2
+\]
+simultaneously for all $\binom{n}{2}$ pairs.  In particular, the
+existence of such a map is guaranteed (probabilistic method), and
+moreover a random Gaussian matrix achieves it with high probability.
+\end{proof}
+
+\begin{remark}[Tightness]
+The dependence $k = \Theta(\epsilon^{-2}\log n)$ is known to be
+\emph{optimal}: Alon~\cite{alon2003jl} showed that for certain point sets, any
+linear map into $\R^k$ preserving all pairwise distances to within
+$(1 \pm \epsilon)$ requires $k = \Omega(\epsilon^{-2}\log n)$.
+\end{remark}
+
+\begin{remark}[Generalisations]
+The Gaussian distribution is not essential.  The proof uses only
+two properties of the entries of $A$: (i)~zero mean and variance $1/k$,
+and (ii)~sub-Gaussian tails.  Consequently, the lemma holds with the
+same $k$ for:
+\begin{itemize}[nosep]
+  \item \textbf{Rademacher entries:} $A_{ij} = \pm 1/\sqrt{k}$ with
+    equal probability~\cite{achlioptas2003random}.
+  \item \textbf{Sparse projections:} $A_{ij} \in
+    \{-\sqrt{3/k},\; 0,\; \sqrt{3/k}\}$ with probabilities
+    $\{1/6,\; 2/3,\; 1/6\}$~\cite{achlioptas2003random}, yielding $\sim$3$\times$
+    speedup in projection.
+  \item \textbf{Sub-sampled randomised Hadamard transform (SRHT):}
+    achieves $\calO(d \log k)$ projection time instead of
+    $\calO(dk)$~\cite{ailon2009fast}.
+\end{itemize}
+\end{remark}
+
+\subsection{Matryoshka Representation Learning (MRL)}
+
+A recent training technique~\cite{kusupati2022matryoshka} that produces embeddings where truncating
+to the first $k < d$ dimensions yields a valid (though coarser)
+embedding.  This enables adaptive precision: coarse search in low
+dimensions, then re-rank in full dimensions.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Practical System Design Considerations}\label{sec:practical}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Index Selection Guidelines}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Method} & \textbf{Build Time} & \textbf{Query Time} & \textbf{Memory} & \textbf{Best For} \\
+\midrule
+Flat          & $\calO(1)$    & $\calO(nd)$      & $\calO(nd)$ & $n < 10^4$ \\
+IVF-Flat      & $\calO(nd)$   & $\calO(\frac{n}{C}d)$ & $\calO(nd)$ & $10^4$--$10^6$ \\
+IVF-PQ        & $\calO(nd)$   & $\calO(\frac{n}{C}M)$ & $\calO(nM)$ & $10^6$--$10^9$, RAM-limited \\
+HNSW          & $\calO(n\log n\,d)$ & $\calO(\mathrm{ef}\cdot d\log n)$ & $\calO(nMd)$ & $10^5$--$10^8$, latency-critical \\
+DiskANN       & $\calO(n\log n\,d)$ & $\calO(d\log n)$ & $\calO(nM)$ + SSD & $>10^8$, limited RAM \\
+LSH           & $\calO(n^{1+\rho}d)$ & $\calO(n^\rho d)$ & $\calO(n^{1+\rho})$ & Theoretical / streaming \\
+\bottomrule
+\end{tabular}
+\caption{Complexity comparison of major index types ($C$ = IVF clusters, $M$ = PQ sub-spaces or HNSW degree, $\mathrm{ef}$ = HNSW beam width).}
+\end{table}
+
+\subsection{Recall--Throughput Trade-off}
+
+Every ANN index exposes one or more ``knobs'' controlling the
+recall--throughput trade-off:
+\begin{itemize}[nosep]
+  \item \textbf{IVF}: $n_{\text{probe}}$ (number of cells probed).
+  \item \textbf{HNSW}: $\mathrm{ef}$ (beam width at query time).
+  \item \textbf{PQ}: $M$ (number of sub-quantisers) and $K_s$ (codebook
+    size).
+  \item \textbf{DiskANN}: $L$ (search list size) and number of SSD
+    reads.
+\end{itemize}
+
+\subsection{Sharding and Replication}
+
+For datasets exceeding single-machine capacity, vector databases
+partition data across shards (each shard is an independent index) and
+replicate shards for fault tolerance.  Query routing identifies relevant
+shards, issues parallel sub-queries, and merges top-$k$ results.
+
+\subsection{Streaming / Real-Time Updates}
+
+Graph-based indices (HNSW, Vamana) support incremental insertion
+natively.  IVF indices require periodic re-clustering as the data
+distribution drifts.  A common pattern is a \emph{two-tier} architecture:
+a mutable in-memory buffer (e.g., HNSW) for recent writes, periodically
+merged into an immutable on-disk index (e.g., IVF-PQ).
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Evaluation Metrics}\label{sec:eval}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definition}[Recall@$k$]
+Given ground-truth $k$-NN set $G_k(q)$ and retrieved set $R_k(q)$:
+\[
+  \mathrm{Recall@}k = \frac{|R_k(q) \cap G_k(q)|}{k}.
+\]
+\end{definition}
+
+\begin{definition}[Queries Per Second (QPS)]
+Throughput metric; typically measured single-threaded or at a fixed
+parallelism level.
+\end{definition}
+
+The standard benchmark is \textsc{ANN-Benchmarks}~\cite{aumuller2020annbenchmarks}, which evaluates indices on the Pareto frontier of recall vs.\ QPS
+across standardised datasets (SIFT1M, GloVe, GIST, etc.).
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\section{Summary and Outlook}
+%% ══════════════════════════════════════════════════════════════════════════
+
+We have presented the mathematical and algorithmic foundations of vector
+database systems, progressing from exact brute-force search through
+tree-based methods, locality-sensitive hashing, quantisation techniques,
+inverted file indices, and state-of-the-art graph-based approaches.
+
+Key themes include the fundamental tension between recall and efficiency;
+the power of quantisation to compress vectors with controlled distortion;
+and the remarkable effectiveness of navigable small-world graphs for
+high-dimensional search.
+
+Active research frontiers include learned indices (using neural networks
+to predict partition boundaries), hardware-aware optimisation (GPU,
+FPGA, CXL-memory), streaming and mutable indices for real-time
+applications, and tighter integration of vector search with relational
+query processing in hybrid databases.
+
+
+%% ══════════════════════════════════════════════════════════════════════════
+\begin{thebibliography}{99}
+%% ══════════════════════════════════════════════════════════════════════════
+
+\bibitem{johnson1984extensions}
+W.~B. Johnson and J.~Lindenstrauss,
+``Extensions of Lipschitz mappings into a Hilbert space,''
+\emph{Contemporary Mathematics}, vol.~26, pp.~189--206, 1984.
+
+\bibitem{indyk1998lsh}
+P.~Indyk and R.~Motwani,
+``Approximate nearest neighbors: Towards removing the curse of dimensionality,''
+in \emph{Proc.\ 30th ACM Symposium on Theory of Computing (STOC)},
+pp.~604--613, 1998.
+
+\bibitem{charikar2002simhash}
+M.~S. Charikar,
+``Similarity estimation techniques from rounding algorithms,''
+in \emph{Proc.\ 34th ACM Symposium on Theory of Computing (STOC)},
+pp.~380--388, 2002.
+
+\bibitem{achlioptas2003random}
+D.~Achlioptas,
+``Database-friendly random projections: Johnson--Lindenstrauss with binary coins,''
+\emph{Journal of Computer and System Sciences}, vol.~66, no.~4,
+pp.~671--687, 2003.
+
+\bibitem{alon2003jl}
+N.~Alon,
+``Problems and results in extremal combinatorics---I,''
+\emph{Discrete Mathematics}, vol.~273, no.~1--3, pp.~31--53, 2003.
+(Lower bound for the Johnson--Lindenstrauss lemma.)
+
+\bibitem{datar2004e2lsh}
+M.~Datar, N.~Immorlica, P.~Indyk, and V.~S. Mirrokni,
+``Locality-sensitive hashing scheme based on $p$-stable distributions,''
+in \emph{Proc.\ 20th ACM Symposium on Computational Geometry (SoCG)},
+pp.~253--262, 2004.
+
+\bibitem{lv2007multiprobe}
+Q.~Lv, W.~Josephson, Z.~Wang, M.~Charikar, and K.~Li,
+``Multi-probe LSH: Efficient indexing for high-dimensional similarity search,''
+in \emph{Proc.\ 33rd International Conference on Very Large Data Bases (VLDB)},
+pp.~950--961, 2007.
+
+\bibitem{ailon2009fast}
+N.~Ailon and B.~Chazelle,
+``The fast Johnson--Lindenstrauss transform and approximate nearest neighbors,''
+\emph{SIAM Journal on Computing}, vol.~39, no.~1, pp.~302--322, 2009.
+
+\bibitem{jegou2011pq}
+H.~J\'egou, M.~Douze, and C.~Schmid,
+``Product quantization for nearest neighbor search,''
+\emph{IEEE Transactions on Pattern Analysis and Machine Intelligence},
+vol.~33, no.~1, pp.~117--128, 2011.
+
+\bibitem{ge2013opq}
+T.~Ge, K.~He, Q.~Ke, and J.~Sun,
+``Optimized product quantization,''
+\emph{IEEE Transactions on Pattern Analysis and Machine Intelligence},
+vol.~36, no.~4, pp.~744--755, 2014.
+(Conference version at CVPR 2013.)
+
+\bibitem{malkov2014nsw}
+Y.~A. Malkov, A.~Ponomarenko, A.~Logvinov, and V.~Krylov,
+``Approximate nearest neighbor algorithm based on navigable small world graphs,''
+\emph{Information Systems}, vol.~45, pp.~61--68, 2014.
+
+\bibitem{bernhardsson2015annoy}
+E.~Bernhardsson,
+``Annoy: Approximate Nearest Neighbors in C++/Python,''
+2015.
+\url{https://github.com/spotify/annoy}.
+
+\bibitem{malkov2018hnsw}
+Y.~A. Malkov and D.~A. Yashunin,
+``Efficient and robust approximate nearest neighbor search using
+Hierarchical Navigable Small World graphs,''
+\emph{IEEE Transactions on Pattern Analysis and Machine Intelligence},
+vol.~42, no.~4, pp.~824--836, 2020.
+(arXiv preprint 2016; journal version 2018/2020.)
+
+\bibitem{johnson2019faiss}
+J.~Johnson, M.~Douze, and H.~J\'egou,
+``Billion-scale similarity search with GPUs,''
+\emph{IEEE Transactions on Big Data}, vol.~7, no.~3, pp.~535--547, 2021.
+(Faiss library; conference version at GTC 2017.)
+
+\bibitem{jayaram2019diskann}
+S.~Jayaram Subramanya, F.~Devvrit, H.~V. Simhadri, R.~Krishnaswamy,
+and R.~Kadekodi,
+``DiskANN: Fast accurate billion-point nearest neighbor search on a single node,''
+in \emph{Advances in Neural Information Processing Systems (NeurIPS)},
+vol.~32, 2019.
+
+\bibitem{guo2020scann}
+R.~Guo, P.~Sun, E.~Lindgren, Q.~Geng, D.~Simcha, F.~Chern, and S.~Kumar,
+``Accelerating large-scale inference with anisotropic vector quantization,''
+in \emph{Proc.\ 37th International Conference on Machine Learning (ICML)},
+pp.~3887--3896, 2020.
+
+\bibitem{khattab2020colbert}
+O.~Khattab and M.~Zaharia,
+``ColBERT: Efficient and effective passage search via contextualized late
+interaction over BERT,''
+in \emph{Proc.\ 43rd International ACM SIGIR Conference on Research and
+Development in Information Retrieval}, pp.~39--48, 2020.
+
+\bibitem{aumuller2020annbenchmarks}
+M.~Aum\"uller, E.~Bernhardsson, and A.~Faithfull,
+``ANN-Benchmarks: A benchmarking tool for approximate nearest neighbor algorithms,''
+\emph{Information Systems}, vol.~87, 101374, 2020.
+
+\bibitem{kusupati2022matryoshka}
+A.~Kusupati, G.~Bhatt, A.~Rber, M.~Wallingford, A.~Sinha,
+V.~Ramasamy, S.~N. Prasad, K.~Simhadri, and P.~Jain,
+``Matryoshka representation learning,''
+in \emph{Advances in Neural Information Processing Systems (NeurIPS)},
+vol.~35, 2022.
+
+\bibitem{babenko2014aq}
+A.~Babenko and V.~Lempitsky,
+``Additive quantization for extreme vector compression,''
+in \emph{Proc.\ IEEE Conference on Computer Vision and Pattern Recognition
+(CVPR)}, pp.~931--938, 2014.
+
+\bibitem{chen2010rq}
+Y.~Chen, T.~Guan, and C.~Wang,
+``Approximate nearest neighbor search by residual vector quantization,''
+\emph{Sensors}, vol.~10, no.~12, pp.~11259--11273, 2010.
+
+\bibitem{dasgupta2008random}
+S.~Dasgupta and Y.~Freund,
+``Random projection trees and low dimensional manifolds,''
+in \emph{Proc.\ 40th ACM Symposium on Theory of Computing (STOC)},
+pp.~537--546, 2008.
+
+\bibitem{bentley1975kdtree}
+J.~L. Bentley,
+``Multidimensional binary search trees used for associative searching,''
+\emph{Communications of the ACM}, vol.~18, no.~9, pp.~509--517, 1975.
+
+\bibitem{omohundro1989balltree}
+S.~M. Omohundro,
+``Five balltree construction algorithms,''
+\emph{Technical Report TR-89-063}, International Computer Science
+Institute, Berkeley, 1989.
+
+\bibitem{douze2024faiss}
+M.~Douze, A.~Guzhva, C.~Deng, J.~Johnson, G.~Szilvasy, P.-E.~Mazar\'e,
+M.~Lomeli, L.~Hosseini, and H.~J\'egou,
+``The Faiss library,''
+\emph{arXiv preprint arXiv:2401.08281}, 2024.
+
+\bibitem{aguerrebere2024similarity}
+C.~Aguerrebere, I.~Bhatt, M.~Doherty, and R.~Jain,
+``Similarity search in the blink of an eye with compressed indices,''
+\emph{Proceedings of the VLDB Endowment}, vol.~16, no.~11, pp.~3433--3446,
+2023.
+
+\end{thebibliography}
+
+
+\end{document}

@@ -1,0 +1,34 @@
+# Teaching — courses, with semester, role, and materials.
+
+- semester: "Spring 2026"
+  course: "Math 245"
+  title: "Riemann Surfaces"
+  role: "Instructor"
+  description: "Graduate course. Sheaf cohomology, divisors, Riemann–Roch, theta functions, and uniformization."
+  links:
+    - name: syllabus
+      url: "#"
+    - name: notes
+      url: "#"
+
+- semester: "Fall 2025"
+  course: "Math 132"
+  title: "Complex Analysis"
+  role: "Instructor"
+  description: "Undergraduate course. Holomorphic functions, contour integration, conformal mapping, with an excursion into modular forms at the end."
+  links:
+    - name: syllabus
+      url: "#"
+    - name: notes
+      url: "#"
+    - name: psets
+      url: "#"
+
+- semester: "Spring 2025"
+  course: "Math 51"
+  title: "Linear Algebra and Multivariable Calculus"
+  role: "Teaching Assistant"
+  description: "Section instructor and grader. Prepared weekly worksheets on changes of basis and the spectral theorem."
+  links:
+    - name: worksheets
+      url: "#"

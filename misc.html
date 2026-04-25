@@ -1,0 +1,31 @@
+---
+layout: page
+title: miscellaneous
+---
+<h1>miscellaneous</h1>
+<p class="byline">talks, reading notes, side projects.</p>
+
+<ul class="post-list">
+{%- for item in site.data.misc -%}
+  <li>
+    <span class="date">{{ item.year }}</span>
+    <div>
+      <div class="title">
+        {%- if item.links and item.links[0] -%}
+          <a href="{{ item.links[0].url }}">{{ item.title | markdownify | remove: '<p>' | remove: '</p>' }}</a>
+        {%- else -%}
+          {{ item.title | markdownify | remove: '<p>' | remove: '</p>' }}
+        {%- endif -%}
+      </div>
+      <div class="excerpt">{{ item.description | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+      {%- if item.links -%}
+      <div class="excerpt">
+      {%- for link in item.links -%}{% unless forloop.first %} · {% endunless %}<a href="{{ link.url }}">{{ link.name }}</a>{%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </li>
+{%- endfor -%}
+</ul>
+
+<a href="{{ '/' | relative_url }}" class="back">← home</a>

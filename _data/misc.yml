@@ -1,0 +1,32 @@
+# Miscellaneous items — talks, reading notes, book reviews, side projects.
+# Same shape as research.yml. Edit freely.
+
+- year: 2026
+  title: "Talk: The Hitchin connection at genus one"
+  description: "Slides from a seminar talk. A derivation of the projectively flat connection on theta functions, with emphasis on where the framing anomaly enters."
+  links:
+    - name: slides
+      url: "#"
+
+- year: 2025
+  title: "Review of *Geometry of Quantum States* by Bengtsson & Życzkowski"
+  description: "Short notes on a beautiful book. Especially good on the Fubini–Study metric and the geometric origin of Berry phases."
+  links:
+    - name: pdf
+      url: "#"
+
+- year: 2024
+  title: "Reading notes on Witten, 1989"
+  description: "My working notes through *Quantum Field Theory and the Jones Polynomial*. Derivations filled in, a handful of typos fixed."
+  links:
+    - name: pdf
+      url: "#"
+
+- year: 2024
+  title: "theta-viz"
+  description: "A small interactive visualization of the Jacobi theta function on the upper half-plane. Written in TypeScript and WebGL."
+  links:
+    - name: demo
+      url: "#"
+    - name: github
+      url: "#"

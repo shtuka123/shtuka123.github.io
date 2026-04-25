@@ -1,0 +1,38 @@
+title: ani
+description: Personal site.
+url: ""
+baseurl: ""
+author: ani
+email: you@example.com
+github_user: yourname
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    css: class
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  hard_wrap: false
+  # Disable kramdown's math engine so $...$ and $$...$$ pass through
+  # untouched and MathJax handles them directly.
+  math_engine: null
+
+permalink: /blog/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - .bundle
+  - .jekyll-cache
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: feed.xml
