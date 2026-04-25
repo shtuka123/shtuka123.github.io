@@ -101,7 +101,7 @@ simultaneously under both actions produces the Langlands correspondence.
 ## Why Shimura varieties are powerful but selective
 
 Modular curves are the simplest Shimura varieties. Higher-dimensional
-Shimura varieties extend the same idea: they are moduli spaces {% include sn.html id=3 content="Technically I'm lying here: conjecturally all Shimura varieties are moduli spaces of some sort of motivic object, but in practice, the best thing we can say are that some Shimura varieties are moduli spaces of Hodge structures."} whose
+Shimura varieties extend the same idea: they are moduli spaces {% include sn.html id=3 content="Technically I'm lying here: conjecturally all Shimura varieties are moduli spaces of some sort of motivic object, but in practice, the best thing we can say are that some Shimura varieties are moduli spaces of Hodge structures." %} whose
 cohomology carries Hecke actions and Galois actions at the same time.
 
 But Shimura varieties have a built-in limitation. Their cohomology sees
