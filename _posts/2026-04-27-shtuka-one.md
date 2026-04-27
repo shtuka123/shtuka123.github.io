@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Shtukas: Part I"
-date: 2026-04-24
+date: 2026-04-27
 description: What is a shtuka?
 ---
 
