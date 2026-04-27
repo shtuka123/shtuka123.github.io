@@ -88,7 +88,7 @@ Let $\mu := (\mu_1, \ldots, \mu_r)$ be tuples of integers as defined above measu
 
 Drinfeld's proof of the Langlands correspondence for $\GL_2$ makes use of the moduli stack of shtukas of rank $2$ with legs $\mu_1$ and $\mu_2$, of type $(1, 0)$ and $(0, -1)$ respectively. He first shows that $\Sht_{2, D}^{\mu}$ is a Deligne-Mumford stack, and that the natural morphism $\Sht_{2, D}^{\mu} \to (X \setminus D)^2$ is smooth of relative dimension $2$. The tower of stacks $\Sht_{2, D}^{\mu}$ (as $D$ varies through all effective divisors) admits an action of $\GL_2(\BA_f)$. Drinfeld defines
 
-$$V\_\ell := \varinjlim\_{D} H^2(\Sht_{2, D}^{\mu} \times \bar{\eta}_2, \bar{\BQ}\_\ell)$$
+$$V_\ell := \varinjlim_{D} H^2(\Sht_{2, D}^{\mu} \times \bar{\eta}_2, \bar{\BQ}_\ell)$$
 
 where $\eta_2 = \Spec F_2$ is the generic point of the surface $X^2$, and $\bar{\eta}_2 = \Spec \bar{F\_2}$. Then $\GL_2(\BA_f)$ acts on $V\_\ell$. If $\pi$ is a cuspidal automorphic representation of $\GL_2(\BA_f)$ with $\bar{\BQ}\_\ell$ coefficients, then the representation of $G\_{F_2}$ on $\Hom\_{\GL_2(\BA_f)}(\pi, V\_\ell)$ factors through a representation of $W_F \times W_F$ of the form $\varphi \otimes \hat{\varphi}$, where $\varphi$ is irreducible and $2$-dimensional. Then $\pi \mapsto \varphi$ *is* the Langlands correspondence for $\GL_2$ over $F$.
 
