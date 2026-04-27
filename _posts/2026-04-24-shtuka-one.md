@@ -31,7 +31,7 @@ Deligne constructs a $\overline{\BQ}_\ell$-adic local system $\xi_k$ on $X_K$ fo
 \[ H^1(\xi_k) := \varprojlim_K H^1(X_{K, \bar{Q}}, \xi_k) \] This is a representation of $\GL_2(\BA_f) \times G_\BQ$.
 
 
-<div class="thm thm-theorem" markdown="1">
+<div class="thm thm-theorem">  <span class="thm-label" data-title="Hitchin"></span>
 As a representation of $\GL_2(\BA_f) \times G_\BQ$, the cuspidal part of the cohomology $H^1(\xi_k)$ is isomorphic to (up to some twists) \[ \bigoplus_{\pi} \pi_f \otimes \varphi_\pi \] where $\pi = \pi_f \otimes \pi_\infty$ runs over
 cuspidal automorphic representations for which $\pi_\infty$ is discrete series of weight $k$, and $\varphi_\pi$ is irreducible and $2$-dimensional.
 
