@@ -68,6 +68,17 @@ Essentially all approaches to constructing the Langlands correspondence over num
 
 ## Shtukas
 
+(Moduli spaces of) shtukas are the function field analogues of Shimura varieties. These spaces will no longer be varieties, or even schemes - they will be algebraic stacks, btu they will have 
+the advantage that they exist uniformly for all groups $G$.
+
+<div class="thm thm-definition" markdown="1">
+<span class="thm-label">Definition 3.</span>
+    Let $X / \BF_q$ be a smooth projective curve whose function field is $F$, and let $S$ be any $\BF_q$-scheme. An $X$-shtuka of rank $n$ over $S$ consists of the following data:
+    - Morphisms $x_1, \ldots, x_r : S \to X$ called the *legs* of the shtuka
+    - Vector bundles $\Ecal_0, \ldots, \Ecal_r = \Frob_S^* \Ecal_0$ of rank $n$ over $X \times S$.
+    - For $i = 1, \ldots, r$, an isomorphism $f_i : \Ecal_{i-1} \lvert_{(X \times S) \setminus \Gamma_i} \cong \Ecal_{i} \lvert_{(X \times S) \setminus \Gamma_i}$ defined away from the graph $Gamma_i \subset X \times S$ of $x_i$.
+</div>
+
 <div class="dinkus"></div>
 
 ## Further reading
