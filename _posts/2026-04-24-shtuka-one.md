@@ -14,40 +14,40 @@ Shtukas are an object in modern number theory that play the role of Shimura vari
 Let $F$ be a global field (so either a finite Galois extension of $\mathbf{Q}$ or the function field of a curve over $\mathbf{F}_q$), and $G/F$ a reductive group. The Langlands correspondence is a conjectural non-abelian generalization of the reciprocity laws of class field theory, in the sense that when $G = \GL_1$, it recovers these laws. It predicts a correspondence between the following two sets:
 
 - Algebraic automorphic representations of $G(\BA_f)$ with complex coefficients (the automorphic side).
-- $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}_\ell)$. Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}_\ell$.
+- $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}\_\ell)$. Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}\_\ell$.
 
-The Langlands correspondence then says that there should be a finite-to-one map $\pi \mapsto \varphi_\pi$. In the number field case, the global Langlands correspondence remains wide open, even for the next simplest possible group $\GL_2$. But for function fields (i.e global fields of characteristic $p > 0$), the state of the conjecture looks much better. In this setting, Drinfeld and L. Lafforgue established the correspondence for $\GL_2$ and $\GL_n$ respectively. Why is this possible? The answer is that essentially all known instances of the Langlands correspondence are realized via the cohomology of some geometric object, and function fields are more intrisically geometric than number fields.
+The Langlands correspondence then says that there should be a finite-to-one map $\pi \mapsto \varphi\_\pi$. In the number field case, the global Langlands correspondence remains wide open, even for the next simplest possible group $\GL_2$. But for function fields (i.e global fields of characteristic $p > 0$), the state of the conjecture looks much better. In this setting, Drinfeld and L. Lafforgue established the correspondence for $\GL_2$ and $\GL_n$ respectively. Why is this possible? The answer is that essentially all known instances of the Langlands correspondence are realized via the cohomology of some geometric object, and function fields are more intrisically geometric than number fields.
 
 How does such a geometric construction work? Very roughly, one starts with some geometric object $X$ that is defined over $F$, and also has some level structure according to compact open subgroups of $G(\BA_F)$. Then the cohomology $R\Gamma(X)$ carries both an action of the Galois group $G_F$ and also $G(\BA_F)$, and these actions will commute with each other. The Langlands correspondence is then read off of this decomposition. The following example of modular curves illustrates this process.
 
 ## Modular Curves
 
-The most transparent situation in which the Langlands correspondence is realized in the cohomology of some geometric object is the case of modular curves. This corresponds to taking $F = \BQ$ and $G = \GL_2$. Then there is a bijection between cuspidal newforms of weight $k \geq 2$ and cuspidal automorphic representations $\pi = \pi_f \otimes \pi_\infty$ of $G(\BA_\BQ) = G(\BA_f) \times G(\BR)$ whose archimedean component $\pi_\infty$ is the discrete series of weight $k$. In this situation, the relevant geometric objects are certain Shimura varieties, namely the modular curves $Y_K$ as $K$ ranges through the compact open subgroups of $\GL_2(\BA_\BQ)$. These Shimura varieties are defined over $\BQ$. Let $X_K$ be the compactification of $Y_K$, and $X_{K, \bar{\BQ}}$ denote its base change to $\bar{\BQ}$.
+The most transparent situation in which the Langlands correspondence is realized in the cohomology of some geometric object is the case of modular curves. This corresponds to taking $F = \BQ$ and $G = \GL_2$. Then there is a bijection between cuspidal newforms of weight $k \geq 2$ and cuspidal automorphic representations $\pi = \pi_f \otimes \pi\_\infty$ of $G(\BA\_\BQ) = G(\BA_f) \times G(\BR)$ whose archimedean component $\pi\_\infty$ is the discrete series of weight $k$. In this situation, the relevant geometric objects are certain Shimura varieties, namely the modular curves $Y_K$ as $K$ ranges through the compact open subgroups of $\GL_2(\BA\_\BQ)$. These Shimura varieties are defined over $\BQ$. Let $X_K$ be the compactification of $Y_K$, and $X_{K, \bar{\BQ}}$ denote its base change to $\bar{\BQ}$.
 
-Deligne constructs a $\bar{\BQ}_\ell$-adic local system $\xi_k$ on $X_K$ for each $k \geq 2$. Define
+Deligne constructs a $\bar{\BQ}\_\ell$-adic local system $\xi_k$ on $X_K$ for each $k \geq 2$. Define
 
 $$H^1(\xi_k) := \varprojlim_K H^1(X_{K, \bar{\BQ}}, \xi_k).$$
 
-This is a representation of $\GL_2(\BA_f) \times G_\BQ$.
+This is a representation of $\GL_2(\BA_f) \times G\_\BQ$.
 
 <div class="thm thm-theorem" markdown="1">
 <span class="thm-label">Theorem 1 (Deligne–Carayol).</span>
-As a representation of $\GL_2(\BA_f) \times G_\BQ$, the cuspidal part of the cohomology $H^1(\xi_k)$ is isomorphic to (up to some twists)
+As a representation of $\GL_2(\BA_f) \times G\_\BQ$, the cuspidal part of the cohomology $H^1(\xi_k)$ is isomorphic to (up to some twists)
 
 $$\bigoplus_{\pi} \pi_f \otimes \varphi_\pi,$$
 
-where $\pi = \pi_f \otimes \pi_\infty$ runs over cuspidal automorphic representations for which $\pi_\infty$ is discrete series of weight $k$, and $\varphi_\pi$ is irreducible and $2$-dimensional.
+where $\pi = \pi_f \otimes \pi\_\infty$ runs over cuspidal automorphic representations for which $\pi\_\infty$ is discrete series of weight $k$, and $\varphi\_\pi$ is irreducible and $2$-dimensional.
 </div>
 
 ## Shimura Varieties
 
-Modular curves are $1$-dimensional examples of Shimura varieties. Here is a crash course on the basic formalism: one begins with a Shimura datum, which is a pair $(G, \mu)$ with $G$ a reductive group over $\BQ$ and $\mu$ a $G(\BR)$-conjugacy class of morphisms $\BC^\times \to G(\BR)$. This pair is forced to satisfy certain axioms, basically ensuring that the conjugacy class $\Hcal_\mu$ is a Hermitian symmetric domain. We then define the tower of Shimura varieties
+Modular curves are $1$-dimensional examples of Shimura varieties. Here is a crash course on the basic formalism: one begins with a Shimura datum, which is a pair $(G, \mu)$ with $G$ a reductive group over $\BQ$ and $\mu$ a $G(\BR)$-conjugacy class of morphisms $\BC^\times \to G(\BR)$. This pair is forced to satisfy certain axioms, basically ensuring that the conjugacy class $\Hcal\_\mu$ is a Hermitian symmetric domain. We then define the tower of Shimura varieties
 
 $$\Sh(G, \mu)_K := G(\BQ) \backslash \big( \Hcal_\mu \times G(\BA_f) / K \big)$$
 
 as $K$ varies through the compact open subgroups of $G(\BA_f)$. The basic result, due to Deligne and many others, is that $\Sh_K(G, \mu)$ is a quasi-projective variety over $\BC$, canonically defined over a number field $E$.
 
-The $\ell$-adic cohomology of the tower $\Sh(G, \mu)_K$ admits an action of $G(\BA_f) \times G_E$. Kottwitz proposed that the Langlands correspondence should be realized in this cohomology, in the following sense: to an algebraic representation $\pi_\infty$ of $G(\BR)$, there is a corresponding local system $\xi$ on $\Sh(G, \mu)_K$, and one defines
+The $\ell$-adic cohomology of the tower $\Sh(G, \mu)\_K$ admits an action of $G(\BA_f) \times G_E$. Kottwitz proposed that the Langlands correspondence should be realized in this cohomology, in the following sense: to an algebraic representation $\pi\_\infty$ of $G(\BR)$, there is a corresponding local system $\xi$ on $\Sh(G, \mu)\_K$, and one defines
 
 $$H^i(\xi) := \varprojlim_K H^i\big( \Sh(G, \mu)_{K, \bar{\BQ}}, \bar{\BQ}_\ell \big),$$
 
