@@ -16,7 +16,7 @@ of the reciprocity laws of class field theory, in the sense that when $G = \GL_1
 
 \begin{itemize}
     \item Algebraic automorphic representations of $G(\BA_f)$ with complex coefficients (the automorphic side). 
-    \item $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}_\ell). Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}_\ell$.
+    \item $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}_\ell)$. Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}_\ell$.
 \end{itemize}
 
 The Langlands correspondence then says that there should be a finite-to-one map $\pi \mapsto \varphi_\pi$. In the number field case, the global Langlands correspondence remains wide open, even for the next simplest possible group $\GL_2$. But for function fields (i.e global fields of characteristic $p > 0$), the state of the conjecture looks much better. In this setting, Drinfeld and L. Lafforgue established the correspondence for $\GL_2$ and $\GL_n$ respectively. Why is this possible? The answer is that essentially all known instances of the Langlands correspondence are realized via the cohomology of some geometric object, and function fields are more intrisically geometric than number fields. 
