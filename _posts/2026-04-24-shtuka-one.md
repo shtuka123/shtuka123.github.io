@@ -27,11 +27,11 @@ How does such a geometric construction work? Very roughly, oen starts with some 
 
 The most transparent situation in which the Langlands correspondence is realized in the cohomology of some geometric object is the case of modular curves. This corresponds to taking $F = \BQ$ and $G = \GL_2$. Then there is a bijection between cuspidal newforms of weight $k \geq 2$ and cuspidal automorphic representations $\pi = \pi_f \otimes \pi_\infty$ of $G(\BA_\BQ) = G(\BA_f) \times G(\BR)$ whose archimedean component $\pi_\infty$ is the discrete series of weight $k$. In this situation, the relevant geometric objects are certain Shimura varieties, namely the modular curves $Y_K$ as $K$ ranges through the compact open subgroups of $\GL_2(\BA_\BQ)$. These Shimura varieties are defined over $\BQ$. Let $X_K$ be the compactification of $Y_K$, and $X_{K, \bar{\BQ}}$ denote its base change to $\bar{\BQ}$.
 
-Deligne constructs a $\overline{\BQ}_\ell$-adic local system $\xi_k$ on $X_K$ for each $k \geq 2$. Define 
+Deligne constructs a $\bar{\BQ}_{\ell}$-adic local system $\xi_k$ on $X_K$ for each $k \geq 2$. Define 
 \[ H^1(\xi_k) := \varprojlim_K H^1(X_{K, \bar{Q}}, \xi_k) \] This is a representation of $\GL_2(\BA_f) \times G_\BQ$.
 
 
-<div class="thm thm-theorem">  <span class="thm-label" data-title="Hitchin"></span>
+<div class="thm thm-theorem">  <span class="thm-label" data-title="Deligne-Carayol"></span>
 As a representation of $\GL_2(\BA_f) \times G_\BQ$, the cuspidal part of the cohomology $H^1(\xi_k)$ is isomorphic to (up to some twists) \[ \bigoplus_{\pi} \pi_f \otimes \varphi_\pi \] where $\pi = \pi_f \otimes \pi_\infty$ runs over
 cuspidal automorphic representations for which $\pi_\infty$ is discrete series of weight $k$, and $\varphi_\pi$ is irreducible and $2$-dimensional.
 
