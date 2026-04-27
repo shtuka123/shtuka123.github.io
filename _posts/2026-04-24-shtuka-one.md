@@ -92,6 +92,9 @@ $$V_\ell := \varinjlim_{D} H^2(\Sht_{2, D}^{\mu} \times \bar{\eta}_2, \bar{\BQ}_
 
 where $\eta_2 = \Spec F_2$ is the generic point of the surface $X^2$, and $\bar{\eta}_2 = \Spec \bar{F\_2}$. Then $\GL_2(\BA_f)$ acts on $V\_\ell$. If $\pi$ is a cuspidal automorphic representation of $\GL_2(\BA_f)$ with $\bar{\BQ}\_\ell$ coefficients, then the representation of $G\_{F_2}$ on $\Hom\_{\GL_2(\BA_f)}(\pi, V\_\ell)$ factors through a representation of $W_F \times W_F$ of the form $\varphi \otimes \hat{\varphi}$, where $\varphi$ is irreducible and $2$-dimensional. Then $\pi \mapsto \varphi$ *is* the Langlands correspondence for $\GL_2$ over $F$.
 
+Later, L. Lafforgue extended Drinfeld's methods to prove Langlands for $\GL_n$ over $F$, again using moduli of rank $n$ shtukas with two legs. Varshavsky also defined stacks of shtukas for all reductive groups $G$. A version of Conjecture 2 also exists for these stacks as well, which I won't write out here. 
+
+Finally, I should mention another fascinating application of shtukas - their relation to (derivatives of) $L$-functions. This is something I hope to write more about later on, and in fact was my original motivation for learning about shtukas!
 
 
 
@@ -104,3 +107,4 @@ where $\eta_2 = \Spec F_2$ is the generic point of the surface $X^2$, and $\bar{
 - V. Drinfeld, *Langlands' conjecture for $\GL_2$ over function fields*.
 - L. Lafforgue, *Chtoucas de Drinfeld et correspondance de Langlands*.
 - V. Lafforgue, *Shtukas for reductive groups and Langlands correspondence for function fields*.
+- J. Weinstein, *Shtukas and the Langlands Program: A Birds-Eye View*.
