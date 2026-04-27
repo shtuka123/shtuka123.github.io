@@ -339,7 +339,7 @@ mjx-container svg { vertical-align: -0.07em; }
 
 article.content {
   counter-reset: thm-theorem thm-proposition thm-lemma thm-corollary
-                 thm-definition thm-example;
+                 thm-definition thm-example thm-conjecture;
 }
 
 .thm {
@@ -369,11 +369,13 @@ article.content {
 .thm-lemma       { border-left-color: var(--accent); counter-increment: thm-lemma; }
 .thm-lemma       > .thm-label::before { content: "Lemma " counter(thm-lemma); }
 
-.thm-conjecture  { border-left-color: var(--accent); counter-increment: thm-conjecture; }
-.thm-conjecture  > .thm-label::before { content: "Conjecture " counter(thm-conjecture);}
-
 .thm-corollary   { border-left-color: var(--accent); counter-increment: thm-corollary; }
 .thm-corollary   > .thm-label::before { content: "Corollary " counter(thm-corollary); }
+
+.thm-conjecture  { border-left-color: var(--accent-soft); background: rgba(166, 74, 51, 0.03); counter-increment: thm-conjecture; }
+.thm-conjecture  > .thm-label::before { content: "Conjecture " counter(thm-conjecture); }
+.thm-conjecture  { font-style: italic; }
+.thm-conjecture > .thm-label { font-style: normal; }
 
 .thm-definition  { border-left-color: #1c4a6b; counter-increment: thm-definition; }
 .thm-definition  > .thm-label::before { content: "Definition " counter(thm-definition); }

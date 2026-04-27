@@ -50,7 +50,7 @@ $$ H^*(\xi) := \sum_i (-1)^i H^i(\xi)$$
 
 Here the sum defining $H^*(\xi)$ is taken in the Grothendieck group of $G(\BA_f) \times G_E$-representations. 
 
-<div class="thm thm-conjecture"> <span class="thm-label" ></span>
+<div class="thm thm-conjecture"> <span class="thm-label" data-title="Kottwitz"></span>
     In this Grothendieck group, we have (up to some twists)
     \[ H^*(\xi) = \sum_\pi a(\pi, \xi) \pi_f \otimes (R_\mu \circ \varphi_\pi) \] Here $\pi$ runs over all cuspidal automorphic representations of $G$, $R_\mu : {}^L G \to \GL(N)$ is the representation of highest weight $\mu$, and $a(\pi, \xi)$ is some integer.
 </div>

@@ -1,5 +1,5 @@
-title: Aniruddh V.
-description: 
+title: ani
+description: Personal site.
 url: ""
 baseurl: ""
 author: ani
@@ -8,7 +8,7 @@ github_user: yourname
 
 markdown: kramdown
 kramdown:
-  input: GFM
+  input: kramdown
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: 'highlight'
