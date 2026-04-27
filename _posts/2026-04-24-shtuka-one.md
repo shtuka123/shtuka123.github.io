@@ -14,7 +14,7 @@ Shtukas are an object in modern number theory that play the role of Shimura vari
 Let $F$ be a global field (so either a finite Galois extension of $\mathbf{Q}$ or the function field of a curve over $\mathbf{F}_q$), and $G/F$ a reductive group. The Langlands correspondence is a conjectural non-abelian generalization of the reciprocity laws of class field theory, in the sense that when $G = \GL_1$, it recovers these laws. It predicts a correspondence between the following two sets:
 
 - Algebraic automorphic representations of $G(\BA_f)$ with complex coefficients (the automorphic side).
-- $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}_\ell)$. Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}_\ell$.
+- $L$-parameters, which are conjugacy classes of continous homomorphisms $\varphi \colon G_F \to {}^L G(\overline{\BQ}_\ell)$. Here $\ell$ is a prime different than the characteristic of $F$, and we fix an isomorphism between $\BC$ and $\overline{\BQ}_{\ell}$.
 
 The Langlands correspondence then says that there should be a finite-to-one map $\pi \mapsto \varphi_\pi$. In the number field case, the global Langlands correspondence remains wide open, even for the next simplest possible group $\GL_2$. But for function fields (i.e global fields of characteristic $p > 0$), the state of the conjecture looks much better. In this setting, Drinfeld and L. Lafforgue established the correspondence for $\GL_2$ and $\GL_n$ respectively. Why is this possible? The answer is that essentially all known instances of the Langlands correspondence are realized via the cohomology of some geometric object, and function fields are more intrisically geometric than number fields.
 
@@ -49,7 +49,7 @@ as $K$ varies through the compact open subgroups of $G(\BA_f)$. The basic result
 
 The $\ell$-adic cohomology of the tower $\Sh(G, \mu)_K$ admits an action of $G(\BA_f) \times G_E$. Kottwitz proposed that the Langlands correspondence should be realized in this cohomology, in the following sense: to an algebraic representation $\pi_\infty$ of $G(\BR)$, there is a corresponding local system $\xi$ on $\Sh(G, \mu)_K$, and one defines
 
-$$H^i(\xi) := \varprojlim_K H^i\big( \Sh(G, \mu)_{K, \bar{\BQ}}, \bar{\BQ}_\ell \big),$$
+$$H^i(\xi) := \varprojlim_K H^i\big( \Sh(G, \mu)_{K, \bar{\BQ}}, \bar{\BQ}_{\ell} \big),$$
 
 $$H^*(\xi) := \sum_i (-1)^i H^i(\xi).$$
 
