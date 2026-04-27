@@ -80,6 +80,15 @@ Let $X / \BF_q$ be a smooth projective curve whose function field is $F$, and le
 - For $i = 1, \ldots, r$, an isomorphism $f_i : \Ecal_{i-1} \lvert_{(X \times S) \setminus \Gamma_i} \cong \Ecal_{i} \lvert_{(X \times S) \setminus \Gamma_i}$ defined away from the graph $\Gamma_i \subset X \times S$ of $x_i$.
 </div>
 
+For each geometric point $s \to S$, the failure of $f_i$ to be an isomorphism at $X \times s$ is measured by a tuple of integers $\mu = (k_1, \ldots, k_n)$, with $k_1, \geq \cdots \geq k_n$. For example, an $f$ of type 
+$(1, 0, \ldots, 0)$ is a map $\Ecal \to \Ecal '$ whose cokernel is the pushforward from $x$ of a $1$-dimensional vector space. 
+There is a notion of level structure as well: for each effective divisor $D \subset X$ not meeting the legs of the shtuka, a level $D$ structure is a collection of trivializations $\Ecal_i \lvert_D \cong \Ocal_D^{\oplus n}$ for each $i = 0, \ldots, r-1$, which are compatible with the $f_i$.
+
+Let $\mu := (\mu_1, \ldots, \mu_r)$ be tuples of integers as defined above measuring the failure of each $f_i$ to be an isomorphism. We write $\Sht_{n, D}^\mu$ for the moduli stack of $r$-legged $\GL_n$-shtukas, with modification type $\mu$ and level $D$ structure.
+
+Drinfeld's proof of the Langlands correspondence for $\GL_2$ makes use of the moduli stack of shtukas of rank $2$ with legs $\mu_1$ and $\mu_2$, of type $(1, 0)$ and $(0, -1)$ respectively. He first shows that 
+$\Sht_{2, D}^{\mu}$ is a Deligne-Mumford stack, and that the natural morphism $\Sht_{2, D}^{\mu} \to (X \setminus D)^2$ is smooth of relative dimension $2$. The tower of stacks $\Sht_{2, D}^{\mu}$ (as $D$ varies through all effective divisors) admits an action of $\GL_2(\BA_f)$. Drinfeld defines 
+$$ V_{\ell} := \varinjlim_{D} H^2(\Sht_{2, D}^{\mu} \times \bar{\eta}_2, \bar{\BQ}_{\ell} )  $$ where $\eta_2 = \Spec F_2$ is the generic point of the surface $X^2$, and $\bar{\eta}_2 = \Spec \bar{F_2}$. Then $\GL_2(\BA_f)$ acts on $V_{\ell}$.  
 <div class="dinkus"></div>
 
 ## Further reading
