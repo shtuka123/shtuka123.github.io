@@ -21,7 +21,7 @@
   --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Measure & rhythm — asymmetric: content left, sidenotes right */
-  --measure: 40rem;   /* main text column */
+  --measure: 32rem;   /* main text column */
   --gutter:   8rem;   /* right margin for sidenotes */
 }
 
@@ -317,6 +317,92 @@ mjx-container[display="true"] {
   overflow-y: hidden;
 }
 mjx-container svg { vertical-align: -0.07em; }
+
+/* q.uiver embed */
+.quiver-embed {
+  margin: 1.6em 0;
+  display: flex;
+  justify-content: center;
+}
+.quiver-embed iframe { max-width: 100%; }
+
+/* ============================================================
+   Theorem-like environments.
+   Markup (from {% include thm.html %}):
+     <div class="thm thm-theorem">
+       <span class="thm-label"></span> Statement body.
+     </div>
+   With optional title:
+     <span class="thm-label" data-title="Schur's lemma"></span>
+   Counters reset per article so numbering starts at 1 on each post.
+   ============================================================ */
+
+article.content {
+  counter-reset: thm-theorem thm-proposition thm-lemma thm-corollary
+                 thm-definition thm-example;
+}
+
+.thm {
+  margin: 1.6em 0;
+  padding: 0.7em 1em 0.7em 1.1em;
+  border-left: 2px solid var(--rule);
+  border-radius: 0 3px 3px 0;
+  background: rgba(122, 46, 31, 0.025);
+}
+.thm > p:first-child { margin-top: 0; }
+.thm > p:last-child  { margin-bottom: 0; }
+
+.thm-label {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-weight: 500;
+  margin-right: 0.35em;
+}
+
+/* Numbered environments — CSS counters */
+.thm-theorem     { border-left-color: var(--accent); counter-increment: thm-theorem; }
+.thm-theorem     > .thm-label::before { content: "Theorem " counter(thm-theorem); }
+
+.thm-proposition { border-left-color: var(--accent); counter-increment: thm-proposition; }
+.thm-proposition > .thm-label::before { content: "Proposition " counter(thm-proposition); }
+
+.thm-lemma       { border-left-color: var(--accent); counter-increment: thm-lemma; }
+.thm-lemma       > .thm-label::before { content: "Lemma " counter(thm-lemma); }
+
+.thm-corollary   { border-left-color: var(--accent); counter-increment: thm-corollary; }
+.thm-corollary   > .thm-label::before { content: "Corollary " counter(thm-corollary); }
+
+.thm-definition  { border-left-color: #1c4a6b; counter-increment: thm-definition; }
+.thm-definition  > .thm-label::before { content: "Definition " counter(thm-definition); }
+
+.thm-example     { border-left-color: #8a5a1f; background: rgba(138, 90, 31, 0.03); counter-increment: thm-example; }
+.thm-example     > .thm-label::before { content: "Example " counter(thm-example); }
+
+/* Unnumbered, lightest — remark */
+.thm-remark      { border-left-color: var(--rule); background: transparent; }
+.thm-remark      > .thm-label::before { content: "Remark"; }
+
+/* Proof — italic q.e.d. tombstone, no background */
+.thm-proof {
+  border-left: none; padding-left: 0; padding-right: 0;
+  background: transparent; margin: 1.2em 0;
+}
+.thm-proof > .thm-label::before { content: "Proof"; }
+.thm-proof::after {
+  content: "□";
+  display: inline-block;
+  margin-left: 0.4em;
+  color: var(--ink-soft);
+}
+
+/* Append optional title in parentheses, then trailing period */
+.thm-label[data-title]::after {
+  content: " (" attr(data-title) ").";
+}
+.thm-label:not([data-title])::after {
+  content: ".";
+}
+
 
 /* ---------- Post listing ---------- */
 .post-list { list-style: none; padding: 0; margin: 0; }
