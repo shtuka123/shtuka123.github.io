@@ -21,7 +21,7 @@
   --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Measure & rhythm — asymmetric: content left, sidenotes right */
-  --measure: 32rem;   /* main text column */
+  --measure: 48rem;   /* main text column */
   --gutter:   8rem;   /* right margin for sidenotes */
 }
 

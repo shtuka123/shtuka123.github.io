@@ -56,7 +56,7 @@ $$H^*(\xi) := \sum_i (-1)^i H^i(\xi).$$
 Here the sum defining $H^*(\xi)$ is taken in the Grothendieck group of $G(\BA_f) \times G_E$-representations.
 
 <div class="thm thm-conjecture" markdown="1">
-<span class="thm-label">Conjecture 1 (Kottwitz).</span>
+<span class="thm-label">Conjecture 2 (Kottwitz).</span>
 In this Grothendieck group, we have (up to some twists)
 
 $$H^*(\xi) = \sum_\pi a(\pi, \xi) \, \pi_f \otimes (R_\mu \circ \varphi_\pi).$$
