@@ -369,6 +369,9 @@ article.content {
 .thm-lemma       { border-left-color: var(--accent); counter-increment: thm-lemma; }
 .thm-lemma       > .thm-label::before { content: "Lemma " counter(thm-lemma); }
 
+.thm-conjecture  { border-left-color: var(--accent); counter-increment: thm-conjecture; }
+.thm-conjecture  > .thm-label::before { content: "Conjecture " counter(thm-conjecture);}
+
 .thm-corollary   { border-left-color: var(--accent); counter-increment: thm-corollary; }
 .thm-corollary   > .thm-label::before { content: "Corollary " counter(thm-corollary); }
 
