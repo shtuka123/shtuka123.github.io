@@ -15,8 +15,11 @@ kramdown:
     css: class
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   hard_wrap: false
-  # Don't try to process math — MathJax handles it via \(...\) and \[...\]
-  math_engine: null
+  # Use kramdown's math engine so $...$ and $$...$$ are recognized as
+  # math (kramdown emits <script type="math/tex"> tags). The MathJax
+  # include converts these to \(...\) and $$...$$ on page load so
+  # MathJax v3 picks them up.
+  math_engine: mathjax
   parse_block_html: true
   parse_span_html: true
 
