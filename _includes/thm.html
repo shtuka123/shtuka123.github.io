@@ -1,0 +1,23 @@
+{%- comment -%}
+Theorem-like environment.
+Usage:
+  {% include thm.html name="theorem" body="Let $X$ be smooth..." %}
+  {% include thm.html name="lemma" title="Schur's lemma" body="..." %}
+
+Multi-paragraph: write the div by hand:
+  <div class="thm thm-theorem" markdown="1">
+  Body paragraph one.
+
+  Body paragraph two.
+  </div>
+
+Valid names: theorem, proposition, lemma, corollary, conjecture,
+definition, example, remark, proof.
+{%- endcomment -%}
+{%- assign labels = "theorem:Theorem,proposition:Proposition,lemma:Lemma,corollary:Corollary,conjecture:Conjecture,definition:Definition,example:Example,remark:Remark,proof:Proof" | split: "," -%}
+{%- assign label_text = "" -%}
+{%- for pair in labels -%}
+  {%- assign kv = pair | split: ":" -%}
+  {%- if kv[0] == include.name -%}{%- assign label_text = kv[1] -%}{%- endif -%}
+{%- endfor -%}
+<div class="thm thm-{{ include.name }}" markdown="span"><span class="thm-label">{{ label_text }}{% if include.title %} ({{ include.title }}){% endif %}.</span> {{ include.body }}</div>
