@@ -1,12 +1,13 @@
 ---
-title: "Intersection Homology: Poincaré Duality for Singular Spaces"
+title: "Intersection Homology"
 date: 2026-05-07
-description: "A chain-level introduction to intersection homology, why ordinary Poincaré duality fails on singular spaces, and how allowability repairs it."
+description: ""
 tags:
   - intersection homology
   - algebraic topology
   - singular spaces
   - Poincaré duality
+draft: true
 ---
 
 import MathBlock from '../../components/MathBlock.astro';
@@ -239,22 +240,6 @@ remembering which chains used the singularity too aggressively.
   <figcaption>The torus suspension in one picture: ordinary homology kills the loop classes, while complementary middle perversities restore the pairing.</figcaption>
 </figure>
 
-## What to remember
-
-The construction is easy to summarize, even though the full theory is deep.
-
-1. Ordinary Poincaré duality works because cycles can be moved into general position inside
-   smooth local charts.
-2. Singular spaces break this because chains can pass through singular strata without restriction.
-3. Intersection homology repairs the chain complex by imposing allowability conditions near those
-   strata.
-4. A perversity measures how much contact with codimension-$k$ singular strata is allowed.
-5. Complementary perversities recover a Poincaré duality pairing.
-
-From this point of view, intersection homology is not an artificial correction. It is the homology
-theory obtained by taking the geometric proof of Poincaré duality seriously and asking what
-restrictions are needed so intersections stay controlled on singular spaces.
-
 ## Where the story goes next
 
 This post used chains, but the modern theory is often sheaf-theoretic. The same information is
@@ -263,8 +248,8 @@ sheaf-theoretic form of Poincaré duality for intersection homology.
 
 That viewpoint leads to the decomposition theorem, the topology of complex algebraic varieties,
 representation theory, and the appearance of intersection cohomology in geometric Langlands.
-The natural next post is: from intersection chains to the intersection complex, and why perverse
-sheaves are the right language.
+In the next post, we'll go from intersection chains to the intersection complex, and explain why perverse
+sheaves are the correct modern framework. 
 
 ## Further reading
 
