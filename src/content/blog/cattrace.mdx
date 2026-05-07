@@ -1,0 +1,50 @@
+---
+title: "Categorical Traces"
+date: 2026-04-28
+description: "Categorical traces are a generalization of ordinary traces of endomorphisms on finite dimensional vector spaces to symmetric monoidal (infinity-)categories. They have countless applications to algebraic geometry and representation theory. In this post I outline some of their basic properties and give an application I find interesting."
+tags:
+  - category theory
+  - traces
+  - algebraic geometry
+draft: true
+---
+
+import Theorem from '../../components/Theorem.astro';
+
+I want to discuss a gadget called the *categorical trace*. This is a vast generalization of the usual notion of a trace from linear algebra. So for motivation, let's start there.
+
+## Traces (The Harvard Way)
+
+Fix a field $K$ (which can be taken to be $\BR$ or $\BC$). If $V$ is a vector space over $K$ and $f : V \to V$ is a linear map, we can associate to it a number $\tr(f) \in K$ that satsifies many nice properties: For instance
+
+- it is linear: $\tr(af + bg) = a\tr(f) + b\tr(g)$.
+- it is cyclic: $\tr(f_1 \circ f_2 \circ \cdots \circ f_r) = \tr(f_r \circ f_1 \circ \cdots \circ f_&#123;r-1&#125;)$.
+- as a special case of the above property: $ \tr(p \circ f \circ p^&#123;-1&#125;) = \tr(f)$.
+
+How do we compute the trace? Well we have to do something rather evil: pick a basis. Then in this basis, we can write $f$ as a matrix, and $\tr(f)$ is simply the sum of the diagonal elements in this matrix. Thankfully, the third property above implies that the answer we get for any given $f$ is independent of the basis we choose, so this trace really is well defined. But this is a bit unsatisfying, at least to me - if the end result is independent of the choice of basis we make, is there some way to compute
+the trace in a way that doesn't require choosing a basis at all?
+
+The answer is yes! But we need to recall some more machinery: Recall that to any vector space $V$, there is a dual vector space $V^\vee$, defined as $V^\vee := \Hom(V, K)$. We can form the tensor product $V \otimes V^\vee$, and from this object we define two natural linear maps
+
+- $\ev : V \otimes V^\vee \to K$
+- $\psi : V \otimes V^\vee \to \End(V)$
+
+Here $\ev(v, f) := f(v)$, and $\psi(v, f)(x) = f(x) v$. Now here's the punchline: when $V$ is finite dimensional, the map $\psi$ is an isomorphism! So any $\phi \in \End(V)$ can be written in the form $(v_\phi, f_\phi) \in V \otimes V^\vee$, call this assignment $\psi^&#123;-1&#125;$. Then the trace of $f$ can be computed as $\tr(f) = \ev(\psi^&#123;-1&#125;(f))$. This is sometimes referred to as 'the Harvard way" of defining the trace, see [Levent Alpoge's Princeton Quals](https://web.math.princeton.edu/generals/students/alpoge_levent) for the history behind this.
+
+Technically, I have written the trace in a way (that at first glance) does not require me to choose a basis. But really, I've just shifted the basis-choosing earlier down the line - writing down the map $\psi^&#123;-1&#125;$ (and indeed proving that $\psi$ is an isomorphism when $V$ is finite dimensional) requires choosing a basis! Nonetheless, this conceptual shift is really important - it tells us that the "trace" is something that we can write down in any general situation where we have some sort of linear algebraic structure present. Such settings are
+called *symmetric monoidal categories*.
+
+## Symmetric Monoidal Categories
+
+A symmetric monoidal category is essentially one in which we can do linear algebra.
+
+<Theorem type="definition" label="Definition 1.">
+
+A *symmetric monoidal category* is a triple $ (\Ccal, \mathbf&#123;1&#125;, \otimes) $ where $\Ccal$ is an ($\infty$-)category, $\otimes : \Ccal \times \Ccal \to \Ccal$ is a bifunctor that is associative, and
+
+- $A \otimes B = B \otimes A$ for all $A, B \in \Ccal$ (this is the symmetric part)
+- $\mathbf&#123;1&#125; \otimes A = A$ for all $A \in \Ccal$ (this is the monoidal part)
+
+</Theorem>
+
+There are a bunch of compatibilities that this datum must satisfy involving many commutative diagrams, which I will omit. The main idea is that these compatibilities are designed so that $\Ccal$ behaves like the category of vector spaces over some field, in fact $(\Vect_K, K, \otimes)$ is a symmetric monoidal category for any field $K$.

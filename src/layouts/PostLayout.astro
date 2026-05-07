@@ -1,0 +1,17 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TagList from '../components/TagList.astro';
+import { longDate } from '../lib/format';
+
+const { title, date, description, tags = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="content">
+    <h1>{title}</h1>
+    <p class="byline">{longDate(date)}</p>
+    <TagList tags={tags} />
+    <slot />
+    <a href="/blog/" class="back">&larr; blog</a>
+  </article>
+</BaseLayout>

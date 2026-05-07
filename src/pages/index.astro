@@ -1,0 +1,91 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { research } from '../data/research';
+import { teaching } from '../data/teaching';
+import { misc } from '../data/misc';
+import { getAllPosts } from '../lib/posts';
+import { monthYear } from '../lib/format';
+
+const posts = await getAllPosts();
+---
+
+<PageLayout title="ani" description="Personal site.">
+  <h1>Aniruddh V.</h1>
+
+  <p>
+    Hi! I am currently an undergraduate at Berkeley studying math and physics. I am interested in special cycles and their
+    connections to the (relative) Langlands program, and more generally algebraic number theory and its connections to
+    algebraic geometry and representation theory. More recently, I have also been interested in increasing and
+    benchmarking frontier reasoning models' mathemtical reasoning capabiltiies.
+  </p>
+
+  <p>
+    You can reach me at
+    <a>"aniruddhv@" + school.edu</a>.
+  </p>
+
+  <h2>research</h2>
+  <ul class="post-list">
+    {
+      research.slice(0, 2).map((item) => (
+        <li>
+          <span class="date">{item.year}</span>
+          <div>
+            <div class="title"><a href="/research/">{item.title}</a></div>
+            <div class="excerpt">
+              {item.venue}
+              {item.links.map((link) => (
+                <Fragment> &middot; <a href={link.url}>{link.name}</a></Fragment>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>teaching</h2>
+  <ul class="post-list wide-date">
+    {
+      teaching.slice(0, 2).map((item) => (
+        <li>
+          <span class="date">{item.semester}</span>
+          <div>
+            <div class="title"><a href="/teaching/">{item.course} &middot; {item.title}</a></div>
+            <div class="excerpt"><em>{item.role}</em></div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>blog</h2>
+  <ul class="post-list">
+    {
+      posts.slice(0, 3).map((post) => (
+        <li>
+          <span class="date">{monthYear(post.data.date)}</span>
+          <div>
+            <div class="title"><a href={`/blog/${post.id}/`}>{post.data.title}</a></div>
+            {post.data.description && <div class="excerpt">{post.data.description}</div>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>miscellaneous</h2>
+  <ul class="post-list">
+    {
+      misc.slice(0, 2).map((item) => (
+        <li>
+          <span class="date">{item.year}</span>
+          <div>
+            <div class="title"><a href="/misc/">{item.title}</a></div>
+            {item.description && <div class="excerpt">{item.description}</div>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</PageLayout>

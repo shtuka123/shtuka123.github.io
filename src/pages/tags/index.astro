@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getAllPosts } from '../../lib/posts';
+import { collectTags } from '../../lib/tags';
+
+const tags = collectTags(await getAllPosts());
+---
+
+<PageLayout title="tags" description="Browse blog posts by tag.">
+  <h1>tags</h1>
+  <p class="byline">browse blog posts by subject.</p>
+
+  <ul class="post-list">
+    {
+      tags.map((tag) => (
+        <li>
+          <span class="date">{tag.count}</span>
+          <div>
+            <div class="title"><a href={`/tags/${tag.slug}/`}>{tag.name}</a></div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a href="/blog/" class="back">&larr; blog</a>
+</PageLayout>

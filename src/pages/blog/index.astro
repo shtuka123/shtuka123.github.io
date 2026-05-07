@@ -1,0 +1,42 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getAllPosts } from '../../lib/posts';
+import { shortDate, year } from '../../lib/format';
+
+const posts = await getAllPosts();
+type Post = (typeof posts)[number];
+const postsByYear = posts.reduce((groups, post) => {
+  const key = year(post.data.date);
+  const group = groups.get(key) ?? [];
+  group.push(post);
+  groups.set(key, group);
+  return groups;
+}, new Map<string, Post[]>());
+---
+
+<PageLayout title="blog" description="notes, essays, and half-worked-out ideas.">
+  <h1>blog</h1>
+  <p class="byline">notes, essays, and half-worked-out ideas.</p>
+
+  {
+    [...postsByYear].map(([groupYear, groupPosts]) => (
+      <Fragment>
+        <h2>{groupYear}</h2>
+        <ul class="post-list">
+          {groupPosts.map((post) => (
+            <li>
+              <span class="date">{shortDate(post.data.date)}</span>
+              <div>
+                <div class="title"><a href={`/blog/${post.id}/`}>{post.data.title}</a></div>
+                {post.data.description && <div class="excerpt">{post.data.description}</div>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Fragment>
+    ))
+  }
+
+  <a href="/tags/" class="back">tags</a>
+  <a href="/" class="back">&larr; home</a>
+</PageLayout>

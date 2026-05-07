@@ -1,0 +1,35 @@
+---
+const labels = {
+  theorem: 'Theorem',
+  proposition: 'Proposition',
+  lemma: 'Lemma',
+  corollary: 'Corollary',
+  conjecture: 'Conjecture',
+  definition: 'Definition',
+  example: 'Example',
+  remark: 'Remark',
+  proof: 'Proof'
+};
+
+type TheoremType = keyof typeof labels;
+
+interface Props {
+  type?: TheoremType;
+  label?: string;
+  title?: string;
+}
+
+const {
+  type = 'theorem',
+  label,
+  title
+} = Astro.props as Props;
+
+const name = labels[type] ?? labels.theorem;
+const labelText = label ?? `${name}${title ? ` (${title})` : ''}.`;
+---
+
+<div class={`thm thm-${type}`}>
+  <span class="thm-label">{labelText}</span>
+  <slot />
+</div>

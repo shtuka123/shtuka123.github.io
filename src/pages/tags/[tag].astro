@@ -1,0 +1,40 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getAllPosts } from '../../lib/posts';
+import { collectTags } from '../../lib/tags';
+import { shortDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return collectTags(posts).map((tag) => ({
+    params: { tag: tag.slug },
+    props: {
+      tag,
+      posts: posts.filter((post) => post.data.tags.includes(tag.name))
+    }
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<PageLayout title={tag.name} description={`Blog posts tagged ${tag.name}.`}>
+  <h1>{tag.name}</h1>
+  <p class="byline">{tag.count} {tag.count === 1 ? 'post' : 'posts'}</p>
+
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <span class="date">{shortDate(post.data.date)}</span>
+          <div>
+            <div class="title"><a href={`/blog/${post.id}/`}>{post.data.title}</a></div>
+            {post.data.description && <div class="excerpt">{post.data.description}</div>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a href="/tags/" class="back">&larr; tags</a>
+</PageLayout>

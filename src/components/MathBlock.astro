@@ -1,0 +1,9 @@
+---
+interface Props {
+  tex: string;
+}
+
+const { tex } = Astro.props as Props;
+---
+
+<div class="math-block">{`$$${tex}$$`}</div>

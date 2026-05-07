@@ -1,0 +1,274 @@
+---
+title: "Intersection Homology: Poincaré Duality for Singular Spaces"
+date: 2026-05-07
+description: "A chain-level introduction to intersection homology, why ordinary Poincaré duality fails on singular spaces, and how allowability repairs it."
+tags:
+  - intersection homology
+  - algebraic topology
+  - singular spaces
+  - Poincaré duality
+---
+
+import MathBlock from '../../components/MathBlock.astro';
+import Theorem from '../../components/Theorem.astro';
+
+Poincaré duality is one of the most satisfying facts about manifolds: on a compact oriented
+manifold, topology in dimension $i$ is paired with topology in dimension $n-i$. But singular
+spaces are less polite. A singular point can behave like a shortcut through which chains pass too
+freely, and ordinary homology has no memory of how a chain used the singular set.
+
+Intersection homology, introduced by Goresky and MacPherson, fixes this by changing the chain
+complex rather than changing the space. The slogan is:
+
+> cycles may approach singularities only in controlled dimension.
+
+The point of this post is to explain what that means, why it restores duality, and how the
+suspension of a torus shows the failure and the repair in the smallest interesting example.
+
+## Why ordinary duality works
+
+Let $M$ be a compact, connected, oriented $n$-manifold. Poincaré duality says that cap product
+with the fundamental class gives an isomorphism
+
+<MathBlock tex={String.raw`H_i(M; \QQ) \xrightarrow{\ \cap [M]\ } H_{n-i}(M; \QQ).`} />
+
+Equivalently, over a field, there is a perfect pairing
+
+<MathBlock tex={String.raw`H_i(M; \QQ) \times H_{n-i}(M; \QQ) \longrightarrow \QQ.`} />
+
+Geometrically, put an $i$-cycle and an $(n-i)$-cycle in general position. Their intersection is a
+finite signed set of points, and counting those points gives a number depending only on the two
+homology classes.
+
+That proof leans on a hidden local fact: every point of a manifold has a Euclidean neighborhood.
+When cycles are perturbed into general position, they stay inside a world where transversality and
+orientation behave exactly as expected. Singular spaces break that local input.
+
+<figure>
+  <img src="/assets/blog/intersection-homology/figure-1.png" alt="Two transverse one-cycles on an oriented surface meeting at a point." />
+  <figcaption>On a smooth oriented surface, transverse one-cycles meet in points, and the signed count is homological.</figcaption>
+</figure>
+
+## The torus suspension as a warning
+
+Consider
+
+<MathBlock tex={String.raw`X = \Sigma T^2.`} />
+
+Topologically, this is obtained from $T^2 \times [-1,1]$ by collapsing each end torus to a point.
+Away from the two cone points, $X$ looks like a $3$-manifold. At either cone point, however, the
+link is $T^2$, not $S^2$, so $X$ is not a manifold.
+
+Ordinary reduced homology of a suspension satisfies
+
+<MathBlock tex={String.raw`\widetilde H_j(\Sigma Y; \QQ) \cong \widetilde H_{j-1}(Y; \QQ).`} />
+
+Since $H_1(T^2; \QQ) \cong \QQ^2$ and $H_2(T^2; \QQ) \cong \QQ$, the ordinary homology of
+$X = \Sigma T^2$ is:
+
+| $i$ | 0 | 1 | 2 | 3 |
+| --- | --- | --- | --- | --- |
+| $H_i(X; \QQ)$ | $\QQ$ | $0$ | $\QQ^2$ | $\QQ$ |
+
+If $X$ behaved like a closed oriented $3$-manifold, Poincaré duality would force $b_1=b_2$.
+Instead $b_1=0$ and $b_2=2$.
+
+What happened? A loop on the equatorial torus can be filled by coning it to a singular point.
+From the smooth part of the space, this is a very bad filling: the whole loop has been crushed
+through one singular point.
+
+<figure>
+  <img src="/assets/blog/intersection-homology/figure-2.png" alt="A loop on the torus cross-section filled by coning it to a singular point." />
+  <figcaption>Ordinary homology allows a loop on the torus cross-section to be filled by coning it to a singular point.</figcaption>
+</figure>
+
+This is the basic pathology. Ordinary homology only asks whether a chain exists. It does not ask
+whether the chain used the singularity in a controlled way.
+
+There is also an algebraic view. Write $X$ as the union of two cones:
+
+<MathBlock tex={String.raw`X = C_+ \cup_{T^2} C_- .`} />
+
+Each cone is contractible, so the Mayer-Vietoris sequence forces
+
+<MathBlock tex={String.raw`H_2(X; \QQ) \cong H_1(T^2; \QQ) \cong \QQ^2, \qquad H_1(X; \QQ)=0.`} />
+
+The same story appears in exact-sequence language: the cone pieces kill the one-cycles, and
+ordinary homology forgets that the killing happened through singular points.
+
+## The idea: restrict the chains
+
+Intersection homology modifies the chain complex. It does not smooth the space, resolve it, or
+throw away the singular points. It only changes which chains are allowed.
+
+Suppose $X$ has dimension $n$ and $S$ is a singular stratum of codimension $k$. A generic
+$i$-dimensional chain should meet $S$ in dimension about $i-k$. If $i \lt k$, it should miss $S$
+entirely. Intersection homology allows a little extra incidence, governed by a function
+$\bar p$ called a perversity:
+
+<MathBlock tex={String.raw`\dim(\text{chain}\cap S) \leq i-k+\bar p(k).`} />
+
+The larger $\bar p(k)$ is, the more an $i$-chain is allowed to run into codimension-$k$ singular
+strata.
+
+<figure>
+  <img src="/assets/blog/intersection-homology/figure-3.png" alt="Lower and upper middle perversity rules near an isolated point." />
+  <figcaption>The same geometric behavior can be forbidden for one perversity and allowed for another.</figcaption>
+</figure>
+
+Despite the dramatic name, a perversity is just a bookkeeping device:
+
+<MathBlock tex={String.raw`\bar p : \{2,3,4,\ldots\} \to \ZZ, \qquad \bar p(2)=0,`} />
+
+with the rule that $\bar p(k+1)$ is either $\bar p(k)$ or $\bar p(k)+1$. The standard examples are
+the zero perversity, the top perversity, and the two middle perversities:
+
+<MathBlock tex={String.raw`\bar 0(k)=0, \qquad \bar t(k)=k-2,`} />
+<MathBlock tex={String.raw`\bar m(k)=\left\lfloor {k-2 \over 2}\right\rfloor,\qquad
+\bar n(k)=\left\lceil {k-2 \over 2}\right\rceil.`} />
+
+They satisfy $\bar m(k)+\bar n(k)=k-2$. More generally, perversities $\bar p$ and $\bar q$ are
+called complementary if
+
+<MathBlock tex={String.raw`\bar p(k)+\bar q(k)=k-2 \quad \text{for every } k\geq 2.`} />
+
+## Allowable chains
+
+Let
+
+<MathBlock tex={String.raw`X=X_n \supset X_{n-2}\supset X_{n-3}\supset \cdots \supset X_0\supset X_{-1}=\varnothing`} />
+
+be a stratification of an $n$-dimensional pseudomanifold. The missing $X_&#123;n-1&#125;$ is intentional:
+pseudomanifolds have no codimension-one singular stratum.
+
+If $\sigma:\Delta^i\to X$ is a singular simplex, say that $\sigma$ is $\bar p$-allowable if, for
+every codimension-$k$ stratum, equivalently for each $X_&#123;n-k&#125;$ in the filtration,
+
+<MathBlock tex={String.raw`\dim\bigl(\sigma^{-1}(X_{n-k})\bigr)\leq i-k+\bar p(k).`} />
+
+Here a negative upper bound means the inverse image must be empty.
+
+A chain is allowable if all its simplices are allowable. The intersection chain group
+$IC_i^&#123;\bar p&#125;(X)$ consists of the $i$-chains $\xi$ such that both $\xi$ and its boundary
+$\partial \xi$ are $\bar p$-allowable. The boundary condition is what makes this into a chain
+complex:
+
+<MathBlock tex={String.raw`\cdots \to IC_{i+1}^{\bar p}(X) \xrightarrow{\partial}
+IC_i^{\bar p}(X) \xrightarrow{\partial} IC_{i-1}^{\bar p}(X)\to\cdots.`} />
+
+Then
+
+<MathBlock tex={String.raw`IH_i^{\bar p}(X;\QQ) := H_i\bigl(IC_*^{\bar p}(X;\QQ)\bigr).`} />
+
+If $X$ is already a manifold, there are no singular strata, so every chain is allowable and
+$IH_i^&#123;\bar p&#125;(X;\QQ)=H_i(X;\QQ)$. Intersection homology is not a replacement for ordinary
+homology on manifolds. It is an extension designed to keep manifold-like duality on singular
+spaces.
+
+## Poincaré duality, repaired
+
+The central theorem is the following.
+
+<Theorem type="theorem" label="Poincaré duality for intersection homology.">
+
+Let $X$ be a compact, oriented, $n$-dimensional stratified pseudomanifold. If $\bar p$ and
+$\bar q$ are complementary perversities, then there is a nondegenerate pairing
+
+<MathBlock tex={String.raw`IH_i^{\bar p}(X;\QQ)\times IH_{n-i}^{\bar q}(X;\QQ)\longrightarrow \QQ.`} />
+
+When $X$ is a manifold, this is ordinary Poincaré duality.
+
+</Theorem>
+
+Why does complementarity appear? Suppose an $i$-chain is allowed to meet a codimension-$k$
+stratum in dimension at most $i-k+\bar p(k)$, and an $(n-i)$-chain is allowed to meet it in
+dimension at most $(n-i)-k+\bar q(k)$. Inside the stratum, whose dimension is $n-k$, the expected
+dimension of their intersection is bounded by
+
+<MathBlock tex={String.raw`(i-k+\bar p(k))+((n-i)-k+\bar q(k))-(n-k).`} />
+
+If $\bar p+\bar q=\bar t$, this becomes at most $-2$. So, after putting chains in stratified
+general position, complementary allowable cycles do not create hidden zero-dimensional
+intersections inside the singular strata. The intersection number is controlled by what happens in
+the top-dimensional smooth part.
+
+The nondegeneracy is deeper. Locally near a point of a codimension-$k$ stratum, the space looks
+like $\RR^&#123;n-k&#125;\times cL$, where $L$ is the link. The key calculation is the cone formula:
+below a perversity-dependent cutoff, intersection homology of a cone is inherited from the link;
+above the cutoff, allowable chains can be pushed into the cone point and become trivial. This is
+exactly the mechanism the torus suspension is trying to teach us.
+
+## Back to $\Sigma T^2$
+
+For $X=\Sigma T^2$, the singularities are isolated points in a $3$-dimensional space, so the only
+interesting perversity value is $\bar p(3)$.
+
+For the lower-middle perversity, $\bar m(3)=0$. A $2$-chain is allowed to hit an isolated singular
+point only if
+
+<MathBlock tex={String.raw`0\leq 2-3+\bar m(3)=-1,`} />
+
+which is impossible. So lower-middle allowable $2$-chains cannot pass through either cone point.
+This blocks the ordinary cone filling of a loop, and the two basic loop classes on $T^2$ survive in
+$IH_1^&#123;\bar m&#125;$.
+
+For the upper-middle perversity, $\bar n(3)=1$. Now a $2$-chain may meet an isolated singular
+point in dimension zero:
+
+<MathBlock tex={String.raw`0\leq 2-3+\bar n(3)=0.`} />
+
+The corresponding suspended loops define the complementary $2$-dimensional classes. The cone
+calculation gives:
+
+| $i$ | 0 | 1 | 2 | 3 |
+| --- | --- | --- | --- | --- |
+| $IH_i^&#123;\bar m&#125;(X;\QQ)$ | $\QQ$ | $\QQ^2$ | $0$ | $\QQ$ |
+| $IH_i^&#123;\bar n&#125;(X;\QQ)$ | $\QQ$ | $0$ | $\QQ^2$ | $\QQ$ |
+
+Now the missing duality is back:
+
+<MathBlock tex={String.raw`IH_1^{\bar m}(X;\QQ)\cong \QQ^2
+\quad\text{pairs perfectly with}\quad
+IH_2^{\bar n}(X;\QQ)\cong \QQ^2.`} />
+
+Ordinary homology had $H_1=0$ and $H_2=\QQ^2$. Intersection homology restores balance by
+remembering which chains used the singularity too aggressively.
+
+<figure>
+  <img src="/assets/blog/intersection-homology/figure-4.png" alt="Diagram showing ordinary homology, lower-middle intersection homology, upper-middle intersection homology, and restored duality." />
+  <figcaption>The torus suspension in one picture: ordinary homology kills the loop classes, while complementary middle perversities restore the pairing.</figcaption>
+</figure>
+
+## What to remember
+
+The construction is easy to summarize, even though the full theory is deep.
+
+1. Ordinary Poincaré duality works because cycles can be moved into general position inside
+   smooth local charts.
+2. Singular spaces break this because chains can pass through singular strata without restriction.
+3. Intersection homology repairs the chain complex by imposing allowability conditions near those
+   strata.
+4. A perversity measures how much contact with codimension-$k$ singular strata is allowed.
+5. Complementary perversities recover a Poincaré duality pairing.
+
+From this point of view, intersection homology is not an artificial correction. It is the homology
+theory obtained by taking the geometric proof of Poincaré duality seriously and asking what
+restrictions are needed so intersections stay controlled on singular spaces.
+
+## Where the story goes next
+
+This post used chains, but the modern theory is often sheaf-theoretic. The same information is
+packaged into the intersection complex $IC_X$, a perverse sheaf whose Verdier self-duality is the
+sheaf-theoretic form of Poincaré duality for intersection homology.
+
+That viewpoint leads to the decomposition theorem, the topology of complex algebraic varieties,
+representation theory, and the appearance of intersection cohomology in geometric Langlands.
+The natural next post is: from intersection chains to the intersection complex, and why perverse
+sheaves are the right language.
+
+## Further reading
+
+- M. Goresky and R. MacPherson, *Intersection Homology Theory*, Topology 19 (1980), no. 2, 135-162.
+- M. Goresky and R. MacPherson, *Intersection Homology II*, Inventiones Mathematicae 72 (1983), 77-129.
+- A. Borel et al., *Intersection Cohomology*, Progress in Mathematics, vol. 50, Birkhäuser, 1984.
+- A. Hatcher, *Algebraic Topology*, Cambridge University Press, 2002.

@@ -1,0 +1,33 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { research } from '../../data/research';
+---
+
+<PageLayout title="research" description="papers, preprints, and notes.">
+  <h1>research</h1>
+  <p class="byline">papers, preprints, and notes.</p>
+
+  <ul class="post-list">
+    {
+      research.map((item) => (
+        <li>
+          <span class="date">{item.year}</span>
+          <div>
+            <div class="title">
+              {item.links[0] ? <a href={item.links[0].url}>{item.title}</a> : item.title}
+            </div>
+            <div class="excerpt">{item.description}</div>
+            <div class="excerpt">
+              {item.venue}
+              {item.links.map((link) => (
+                <Fragment> &middot; <a href={link.url}>{link.name}</a></Fragment>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a href="/" class="back">&larr; home</a>
+</PageLayout>

@@ -1,0 +1,50 @@
+type Link = {
+  name: string;
+  url: string;
+};
+
+type TeachingItem = {
+  semester: string;
+  course: string;
+  title: string;
+  role: string;
+  description: string;
+  links: Link[];
+};
+
+export const teaching: TeachingItem[] = [
+  {
+    semester: 'Spring 2026',
+    course: 'Math 254b',
+    title: 'Algebraic Number Theory II',
+    role: 'T.A',
+    description:
+      'Graduate course. Statements and proofs of (local and global) class field theory, complex multiplication of elliptic curves',
+    links: [{ name: 'syllabus', url: '#' }]
+  },
+  {
+    semester: 'Spring 2026',
+    course: 'Math 256b',
+    title: 'Algebraic Geometry II',
+    role: 'T.A',
+    description: 'Graduate course. Sheaf cohomology, divisors, intersection theory, curves and surfaces.',
+    links: [{ name: 'syllabus', url: '#' }]
+  },
+  {
+    semester: 'Fall 2025',
+    course: 'Math 256a',
+    title: 'Algebraic Geometry I',
+    role: 'T.A',
+    description: 'Graduate course. Sheaves, schemes, morphisms of schemes, sheaf cohomology.',
+    links: [{ name: 'syllabus', url: '#' }]
+  },
+  {
+    semester: 'Fall 2025, Spring 2025, Fall 2024',
+    course: 'Math 174',
+    title: 'Introduction to Category Theory',
+    role: 'Lead Instructor',
+    description:
+      'Student-led course. Covers categories, functors, natural transformations, universal properties, (co)limits, and adjunctions.',
+    links: [{ name: 'syllabus', url: '#' }]
+  }
+];

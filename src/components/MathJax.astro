@@ -1,0 +1,67 @@
+<script is:inline>
+  window.MathJax = {
+    loader: {
+      load: ['[tex]/ams', '[tex]/cancel', '[tex]/mathtools', '[tex]/physics', '[tex]/color']
+    },
+    tex: {
+      packages: { '[+]': ['ams', 'cancel', 'mathtools', 'physics', 'color'] },
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      macros: {
+        RR: '\\mathbb{R}', CC: '\\mathbb{C}', ZZ: '\\mathbb{Z}',
+        QQ: '\\mathbb{Q}', NN: '\\mathbb{N}', FF: '\\mathbb{F}',
+        PP: '\\mathbb{P}', HH: '\\mathbb{H}', AA: '\\mathbb{A}',
+        GL: '\\operatorname{GL}', SL: '\\operatorname{SL}',
+        SO: '\\operatorname{SO}', SU: '\\operatorname{SU}',
+        Sp: '\\operatorname{Sp}', Aut: '\\operatorname{Aut}',
+        End: '\\operatorname{End}', Hom: '\\operatorname{Hom}',
+        Ext: '\\operatorname{Ext}', Tor: '\\operatorname{Tor}',
+        Spec: '\\operatorname{Spec}', Proj: '\\operatorname{Proj}',
+        Tr: '\\operatorname{Tr}', tr: '\\operatorname{tr}',
+        im: '\\operatorname{im}', coker: '\\operatorname{coker}',
+        rank: '\\operatorname{rank}', id: '\\operatorname{id}',
+        sgn: '\\operatorname{sgn}', Sh: '\\operatorname{Sh}',
+        ev: '\\operatorname{ev}', Vect: '\\operatorname{Vect}',
+        Frob: '\\operatorname{Frob}', Sht: '\\operatorname{Sht}',
+        abs: ['\\left\\lvert #1 \\right\\rvert', 1],
+        norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+        set: ['\\left\\{ #1 \\right\\}', 1],
+        inner: ['\\left\\langle #1 \\right\\rangle', 1],
+        into: '\\hookrightarrow',
+        onto: '\\twoheadrightarrow',
+        isom: '\\xrightarrow{\\sim}',
+        BA: '\\mathbf{A}', BB: '\\mathbf{B}', BC: '\\mathbf{C}',
+        BD: '\\mathbf{D}', BE: '\\mathbf{E}', BF: '\\mathbf{F}',
+        BG: '\\mathbf{G}', BH: '\\mathbf{H}', BI: '\\mathbf{I}',
+        BJ: '\\mathbf{J}', BK: '\\mathbf{K}', BL: '\\mathbf{L}',
+        BM: '\\mathbf{M}', BN: '\\mathbf{N}', BO: '\\mathbf{O}',
+        BP: '\\mathbf{P}', BQ: '\\mathbf{Q}', BR: '\\mathbf{R}',
+        BS: '\\mathbf{S}', BT: '\\mathbf{T}', BU: '\\mathbf{U}',
+        BV: '\\mathbf{V}', BW: '\\mathbf{W}', BX: '\\mathbf{X}',
+        BY: '\\mathbf{Y}', BZ: '\\mathbf{Z}',
+        Acal: '\\mathcal{A}', Bcal: '\\mathcal{B}', Ccal: '\\mathcal{C}',
+        Dcal: '\\mathcal{D}', Ecal: '\\mathcal{E}', Fcal: '\\mathcal{F}',
+        Gcal: '\\mathcal{G}', Hcal: '\\mathcal{H}', Ical: '\\mathcal{I}',
+        Jcal: '\\mathcal{J}', Kcal: '\\mathcal{K}', Lcal: '\\mathcal{L}',
+        Mcal: '\\mathcal{M}', Ncal: '\\mathcal{N}', Ocal: '\\mathcal{O}',
+        Pcal: '\\mathcal{P}', Qcal: '\\mathcal{Q}', Rcal: '\\mathcal{R}',
+        Scal: '\\mathcal{S}', Tcal: '\\mathcal{T}', Ucal: '\\mathcal{U}',
+        Vcal: '\\mathcal{V}', Wcal: '\\mathcal{W}', Xcal: '\\mathcal{X}',
+        Ycal: '\\mathcal{Y}', Zcal: '\\mathcal{Z}',
+        acal: '\\mathcal{a}', bcal: '\\mathcal{b}', ccal: '\\mathcal{c}',
+        dcal: '\\mathcal{d}', ecal: '\\mathcal{e}', fcal: '\\mathcal{f}',
+        gcal: '\\mathcal{g}', hcal: '\\mathcal{h}', ical: '\\mathcal{i}',
+        jcal: '\\mathcal{j}', kcal: '\\mathcal{k}', lcal: '\\mathcal{l}',
+        mcal: '\\mathcal{m}', ncal: '\\mathcal{n}', ocal: '\\mathcal{o}',
+        pcal: '\\mathcal{p}', qcal: '\\mathcal{q}', rcal: '\\mathcal{r}',
+        scal: '\\mathcal{s}', tcal: '\\mathcal{t}', ucal: '\\mathcal{u}',
+        vcal: '\\mathcal{v}', wcal: '\\mathcal{w}', xcal: '\\mathcal{x}',
+        ycal: '\\mathcal{y}', zcal: '\\mathcal{z}'
+      }
+    },
+    svg: { fontCache: 'global', scale: 1.0 },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>

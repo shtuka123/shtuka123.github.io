@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { teaching } from '../../data/teaching';
+---
+
+<PageLayout title="teaching" description="courses I have taught or assisted.">
+  <h1>teaching</h1>
+  <p class="byline">courses I have taught or assisted.</p>
+
+  <ul class="post-list wide-date">
+    {
+      teaching.map((item) => (
+        <li>
+          <span class="date">{item.semester}</span>
+          <div>
+            <div class="title">
+              {item.links[0] ? (
+                <a href={item.links[0].url}>{item.course} &middot; {item.title}</a>
+              ) : (
+                <Fragment>{item.course} &middot; {item.title}</Fragment>
+              )}
+            </div>
+            <div class="excerpt"><em>{item.role}.</em> {item.description}</div>
+            {item.links.length > 0 && (
+              <div class="excerpt">
+                {item.links.map((link, index) => (
+                  <Fragment>{index > 0 && ' '}&middot; <a href={link.url}>{link.name}</a></Fragment>
+                ))}
+              </div>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a href="/" class="back">&larr; home</a>
+</PageLayout>
