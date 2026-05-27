@@ -4,31 +4,38 @@ import { misc } from '../../data/misc';
 ---
 
 <PageLayout title="miscellaneous" description="talks, reading notes, side projects.">
-  <h1>miscellaneous</h1>
-  <p class="byline">talks, reading notes, side projects.</p>
+  <header class="page-header">
+    <div class="section-label">archive</div>
+    <h1>miscellaneous</h1>
+    <p class="byline">talks, reading notes, side projects.</p>
+  </header>
 
-  <ul class="post-list">
-    {
-      misc.map((item) => (
-        <li>
-          <span class="date">{item.year}</span>
-          <div>
-            <div class="title">
-              {item.links[0] ? <a href={item.links[0].url}>{item.title}</a> : item.title}
-            </div>
-            {item.description && <div class="excerpt">{item.description}</div>}
-            {item.links.length > 0 && (
-              <div class="excerpt">
-                {item.links.map((link, index) => (
-                  <Fragment>{index > 0 && ' '}&middot; <a href={link.url}>{link.name}</a></Fragment>
-                ))}
+  {
+    misc.length > 0 ? (
+      <ul class="post-list">
+        {misc.map((item) => (
+          <li>
+            <span class="date">{item.year}</span>
+            <div>
+              <div class="title">
+                {item.links[0] ? <a href={item.links[0].url}>{item.title}</a> : item.title}
               </div>
-            )}
-          </div>
-        </li>
-      ))
-    }
-  </ul>
+              {item.description && <div class="excerpt">{item.description}</div>}
+              {item.links.length > 0 && (
+                <div class="excerpt">
+                  {item.links.map((link, index) => (
+                    <Fragment>{index > 0 && ' '}&middot; <a href={link.url}>{link.name}</a></Fragment>
+                  ))}
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty-state">nothing filed here yet.</p>
+    )
+  }
 
   <a href="/" class="back">&larr; home</a>
 </PageLayout>

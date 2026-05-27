@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minimal Layout Directions</title>
+  <style>
+    :root {
+      --ink: #191817;
+      --muted: #69645e;
+      --faint: #e7e3dc;
+      --paper: #fbfaf7;
+      --white: #ffffff;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f3f2ef;
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    .intro {
+      max-width: 760px;
+      margin-bottom: 36px;
+    }
+    .intro h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      font-weight: 560;
+      letter-spacing: 0;
+    }
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .option {
+      margin: 34px 0 56px;
+    }
+    .option-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 430px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+    .option h2 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+    .option p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .mockup {
+      min-height: 660px;
+      border: 1px solid #d8d4cc;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 16px 40px rgba(28, 25, 22, 0.07);
+    }
+    .tiny {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    /* Direction 1: Manuscript */
+    .manuscript {
+      background: #fffdf9;
+      font-family: var(--serif);
+      padding: 62px 68px 76px;
+    }
+    .manuscript nav {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #e8e1d4;
+      padding-bottom: 15px;
+      margin-bottom: 52px;
+      font-size: 16px;
+    }
+    .manuscript nav div:last-child {
+      display: flex;
+      gap: 24px;
+      color: #706960;
+      font-style: italic;
+    }
+    .manuscript main {
+      max-width: 700px;
+    }
+    .manuscript h3 {
+      margin: 0 0 18px;
+      font-size: 42px;
+      font-weight: 480;
+      line-height: 1.08;
+    }
+    .manuscript .lead {
+      font-size: 20px;
+      color: #39342f;
+      margin-bottom: 42px;
+    }
+    .manuscript h4 {
+      margin: 38px 0 12px;
+      font-size: 17px;
+      font-style: italic;
+      font-weight: 460;
+      color: #4c453e;
+    }
+    .manuscript ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .manuscript li {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 18px;
+      padding: 13px 0;
+      border-top: 1px solid #eee8dd;
+    }
+    .manuscript time {
+      color: #897f73;
+      font-style: italic;
+    }
+    .manuscript strong {
+      font-weight: 520;
+    }
+    .manuscript span {
+      display: block;
+      color: #746d64;
+      font-size: 15px;
+      margin-top: 2px;
+    }
+
+    /* Direction 2: Index Rail */
+    .rail {
+      display: grid;
+      grid-template-columns: 255px 1fr;
+      background: #fcfcfb;
+      font-family: var(--sans);
+    }
+    .rail aside {
+      border-right: 1px solid #e1e1dd;
+      padding: 44px 34px;
+    }
+    .rail .name {
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .rail .bio {
+      color: #5e5d58;
+      font-size: 14px;
+      margin-bottom: 34px;
+    }
+    .rail nav {
+      display: grid;
+      gap: 11px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #44413d;
+    }
+    .rail main {
+      padding: 44px 50px 58px;
+    }
+    .rail .section {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 28px;
+      padding: 24px 0;
+      border-top: 1px solid #e4e4df;
+    }
+    .rail .section:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+    .rail h3 {
+      margin: 0;
+      color: #65625d;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .rail .item {
+      padding-bottom: 17px;
+    }
+    .rail .item:last-child {
+      padding-bottom: 0;
+    }
+    .rail strong {
+      display: block;
+      font-size: 17px;
+      font-weight: 560;
+    }
+    .rail span {
+      display: block;
+      color: #6d6b65;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* Direction 3: Compact Ledger */
+    .ledger {
+      background: #fdfdfc;
+      padding: 36px 42px 54px;
+      font-family: var(--sans);
+    }
+    .ledger header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: baseline;
+      padding-bottom: 28px;
+      border-bottom: 2px solid #202020;
+      margin-bottom: 24px;
+    }
+    .ledger h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 620;
+    }
+    .ledger nav {
+      display: flex;
+      gap: 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .ledger .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .ledger .summary div {
+      border-bottom: 1px solid #d7d7d2;
+      padding-bottom: 14px;
+    }
+    .ledger .summary strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 560;
+    }
+    .ledger .summary span {
+      color: #696864;
+      font-size: 13px;
+    }
+    .ledger table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .ledger th {
+      color: #66635e;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      text-align: left;
+      text-transform: uppercase;
+      border-bottom: 1px solid #bdbab3;
+      padding: 11px 0;
+    }
+    .ledger td {
+      border-bottom: 1px solid #e5e3de;
+      padding: 14px 0;
+      vertical-align: top;
+    }
+    .ledger td:first-child {
+      width: 92px;
+      color: #6c6861;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .ledger td:last-child {
+      color: #68645d;
+    }
+
+    /* Direction 4: Margin Notes */
+    .margin {
+      background: #fbfaf6;
+      font-family: var(--serif);
+      padding: 44px 48px 64px;
+    }
+    .margin header {
+      max-width: 860px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 60px;
+      border-bottom: 1px solid #ddd5c8;
+      padding-bottom: 22px;
+      margin-bottom: 48px;
+    }
+    .margin h3 {
+      margin: 0 0 8px;
+      font-size: 36px;
+      font-weight: 480;
+      line-height: 1.1;
+    }
+    .margin header p {
+      margin: 0;
+      color: #504a42;
+      font-size: 18px;
+    }
+    .margin nav {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      color: #756d61;
+      font-size: 15px;
+      font-style: italic;
+      text-align: right;
+    }
+    .margin article {
+      max-width: 860px;
+      display: grid;
+      grid-template-columns: minmax(0, 560px) 220px;
+      gap: 80px;
+    }
+    .margin h4 {
+      margin: 0 0 14px;
+      font-size: 15px;
+      font-style: italic;
+      font-weight: 500;
+      color: #5f564c;
+    }
+    .margin p {
+      margin: 0 0 20px;
+      font-size: 18px;
+    }
+    .margin .note {
+      color: #777064;
+      border-left: 1px solid #ded5c6;
+      padding-left: 14px;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 26px;
+    }
+    .margin .list {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .margin .list div {
+      border-top: 1px solid #e7dfd2;
+      padding-top: 12px;
+    }
+    .margin .list strong {
+      display: block;
+      font-weight: 520;
+    }
+    .margin .list span {
+      color: #756e64;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    /* Direction 5: Monastic */
+    .monastic {
+      background: #fffffd;
+      padding: 76px 34px 92px;
+      font-family: var(--serif);
+    }
+    .monastic .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .monastic header {
+      margin-bottom: 70px;
+    }
+    .monastic h3 {
+      margin: 0 0 22px;
+      font-size: 30px;
+      font-weight: 430;
+      line-height: 1.2;
+    }
+    .monastic p {
+      margin: 0 0 18px;
+      color: #332f2a;
+      font-size: 19px;
+    }
+    .monastic nav {
+      display: flex;
+      gap: 18px;
+      margin-top: 28px;
+      color: #756f66;
+      font-size: 15px;
+      font-style: italic;
+    }
+    .monastic section {
+      margin-top: 48px;
+    }
+    .monastic h4 {
+      margin: 0 0 14px;
+      color: #777166;
+      font-size: 14px;
+      font-weight: 400;
+      font-style: italic;
+    }
+    .monastic .row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      padding: 9px 0;
+    }
+    .monastic .row time {
+      color: #8b8478;
+      font-size: 14px;
+      font-style: italic;
+    }
+    .monastic .row strong {
+      font-weight: 480;
+    }
+
+    /* Direction 6: Swiss Grid */
+    .swiss {
+      background: #fff;
+      padding: 38px 42px 56px;
+      font-family: var(--sans);
+    }
+    .swiss header {
+      display: grid;
+      grid-template-columns: 1.2fr 2fr;
+      gap: 34px;
+      padding-bottom: 34px;
+      border-bottom: 1px solid #111;
+    }
+    .swiss h3 {
+      margin: 0;
+      font-size: 44px;
+      font-weight: 620;
+      line-height: 0.98;
+    }
+    .swiss header p {
+      margin: 0;
+      max-width: 560px;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+    .swiss nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      padding: 18px 0 46px;
+      font-family: var(--mono);
+      font-size: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    .swiss .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      padding-top: 30px;
+    }
+    .swiss .label {
+      grid-column: span 3;
+      color: #666;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .swiss .items {
+      grid-column: span 9;
+      display: grid;
+      gap: 18px;
+    }
+    .swiss .entry {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .swiss .entry time {
+      color: #777;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .swiss .entry strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 560;
+    }
+    .swiss .entry span {
+      display: block;
+      color: #666;
+      margin-top: 3px;
+      font-size: 14px;
+    }
+
+    /* Direction 7: Plaintext */
+    .plain {
+      background: #fbfbf9;
+      padding: 44px 46px 62px;
+      color: #171717;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .plain pre {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    .plain .dim {
+      color: #777;
+    }
+    .plain .link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Plaintext family */
+    .plain-variant {
+      padding: 42px 46px 60px;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .plain-variant pre {
+      margin: 0;
+      white-space: pre-wrap;
+      tab-size: 2;
+    }
+    .plain-variant .link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .plain-variant .dim {
+      opacity: 0.66;
+    }
+    .plain-paper {
+      background: #fffaf0;
+      color: #24201a;
+      font-family: "Courier New", Courier, monospace;
+    }
+    .plain-paper .link { color: #6d2d1c; }
+    .plain-ink {
+      background: #f7f7f5;
+      color: #111;
+      font-family: "IBM Plex Mono", "JetBrains Mono", var(--mono);
+    }
+    .plain-ink .link { color: #111; }
+    .plain-green {
+      background: #0d1512;
+      color: #c8e6d0;
+      font-family: "SF Mono", Consolas, var(--mono);
+      box-shadow: none;
+      border-color: #223a31;
+    }
+    .plain-green .link { color: #91d7a4; }
+    .plain-green .dim { color: #6d967a; opacity: 1; }
+    .plain-blue {
+      background: #f4f7fb;
+      color: #17202a;
+      font-family: "Aptos Mono", "Cascadia Mono", var(--mono);
+      border-color: #d9e1ec;
+    }
+    .plain-blue .link { color: #225c83; }
+    .plain-oxide {
+      background: #271d18;
+      color: #f2dfcc;
+      font-family: "Courier Prime", "Courier New", monospace;
+      border-color: #4b352c;
+      box-shadow: none;
+    }
+    .plain-oxide .link { color: #ffb27d; }
+    .plain-oxide .dim { color: #b99983; opacity: 1; }
+    .plain-serif {
+      background: #fffffd;
+      color: #171615;
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .plain-serif pre {
+      font-family: inherit;
+    }
+    .plain-serif .link { color: #4a372a; }
+
+    /* Blue plaintext hybrids */
+    .blue-hybrid {
+      background: #f4f7fb;
+      color: #17202a;
+      border-color: #d9e1ec;
+      padding: 42px 46px 60px;
+      font-family: "Aptos Mono", "Cascadia Mono", "SF Mono", Consolas, var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .blue-hybrid pre {
+      margin: 0;
+      white-space: pre-wrap;
+      tab-size: 2;
+    }
+    .blue-hybrid .link {
+      color: #225c83;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .blue-hybrid .dim {
+      color: #6f7d8d;
+    }
+    .blue-hybrid .mark {
+      color: #7b4e24;
+    }
+    .blue-hybrid.tight {
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .blue-hybrid.roomy {
+      font-size: 14px;
+      line-height: 1.78;
+      padding: 54px 58px 72px;
+    }
+    .blue-hybrid.split pre {
+      max-width: 760px;
+    }
+    .blue-hybrid.split .shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: 38px;
+    }
+    .blue-hybrid.split aside {
+      color: #6f7d8d;
+      border-left: 1px solid #d6dfeb;
+      padding-left: 18px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .blue-hybrid.split aside strong {
+      color: #17202a;
+      font-weight: 500;
+    }
+
+    /* Direction 8: Chronology */
+    .chrono {
+      background: #fffefa;
+      padding: 42px 46px 66px;
+      font-family: var(--serif);
+    }
+    .chrono header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: baseline;
+      margin-bottom: 56px;
+    }
+    .chrono h3 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+    }
+    .chrono nav {
+      display: flex;
+      gap: 18px;
+      color: #716b62;
+      font-size: 15px;
+      font-style: italic;
+    }
+    .chrono .timeline {
+      max-width: 760px;
+      margin-left: auto;
+    }
+    .chrono .year {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 28px;
+      padding: 28px 0;
+      border-top: 1px solid #e2dace;
+    }
+    .chrono .year:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .chrono .year > time {
+      color: #7c7468;
+      font-size: 16px;
+      font-style: italic;
+    }
+    .chrono .events {
+      display: grid;
+      gap: 20px;
+    }
+    .chrono .event strong {
+      display: block;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .chrono .event span {
+      display: block;
+      color: #6e675e;
+      font-size: 15px;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 820px) {
+      .option-head,
+      .rail,
+      .margin header,
+      .margin article,
+      .ledger .summary,
+      .swiss header,
+      .swiss .grid,
+      .chrono .year {
+        grid-template-columns: 1fr;
+      }
+      .rail aside,
+      .rail main,
+      .manuscript,
+      .ledger,
+      .margin,
+      .swiss,
+      .plain,
+      .plain-variant,
+      .blue-hybrid,
+      .chrono {
+        padding: 28px 22px;
+      }
+      .blue-hybrid.split .shell {
+        grid-template-columns: 1fr;
+      }
+      .blue-hybrid.split aside {
+        border-left: 0;
+        border-top: 1px solid #d6dfeb;
+        padding: 18px 0 0;
+      }
+      .swiss .label,
+      .swiss .items {
+        grid-column: auto;
+      }
+      .swiss nav {
+        grid-template-columns: 1fr 1fr;
+      }
+      .rail aside {
+        border-right: 0;
+        border-bottom: 1px solid #e1e1dd;
+      }
+      .margin nav { text-align: left; }
+      .mockup { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="intro">
+      <h1>Minimal Layout Directions</h1>
+      <p>Four low-risk visual directions for the Astro site. These are composition studies, not implemented components yet.</p>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>1. Manuscript Index</h2>
+        <p>Closest to the current site: serif, warm, narrow, and text-first. Good if the blog/math posts should feel like essays.</p>
+      </div>
+      <div class="mockup manuscript">
+        <nav>
+          <div>ani</div>
+          <div><a>research</a><a>teaching</a><a>blog</a><a>misc</a></div>
+        </nav>
+        <main>
+          <h3>Aniruddh V.</h3>
+          <p class="lead">Undergraduate at Berkeley studying math and physics, with interests around special cycles, Langlands, algebraic geometry, and reasoning models.</p>
+          <h4>recent writing</h4>
+          <ol>
+            <li><time>May 2026</time><div><strong>Intersection Homology</strong><span>Poincaré duality for singular spaces.</span></div></li>
+            <li><time>Apr 2026</time><div><strong>Shtukas: Part I</strong><span>What is a shtuka?</span></div></li>
+            <li><time>Apr 2026</time><div><strong>Categorical Traces</strong><span>Traces in symmetric monoidal categories.</span></div></li>
+          </ol>
+          <h4>research</h4>
+          <ol>
+            <li><time>2026</time><div><strong>GAGA for Fargues-Fontaine curves</strong><span>preprint · pdf</span></div></li>
+          </ol>
+        </main>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>2. Fixed Index Rail</h2>
+        <p>A quiet left rail for identity/contact/navigation, with everything else as clean indexed sections. Best for fast scanning.</p>
+      </div>
+      <div class="mockup rail">
+        <aside>
+          <div class="name">Aniruddh V.</div>
+          <div class="bio">Math/physics at Berkeley. Algebraic number theory, algebraic geometry, representation theory.</div>
+          <nav>
+            <a>01 / research</a>
+            <a>02 / teaching</a>
+            <a>03 / blog</a>
+            <a>04 / misc</a>
+            <a>rss</a>
+          </nav>
+        </aside>
+        <main>
+          <section class="section">
+            <h3>About</h3>
+            <div class="item"><strong>Special cycles and Langlands-adjacent geometry.</strong><span>Currently thinking about Fargues-Fontaine curves and mathematical reasoning benchmarks.</span></div>
+          </section>
+          <section class="section">
+            <h3>Research</h3>
+            <div class="item"><strong>GAGA for varieties over the Fargues-Fontaine curve</strong><span>2026 · preprint</span></div>
+          </section>
+          <section class="section">
+            <h3>Teaching</h3>
+            <div class="item"><strong>Math 254b · Algebraic Number Theory II</strong><span>Spring 2026 · T.A.</span></div>
+            <div class="item"><strong>Math 256b · Algebraic Geometry II</strong><span>Spring 2026 · T.A.</span></div>
+          </section>
+          <section class="section">
+            <h3>Blog</h3>
+            <div class="item"><strong>Intersection Homology</strong><span>singular spaces · algebraic topology</span></div>
+            <div class="item"><strong>Shtukas: Part I</strong><span>Langlands · number theory</span></div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>3. Compact Ledger</h2>
+        <p>The most minimal and utilitarian option: dense tables, strong rules, small metadata. Good for an academic CV/blog hybrid.</p>
+      </div>
+      <div class="mockup ledger">
+        <header>
+          <h3>ani</h3>
+          <nav><a>research</a><a>teaching</a><a>blog</a><a>tags</a></nav>
+        </header>
+        <section class="summary">
+          <div><strong>4</strong><span>blog notes</span></div>
+          <div><strong>1</strong><span>research item</span></div>
+          <div><strong>4</strong><span>teaching entries</span></div>
+        </section>
+        <table>
+          <thead><tr><th>Date</th><th>Title</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>2026-05</td><td>Intersection Homology</td><td>blog</td><td>Poincaré duality, singular spaces, perversities</td></tr>
+            <tr><td>2026-04</td><td>Shtukas: Part I</td><td>blog</td><td>Langlands, function fields, Shimura analogues</td></tr>
+            <tr><td>2026</td><td>GAGA for Fargues-Fontaine curves</td><td>research</td><td>preprint · pdf</td></tr>
+            <tr><td>Spring 2026</td><td>Math 254b</td><td>teaching</td><td>Algebraic Number Theory II · T.A.</td></tr>
+            <tr><td>Spring 2026</td><td>Math 256b</td><td>teaching</td><td>Algebraic Geometry II · T.A.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>4. Tufte Margin</h2>
+        <p>Preserves the current mathematical essay feel but makes the home page more deliberate, with margin metadata instead of visual clutter.</p>
+      </div>
+      <div class="mockup margin">
+        <header>
+          <div>
+            <h3>Aniruddh V.</h3>
+            <p>Notes in algebraic geometry, number theory, and mathematical reasoning.</p>
+          </div>
+          <nav><a>research</a><a>teaching</a><a>blog</a><a>misc</a></nav>
+        </header>
+        <article>
+          <main>
+            <h4>current thread</h4>
+            <p>I am interested in special cycles and their connections to the relative Langlands program, and more generally algebraic number theory through geometry and representation theory.</p>
+            <div class="list">
+              <div><strong>Intersection Homology</strong><span>How allowability repairs Poincaré duality on singular spaces.</span></div>
+              <div><strong>Shtukas: Part I</strong><span>Function-field Shimura analogues and global Langlands.</span></div>
+              <div><strong>GAGA for Fargues-Fontaine curves</strong><span>2026 · preprint</span></div>
+            </div>
+          </main>
+          <aside>
+            <div class="note">Margin space stays available for sidenotes on posts, so the blog keeps its mathematical reading affordance.</div>
+            <div class="note">Home page metadata can live here: contact, tags, current courses, RSS.</div>
+          </aside>
+        </article>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>5. Monastic Single Column</h2>
+        <p>The quietest possible version: one text column, no visible framework, and navigation treated as ordinary prose links.</p>
+      </div>
+      <div class="mockup monastic">
+        <div class="wrap">
+          <header>
+            <h3>Aniruddh V.</h3>
+            <p>I study math and physics at Berkeley, mostly near algebraic number theory, algebraic geometry, representation theory, and special cycles.</p>
+            <p>These are notes, teaching pages, and occasional research updates.</p>
+            <nav><a>research</a><a>teaching</a><a>blog</a><a>rss</a></nav>
+          </header>
+          <section>
+            <h4>writing</h4>
+            <div class="row"><time>2026</time><div><strong>Intersection Homology</strong></div></div>
+            <div class="row"><time>2026</time><div><strong>Shtukas: Part I</strong></div></div>
+            <div class="row"><time>2026</time><div><strong>Categorical Traces</strong></div></div>
+          </section>
+          <section>
+            <h4>research and teaching</h4>
+            <div class="row"><time>2026</time><div><strong>GAGA for varieties over the Fargues-Fontaine curve</strong></div></div>
+            <div class="row"><time>Spring</time><div><strong>Math 254b, Math 256b</strong></div></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>6. Swiss Grid</h2>
+        <p>Very clean, sans-serif, and grid-driven. The strongest departure from the current serif essay mood.</p>
+      </div>
+      <div class="mockup swiss">
+        <header>
+          <h3>Aniruddh<br>V.</h3>
+          <p>Undergraduate at Berkeley studying mathematics and physics. Interested in special cycles, Langlands-adjacent geometry, and mathematical reasoning.</p>
+        </header>
+        <nav><a>research</a><a>teaching</a><a>blog</a><a>misc</a></nav>
+        <section class="grid">
+          <div class="label">Recent</div>
+          <div class="items">
+            <div class="entry"><time>2026-05</time><div><strong>Intersection Homology</strong><span>Poincare duality for singular spaces</span></div></div>
+            <div class="entry"><time>2026-04</time><div><strong>Shtukas: Part I</strong><span>Function fields and global Langlands</span></div></div>
+          </div>
+          <div class="label">Academic</div>
+          <div class="items">
+            <div class="entry"><time>2026</time><div><strong>GAGA for Fargues-Fontaine curves</strong><span>preprint</span></div></div>
+            <div class="entry"><time>Spring</time><div><strong>Math 254b / 256b</strong><span>T.A.</span></div></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>7. Plaintext Archive</h2>
+        <p>A stripped-down index that feels almost like a README. Fast, accessible, and deliberately un-designed.</p>
+      </div>
+      <div class="mockup plain">
+<pre>ANIRUDDH V.
+math / physics, berkeley
+
+about
+  interested in special cycles, langlands-adjacent geometry,
+  algebraic number theory, algebraic geometry, and reasoning models.
+
+navigation
+  <span class="link">research</span>     <span class="link">teaching</span>     <span class="link">blog</span>     <span class="link">rss</span>
+
+recent writing
+  2026-05-07   <span class="link">Intersection Homology</span>
+               Poincare duality for singular spaces.
+
+  2026-04-27   <span class="link">Shtukas: Part I</span>
+               What is a shtuka?
+
+research
+  2026         GAGA for varieties over the Fargues-Fontaine curve
+               preprint / pdf
+
+teaching
+  Spring 2026  Math 254b, Algebraic Number Theory II
+  Spring 2026  Math 256b, Algebraic Geometry II
+
+<span class="dim">last updated: May 2026</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>8. Chronological Notebook</h2>
+        <p>Organizes the whole site by time instead of content type. Good if the site should feel like an evolving notebook.</p>
+      </div>
+      <div class="mockup chrono">
+        <header>
+          <h3>ani</h3>
+          <nav><a>index</a><a>research</a><a>teaching</a><a>tags</a></nav>
+        </header>
+        <main class="timeline">
+          <section class="year">
+            <time>2026</time>
+            <div class="events">
+              <div class="event"><strong>Intersection Homology</strong><span>Blog note on singular spaces and Poincare duality.</span></div>
+              <div class="event"><strong>Shtukas: Part I</strong><span>Blog note on function-field Langlands geometry.</span></div>
+              <div class="event"><strong>GAGA for Fargues-Fontaine curves</strong><span>Research note / preprint.</span></div>
+              <div class="event"><strong>Math 254b and Math 256b</strong><span>Teaching assistant.</span></div>
+            </div>
+          </section>
+          <section class="year">
+            <time>2025</time>
+            <div class="events">
+              <div class="event"><strong>Math 256a</strong><span>Algebraic Geometry I, teaching assistant.</span></div>
+              <div class="event"><strong>Math 174</strong><span>Introduction to Category Theory, lead instructor.</span></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>9. Plaintext Warm Paper</h2>
+        <p>Closest to option 7, but warmer and more literary. Courier gives it a typed-note feeling without going full terminal.</p>
+      </div>
+      <div class="mockup plain-variant plain-paper">
+<pre>ANIRUDDH V.
+mathematics / physics, berkeley
+
+about
+  special cycles, langlands-adjacent geometry, algebraic number theory,
+  algebraic geometry, representation theory, mathematical reasoning.
+
+links
+  <span class="link">research</span>  /  <span class="link">teaching</span>  /  <span class="link">blog</span>  /  <span class="link">rss</span>
+
+notes
+  2026-05-07   <span class="link">Intersection Homology</span>
+               Poincare duality for singular spaces.
+
+  2026-04-27   <span class="link">Shtukas: Part I</span>
+               function fields, shtukas, global Langlands.
+
+research
+  2026         GAGA for varieties over the Fargues-Fontaine curve
+               preprint / pdf
+
+<span class="dim">contact: "aniruddhv@" + school.edu</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>10. Plaintext Ink</h2>
+        <p>Crisp grayscale, more technical, more “source file as homepage.” Good if you want maximum restraint.</p>
+      </div>
+      <div class="mockup plain-variant plain-ink">
+<pre>ani
+===
+
+status
+  undergraduate, berkeley
+  math + physics
+
+current interests
+  - special cycles
+  - relative langlands program
+  - algebraic number theory / geometry
+  - reasoning model benchmarks
+
+recent
+  [2026-05-07] <span class="link">Intersection Homology</span>
+               tags: algebraic-topology, singular-spaces
+
+  [2026-04-27] <span class="link">Shtukas: Part I</span>
+               tags: shtukas, langlands, number-theory
+
+teaching
+  [Spring 2026] Math 254b    Algebraic Number Theory II
+  [Spring 2026] Math 256b    Algebraic Geometry II
+
+nav
+  <span class="link">/research</span>   <span class="link">/teaching</span>   <span class="link">/blog</span>   <span class="link">/tags</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>11. Plaintext Green Screen</h2>
+        <p>Terminal flavored but still quiet. More personality, less academic-paper. Best if you want the site to feel like a living log.</p>
+      </div>
+      <div class="mockup plain-variant plain-green">
+<pre>$ whoami
+  ani -- math/physics @ berkeley
+
+$ interests
+  special cycles
+  algebraic number theory
+  algebraic geometry
+  representation theory
+  mathematical reasoning
+
+$ ls blog
+  2026-05-07  <span class="link">intersection-homology</span>
+              Poincare duality for singular spaces
+
+  2026-04-27  <span class="link">shtukas-part-i</span>
+              what is a shtuka?
+
+$ ls teaching
+  spring-2026 math-254b algebraic-number-theory-ii
+  spring-2026 math-256b algebraic-geometry-ii
+
+$ links
+  <span class="link">research</span> <span class="link">teaching</span> <span class="link">blog</span> <span class="link">rss</span>
+
+<span class="dim"># all pages are static; all notes are drafts until proven otherwise</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>12. Plaintext Blue Notes</h2>
+        <p>A cooler palette and modern mono font. Feels like a clean research notebook or lab index.</p>
+      </div>
+      <div class="mockup plain-variant plain-blue">
+<pre>ANIRUDDH V.                                                    MAY 2026
+-----------------------------------------------------------------------
+
+I am an undergraduate at Berkeley studying mathematics and physics.
+My interests cluster around special cycles, Langlands, algebraic
+geometry, representation theory, and mathematical reasoning.
+
+SELECTED NOTES
+  01  <span class="link">Intersection Homology</span>
+      A chain-level introduction to duality on singular spaces.
+
+  02  <span class="link">Shtukas: Part I</span>
+      Why shtukas are function-field analogues of Shimura varieties.
+
+ACADEMIC
+  2026   GAGA for varieties over the Fargues-Fontaine curve
+  2026   Math 254b / Math 256b, T.A.
+
+DIRECTORIES
+  <span class="link">research</span>     <span class="link">teaching</span>     <span class="link">blog</span>     <span class="link">misc</span>     <span class="link">feed.xml</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>13. Plaintext Oxide</h2>
+        <p>Dark, warm, and slightly old-machine. Less sterile than green terminal, more nocturnal.</p>
+      </div>
+      <div class="mockup plain-variant plain-oxide">
+<pre>ani
+---
+
+mathematics and physics at berkeley.
+
+thinking about:
+  langlands, special cycles, algebraic geometry,
+  algebraic number theory, representation theory,
+  reasoning models.
+
+recent notes:
+
+  2026.05.07   <span class="link">intersection homology</span>
+               cycles may approach singularities only in controlled dimension.
+
+  2026.04.27   <span class="link">shtukas: part i</span>
+               moduli spaces of shtukas and the function-field langlands story.
+
+research:
+  2026         gaga for varieties over the fargues-fontaine curve
+
+teaching:
+  math 254b    algebraic number theory ii
+  math 256b    algebraic geometry ii
+
+<span class="dim">/research /teaching /blog /tags /rss</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>14. Plaintext Serif</h2>
+        <p>The same sparse archive idea, but without monospace. It reads like a hand-edited bibliography page.</p>
+      </div>
+      <div class="mockup plain-variant plain-serif">
+<pre>Aniruddh V.
+
+Berkeley, mathematics and physics.
+
+Interests:
+  special cycles; Langlands; algebraic number theory;
+  algebraic geometry; representation theory; reasoning models.
+
+Writing:
+  May 2026      <span class="link">Intersection Homology</span>
+                Poincare duality for singular spaces.
+
+  April 2026    <span class="link">Shtukas: Part I</span>
+                What is a shtuka?
+
+Research:
+  2026          GAGA for varieties over the Fargues-Fontaine curve.
+
+Teaching:
+  Spring 2026   Math 254b, Algebraic Number Theory II.
+  Spring 2026   Math 256b, Algebraic Geometry II.
+
+Navigation:
+  <span class="link">research</span>     <span class="link">teaching</span>     <span class="link">blog</span>     <span class="link">rss</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>15. Blue Archive / Balanced</h2>
+        <p>The direct hybrid: option 12's cool notebook palette with option 7's simple archive structure and moderate spacing.</p>
+      </div>
+      <div class="mockup blue-hybrid">
+<pre>ANIRUDDH V.
+math / physics, berkeley
+
+about
+  interested in special cycles, langlands-adjacent geometry,
+  algebraic number theory, algebraic geometry, representation theory,
+  and mathematical reasoning.
+
+navigation
+  <span class="link">research</span>     <span class="link">teaching</span>     <span class="link">blog</span>     <span class="link">tags</span>     <span class="link">rss</span>
+
+recent writing
+  2026-05-07   <span class="link">Intersection Homology</span>
+               Poincare duality for singular spaces.
+
+  2026-04-27   <span class="link">Shtukas: Part I</span>
+               What is a shtuka?
+
+research
+  2026         GAGA for varieties over the Fargues-Fontaine curve
+               preprint / pdf
+
+teaching
+  Spring 2026  Math 254b, Algebraic Number Theory II
+  Spring 2026  Math 256b, Algebraic Geometry II
+
+<span class="dim">contact: "aniruddhv@" + school.edu</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>16. Blue Archive / Compact</h2>
+        <p>A denser version with less whitespace. Better if you want more of the site visible above the fold.</p>
+      </div>
+      <div class="mockup blue-hybrid tight">
+<pre>ANIRUDDH V.                                      math / physics @ berkeley
+===============================================================================
+
+about
+  special cycles; langlands-adjacent geometry; algebraic number theory;
+  algebraic geometry; representation theory; mathematical reasoning.
+
+nav
+  <span class="link">research</span>  <span class="link">teaching</span>  <span class="link">blog</span>  <span class="link">tags</span>  <span class="link">rss</span>
+
+blog
+  2026-05-07  <span class="link">Intersection Homology</span>
+              Poincare duality for singular spaces.
+
+  2026-04-27  <span class="link">Shtukas: Part I</span>
+              Function fields, shtukas, global Langlands.
+
+academic
+  2026        GAGA for varieties over the Fargues-Fontaine curve       preprint
+  2026        Math 254b                                                T.A.
+  2026        Math 256b                                                T.A.
+
+<span class="dim">updated May 2026</span></pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>17. Blue Archive / Roomy</h2>
+        <p>Same structure, but softer and more breathable. This one feels more personal-site than technical index.</p>
+      </div>
+      <div class="mockup blue-hybrid roomy">
+<pre>ANIRUDDH V.
+
+mathematics and physics at Berkeley
+
+I am interested in special cycles and their connections to the relative
+Langlands program, and more generally algebraic number theory through
+algebraic geometry and representation theory.
+
+                         <span class="link">research</span>  /  <span class="link">teaching</span>  /  <span class="link">blog</span>  /  <span class="link">rss</span>
+
+writing
+
+  2026-05-07     <span class="link">Intersection Homology</span>
+                 A chain-level introduction to duality on singular spaces.
+
+  2026-04-27     <span class="link">Shtukas: Part I</span>
+                 What is a shtuka?
+
+research
+
+  2026           GAGA for varieties over the Fargues-Fontaine curve.
+
+teaching
+
+  Spring 2026    Math 254b, Algebraic Number Theory II.
+  Spring 2026    Math 256b, Algebraic Geometry II.</pre>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>18. Blue Archive / Annotated</h2>
+        <p>Keeps the archive body pure, but adds a tiny right annotation column for contact, status, and current tags.</p>
+      </div>
+      <div class="mockup blue-hybrid split">
+        <div class="shell">
+<pre>ANIRUDDH V.
+
+about
+  math / physics at berkeley.
+  special cycles, langlands, algebraic geometry,
+  representation theory, mathematical reasoning.
+
+writing
+  2026-05-07   <span class="link">Intersection Homology</span>
+               Poincare duality for singular spaces.
+
+  2026-04-27   <span class="link">Shtukas: Part I</span>
+               What is a shtuka?
+
+research
+  2026         GAGA for varieties over the Fargues-Fontaine curve
+
+teaching
+  Spring 2026  Math 254b
+  Spring 2026  Math 256b</pre>
+          <aside>
+            <strong>nav</strong><br>
+            research<br>
+            teaching<br>
+            blog<br>
+            tags<br>
+            rss<br><br>
+            <strong>tags</strong><br>
+            langlands<br>
+            shtukas<br>
+            algebraic topology<br><br>
+            <strong>contact</strong><br>
+            "aniruddhv@" + school.edu
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="option">
+      <div class="option-head">
+        <h2>19. Blue Archive / Field Notes</h2>
+        <p>Still plaintext, but uses small markers and section dividers to make the page feel like an organized notebook.</p>
+      </div>
+      <div class="mockup blue-hybrid">
+<pre><span class="mark">::</span> ANIRUDDH V.
+<span class="mark">::</span> mathematics / physics / berkeley
+
+<span class="mark">-- about ---------------------------------------------------------------</span>
+   special cycles, langlands-adjacent geometry, algebraic number theory,
+   algebraic geometry, representation theory, mathematical reasoning.
+
+<span class="mark">-- directories ---------------------------------------------------------</span>
+   <span class="link">research</span>      <span class="link">teaching</span>      <span class="link">blog</span>      <span class="link">tags</span>      <span class="link">feed.xml</span>
+
+<span class="mark">-- writing -------------------------------------------------------------</span>
+   2026-05-07   <span class="link">Intersection Homology</span>
+                cycles may approach singularities only in controlled dimension.
+
+   2026-04-27   <span class="link">Shtukas: Part I</span>
+                function-field analogues of Shimura varieties.
+
+<span class="mark">-- academic ------------------------------------------------------------</span>
+   2026         GAGA for varieties over the Fargues-Fontaine curve
+   Spring 2026  Math 254b / Math 256b</pre>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

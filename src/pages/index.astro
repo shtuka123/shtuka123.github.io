@@ -9,8 +9,11 @@ import { monthYear } from '../lib/format';
 const posts = await getAllPosts();
 ---
 
-<PageLayout title="ani" description="Personal site.">
-  <h1>Aniruddh V.</h1>
+<PageLayout title="Aniruddh V." description="Personal site.">
+  <header class="page-header">
+    <div class="section-label">home</div>
+    <h1>Aniruddh V.</h1>
+  </header>
 
   <p>
     Hi! I am currently an undergraduate at Berkeley studying math and physics. I am interested in special cycles and their
@@ -24,7 +27,8 @@ const posts = await getAllPosts();
     <a>"aniruddhv@" + school.edu</a>.
   </p>
 
-  <h2>research</h2>
+  <section class="archive-section" aria-labelledby="research-heading">
+  <h2 id="research-heading">research</h2>
   <ul class="post-list">
     {
       research.slice(0, 2).map((item) => (
@@ -43,8 +47,10 @@ const posts = await getAllPosts();
       ))
     }
   </ul>
+  </section>
 
-  <h2>teaching</h2>
+  <section class="archive-section" aria-labelledby="teaching-heading">
+  <h2 id="teaching-heading">teaching</h2>
   <ul class="post-list wide-date">
     {
       teaching.slice(0, 2).map((item) => (
@@ -58,8 +64,10 @@ const posts = await getAllPosts();
       ))
     }
   </ul>
+  </section>
 
-  <h2>blog</h2>
+  <section class="archive-section" aria-labelledby="blog-heading">
+  <h2 id="blog-heading">blog</h2>
   <ul class="post-list">
     {
       posts.slice(0, 3).map((post) => (
@@ -73,19 +81,26 @@ const posts = await getAllPosts();
       ))
     }
   </ul>
+  </section>
 
-  <h2>miscellaneous</h2>
-  <ul class="post-list">
-    {
-      misc.slice(0, 2).map((item) => (
-        <li>
-          <span class="date">{item.year}</span>
-          <div>
-            <div class="title"><a href="/misc/">{item.title}</a></div>
-            {item.description && <div class="excerpt">{item.description}</div>}
-          </div>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="archive-section" aria-labelledby="misc-heading">
+  <h2 id="misc-heading">miscellaneous</h2>
+  {
+    misc.length > 0 ? (
+      <ul class="post-list">
+        {misc.slice(0, 2).map((item) => (
+          <li>
+            <span class="date">{item.year}</span>
+            <div>
+              <div class="title"><a href="/misc/">{item.title}</a></div>
+              {item.description && <div class="excerpt">{item.description}</div>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty-state">nothing filed here yet.</p>
+    )
+  }
+  </section>
 </PageLayout>

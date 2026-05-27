@@ -1,6 +1,6 @@
 export const site = {
-  title: 'ani',
+  title: 'Aniruddh V.',
   description: 'Personal site.',
-  author: 'ani',
+  author: 'Aniruddh V.',
   url: 'https://shtuka123.github.io'
 };

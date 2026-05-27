@@ -1,8 +1,10 @@
 ---
-const year = new Date().getFullYear();
+import { getLastUpdatedLabel } from '../lib/lastUpdated';
+
+const lastUpdated = await getLastUpdatedLabel();
 ---
 
 <footer class="foot">
-  <span>&copy; {year}</span>
+  <span>last updated: {lastUpdated}</span>
   <span><a href="/feed.xml">rss</a></span>
 </footer>

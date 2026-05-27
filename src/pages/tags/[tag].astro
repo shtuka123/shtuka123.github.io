@@ -19,8 +19,11 @@ const { tag, posts } = Astro.props;
 ---
 
 <PageLayout title={tag.name} description={`Blog posts tagged ${tag.name}.`}>
-  <h1>{tag.name}</h1>
-  <p class="byline">{tag.count} {tag.count === 1 ? 'post' : 'posts'}</p>
+  <header class="page-header">
+    <div class="section-label">tag</div>
+    <h1>{tag.name}</h1>
+    <p class="byline">{tag.count} {tag.count === 1 ? 'post' : 'posts'}</p>
+  </header>
 
   <ul class="post-list">
     {

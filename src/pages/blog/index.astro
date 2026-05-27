@@ -14,14 +14,17 @@ const postsByYear = posts.reduce((groups, post) => {
 }, new Map<string, Post[]>());
 ---
 
-<PageLayout title="blog" description="notes, essays, and half-worked-out ideas.">
-  <h1>blog</h1>
-  <p class="byline">notes, essays, and half-worked-out ideas.</p>
+<PageLayout title="blog" description="Random notes on what I'm thinking about">
+  <header class="page-header">
+    <div class="section-label">archive</div>
+    <h1>blog</h1>
+    <p class="byline">Random notes on what I'm thinking about</p>
+  </header>
 
   {
     [...postsByYear].map(([groupYear, groupPosts]) => (
-      <Fragment>
-        <h2>{groupYear}</h2>
+      <section class="archive-section" aria-labelledby={`year-${groupYear}`}>
+        <h2 id={`year-${groupYear}`}>{groupYear}</h2>
         <ul class="post-list">
           {groupPosts.map((post) => (
             <li>
@@ -33,7 +36,7 @@ const postsByYear = posts.reduce((groups, post) => {
             </li>
           ))}
         </ul>
-      </Fragment>
+      </section>
     ))
   }
 

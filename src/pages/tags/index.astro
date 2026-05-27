@@ -7,8 +7,11 @@ const tags = collectTags(await getAllPosts());
 ---
 
 <PageLayout title="tags" description="Browse blog posts by tag.">
-  <h1>tags</h1>
-  <p class="byline">browse blog posts by subject.</p>
+  <header class="page-header">
+    <div class="section-label">archive</div>
+    <h1>tags</h1>
+    <p class="byline">browse blog posts by subject.</p>
+  </header>
 
   <ul class="post-list">
     {

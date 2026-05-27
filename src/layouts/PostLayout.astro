@@ -7,10 +7,13 @@ const { title, date, description, tags = [] } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="content">
-    <h1>{title}</h1>
-    <p class="byline">{longDate(date)}</p>
-    <TagList tags={tags} />
+  <article class="content post-content">
+    <header class="post-header">
+      <div class="section-label">post</div>
+      <h1>{title}</h1>
+      <p class="byline">{longDate(date)}</p>
+      <TagList tags={tags} />
+    </header>
     <slot />
     <a href="/blog/" class="back">&larr; blog</a>
   </article>

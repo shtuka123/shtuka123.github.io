@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blue Archive Site Pages</title>
+  <style>
+    :root {
+      --bg: #eef3f8;
+      --paper: #f4f7fb;
+      --ink: #17202a;
+      --muted: #6f7d8d;
+      --rule: #d9e1ec;
+      --link: #225c83;
+      --mark: #7b4e24;
+      --mono: "Aptos Mono", "Cascadia Mono", "SF Mono", Consolas, ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .preview-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 22px 80px;
+    }
+    .preview-title {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+    .preview-title h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .preview-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .screen-label {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 18px;
+      margin: 34px 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .screen-label strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .screen {
+      min-height: 620px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      box-shadow: 0 16px 42px rgba(23, 32, 42, 0.07);
+      overflow: hidden;
+    }
+    .site {
+      min-height: 620px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 42px 46px 34px;
+    }
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: baseline;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 34px;
+    }
+    .brand {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .site-nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .page-code {
+      white-space: pre-wrap;
+      tab-size: 2;
+    }
+    .page-code h2 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: 500;
+      line-height: inherit;
+    }
+    .muted { color: var(--muted); }
+    .mark { color: var(--mark); }
+    .date { color: var(--muted); }
+    .indent { padding-left: 15ch; }
+    .section {
+      margin-top: 2em;
+    }
+    .entry {
+      display: grid;
+      grid-template-columns: 14ch minmax(0, 1fr);
+      gap: 2ch;
+      margin: 0.35em 0;
+    }
+    .entry .meta {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .entry .desc {
+      display: block;
+      color: var(--muted);
+      margin-top: 0.05em;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin: 1.2em 0 2em;
+    }
+    .tag {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .post-body {
+      max-width: 74ch;
+      white-space: normal;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    .post-body p {
+      margin: 0 0 1.15em;
+    }
+    .post-body h3 {
+      margin: 2.3em 0 0.7em;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .math {
+      overflow-x: auto;
+      margin: 1.4em 0;
+      padding: 0.8em 1em;
+      border-left: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    figure {
+      margin: 1.7em 0;
+    }
+    figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--rule);
+      background: #fff;
+    }
+    figcaption {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      margin-top: 0.6em;
+    }
+    .site-footer {
+      border-top: 1px solid var(--rule);
+      margin-top: 42px;
+      padding-top: 16px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 760px) {
+      .site {
+        padding: 28px 22px 26px;
+      }
+      .site-header,
+      .screen-label,
+      .entry {
+        grid-template-columns: 1fr;
+      }
+      .site-header {
+        display: grid;
+      }
+      .entry {
+        gap: 0;
+        margin-bottom: 1em;
+      }
+      .indent {
+        padding-left: 0;
+      }
+      .screen {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="preview-shell">
+    <section class="preview-title">
+      <h1>Blue Archive / Balanced: Full Site Preview</h1>
+      <p>Color and font from option 12, layout rhythm from option 7/9. Each screen includes the proposed bottom line.</p>
+    </section>
+
+    <div class="screen-label">
+      <strong>home</strong>
+      <span>/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+about
+  undergraduate at Berkeley studying math and physics.
+  interested in special cycles and their connections to the relative
+  Langlands program; more generally algebraic number theory, algebraic
+  geometry, representation theory, and mathematical reasoning.
+
+contact
+  "aniruddhv@" + school.edu
+
+recent writing
+  <span class="date">2026-05-07</span>   <a>Intersection Homology</a>
+               Poincare duality for singular spaces.
+
+  <span class="date">2026-04-27</span>   <a>Shtukas: Part I</a>
+               What is a shtuka?
+
+research
+  <span class="date">2026</span>         <a>GAGA for varieties over the Fargues-Fontaine curve</a>
+               preprint / pdf
+
+teaching
+  <span class="date">Spring 2026</span>  <a>Math 254b, Algebraic Number Theory II</a>
+  <span class="date">Spring 2026</span>  <a>Math 256b, Algebraic Geometry II</a>
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>feed.xml</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>blog index</strong>
+      <span>/blog/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+blog
+  random notes on what i'm thinking about.
+
+2026
+  <span class="date">May 07</span>       <a>Intersection Homology</a>
+               Poincare duality for singular spaces.
+               tags: intersection homology, algebraic topology, singular spaces
+
+  <span class="date">Apr 27</span>       <a>Shtukas: Part I</a>
+               What is a shtuka?
+               tags: shtukas, Langlands, number theory
+
+archive
+  <a>all tags</a>
+  <a>rss feed</a>
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>home</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>post page</strong>
+      <span>/blog/intersection-homology/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+Intersection Homology
+  <span class="date">May 7, 2026</span>
+
+tags
+  <a>intersection homology</a>  <a>algebraic topology</a>  <a>singular spaces</a>  <a>Poincare duality</a>
+        </div>
+        <article class="post-body">
+          <p>Poincare duality is one of the most satisfying facts about manifolds: on a compact oriented manifold, topology in dimension <em>i</em> is paired with topology in dimension <em>n-i</em>. Singular spaces are less polite.</p>
+          <p>Intersection homology fixes this by changing the chain complex rather than changing the space. The slogan is: cycles may approach singularities only in controlled dimension.</p>
+          <h3>the torus suspension as a warning</h3>
+          <p>Consider the suspension of a torus. Away from the two cone points it looks like a 3-manifold, but at either cone point the link is a torus rather than a sphere.</p>
+          <div class="math">X = Sigma T^2,    H_1(X; Q)=0,    H_2(X; Q)=Q^2.</div>
+          <figure>
+            <img src="../public/assets/blog/intersection-homology/figure-2.png" alt="A loop on the torus cross-section filled by coning it to a singular point.">
+            <figcaption>Ordinary homology allows a loop to be filled by coning it to a singular point.</figcaption>
+          </figure>
+          <h3>allowability</h3>
+          <p>Intersection homology remembers when a chain uses the singular set too aggressively by imposing dimension bounds near each stratum.</p>
+        </article>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>back to blog</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>research</strong>
+      <span>/research/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+research
+  papers, preprints, and notes.
+
+items
+  <span class="date">2026</span>         <a>GAGA For Varieties Over the Fargues-Fontaine Cuvve</a>
+               We prove a GAGA theorem for proper varieties over
+               Fargues-Fontaine curves.
+               preprint / pdf
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>home</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>teaching</strong>
+      <span>/teaching/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+teaching
+  courses I have taught or assisted.
+
+courses
+  <span class="date">Spring 2026</span>  <a>Math 254b / Algebraic Number Theory II</a>
+               T.A. Graduate course in local and global class field theory,
+               and complex multiplication of elliptic curves.
+
+  <span class="date">Spring 2026</span>  <a>Math 256b / Algebraic Geometry II</a>
+               T.A. Sheaf cohomology, divisors, intersection theory,
+               curves and surfaces.
+
+  <span class="date">Fall 2025</span>    <a>Math 256a / Algebraic Geometry I</a>
+               T.A. Sheaves, schemes, morphisms of schemes,
+               sheaf cohomology.
+
+  <span class="date">2024-2025</span>    <a>Math 174 / Introduction to Category Theory</a>
+               Lead Instructor. Categories, functors, natural transformations,
+               universal properties, limits, colimits, and adjunctions.
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>home</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>misc</strong>
+      <span>/misc/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+miscellaneous
+  talks, reading notes, side projects.
+
+items
+  <span class="muted">(nothing listed yet)</span>
+
+suggested shape
+  <span class="date">year</span>         title
+               description
+               slides / notes / code
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>home</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>tags</strong>
+      <span>/tags/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+tags
+  browse blog posts by subject.
+
+index
+  <span class="date">1</span>            <a>intersection homology</a>
+  <span class="date">1</span>            <a>algebraic topology</a>
+  <span class="date">1</span>            <a>singular spaces</a>
+  <span class="date">1</span>            <a>Poincare duality</a>
+  <span class="date">1</span>            <a>shtukas</a>
+  <span class="date">1</span>            <a>Langlands</a>
+  <span class="date">1</span>            <a>number theory</a>
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>blog</a></span>
+        </footer>
+      </div>
+    </section>
+
+    <div class="screen-label">
+      <strong>tag page</strong>
+      <span>/tags/intersection-homology/</span>
+    </div>
+    <section class="screen">
+      <div class="site">
+        <header class="site-header">
+          <a class="brand">ANIRUDDH V.</a>
+          <nav class="site-nav"><a>research</a><a>teaching</a><a>blog</a><a>misc</a><a>rss</a></nav>
+        </header>
+        <div class="page-code">
+tag
+  intersection homology
+
+posts
+  <span class="date">May 07</span>       <a>Intersection Homology</a>
+               Poincare duality for singular spaces.
+
+related
+  <a>algebraic topology</a>
+  <a>singular spaces</a>
+  <a>Poincare duality</a>
+        </div>
+        <footer class="site-footer">
+          <span>last updated: May 26, 2026</span>
+          <span><a>all tags</a></span>
+        </footer>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
