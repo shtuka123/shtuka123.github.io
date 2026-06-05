@@ -1,0 +1,139 @@
+---
+title: "An Infinite Dimensional Noetherian Ring"
+date: 2026-06-05
+description: "An example, historically attributed to Nagata, of a noetherian ring with infinite Krull dimension."
+tags:
+  - commutative algebra
+  - algebraic geometry
+---
+
+import MathBlock from '../../components/MathBlock.astro';
+import Theorem from '../../components/Theorem.astro';
+
+## Preliminaries
+
+A common misconception among many students first taking commutative algebra and algebraic geometry is the following:
+
+<Theorem type="remark" label="Misconception 1.">
+
+Every noetherian ring has finite (Krull)-dimension.
+
+</Theorem>
+
+For completeness, let me recall the definitions of these terms.
+
+<Theorem type="definition" label="Definition 2.">
+
+A commutative ring $R$ is *noetherian* if every ascending chain of ideals
+
+<MathBlock tex={String.raw`I_0 \subset I_1 \subset I_2 \subset \cdots`} />
+
+eventually terminates - that is there is some $n$ such that $I_n = I_&#123;n+1&#125;$. Equivalently, every ideal $I \subset R$ is finitely generated.
+
+</Theorem>
+
+Noetherianness is one form of finiteness for rings. Another form is (Krull) dimension, defined as follows:
+
+<Theorem type="definition" label="Definition 3.">
+
+The Krull dimension of a ring $R$ is the supremum of all $n \geq 0$ such that $R$ has a chain of prime ideals
+
+<MathBlock tex={String.raw`\mathfrak p_0 \subset \mathfrak p_1 \subset \cdots \subset \mathfrak p_n`} />
+
+</Theorem>
+
+One might hope that these notions of finiteness are somehow equivalent, but unfortunately that is not the case. There are finite dimensional rings that are not noetherian, and even more surprisingly, noetherian rings that have infinite dimension! The goal of this post is to document an example of the latter, historically attributed to Nagata.
+
+## The example
+
+Here is our example. Let $k$ be a field, and $R := k[x_1, x_2, \ldots]$ be the polynomial ring in countably many variables. For each $i \geq 1$, define ideals
+
+<MathBlock tex={String.raw`\mathfrak p_i := (x_{2^{i-1}}, x_{2^{i-1}+1}, \ldots, x_{2^i-1})`} />
+
+Then the $\mathfrak p_i$ are prime ideals of $R$. Consider the multiplicative subset
+
+<MathBlock tex={String.raw`S = \bigcap_{i \geq 1} (R \setminus \mathfrak p_i)`} />
+
+and let $A := S^&#123;-1&#125;R$. Then we have:
+
+<Theorem type="proposition" label="Proposition 4.">
+
+Keep the notation above.
+
+(i) The maximal ideals of $A$ are exactly $\mathfrak m_i = \mathfrak p_iA$.
+
+(ii) We have $A_&#123;\mathfrak m_i&#125; = R_&#123;\mathfrak p_i&#125;$, which is noetherian of dimension $2^&#123;i-1&#125;$.
+
+(iii) $A$ is noetherian.
+
+</Theorem>
+
+As an immediate consequence, we see that $A$ is an infinite dimensional noetherian ring.
+
+## The proof
+
+Let's now see the proof of the above proposition. Let
+
+<MathBlock tex={String.raw`B_i := \{2^{i-1}, 2^{i-1}+1, \ldots, 2^i-1\}`} />
+
+and $\mathfrak p_i = (x_j : j \in B_i)$. Then $S = R \setminus \bigcup_i \mathfrak p_i$. If $f$ is a nonzero polynomial in $R$, define
+
+<MathBlock tex={String.raw`T(f) := \{i : f \in \mathfrak p_i\}`} />
+
+For each $f$, the set $T(f)$ is finite because $f$ only involves finitely many variables (by definition since $f$ is a polynomial). Moreover $f \in S$ precisely when $T(f) = \emptyset$.
+
+To proceed, we need the following crucial lemma:
+
+<Theorem type="lemma" label="Lemma 5.">
+
+If $\mathfrak q \subset R$ is a prime ideal and $\mathfrak q \cap S = \emptyset$, then $\mathfrak q \subset \mathfrak p_i$ for some $i$.
+
+</Theorem>
+
+<Theorem type="proof" label="Proof.">
+
+Note that every nonzero $f \in \mathfrak q$ satisfies $T(f) \neq \emptyset$. Suppose $f_1, \ldots, f_n \in \mathfrak q$ and
+
+<MathBlock tex={String.raw`T(f_1) \cap \cdots \cap T(f_n) = \emptyset`} />
+
+Choose distinct $B_&#123;e_1&#125;, \ldots, B_&#123;e_n&#125;$ not appearing in any $f_r$ and choose $y_r \in B_&#123;e_r&#125;$. Then
+
+<MathBlock tex={String.raw`h = \sum_{r=1}^n y_rf_r \in \mathfrak q`} />
+
+Thus
+
+<MathBlock tex={String.raw`T(h) = \bigcap_{r=1}^n \left(T(f_r) \cup \{e_r\}\right) = \emptyset`} />
+
+so $h \in S$, contradicting $\mathfrak q \cap S = \emptyset$. Thus the family $\lbrace T(f): f \neq 0 \in \mathfrak q \rbrace$ has the finite intersection property, and since any one $T(f_0)$ is finite, their total intersection is nonempty. Thus some $i$ satisfies $f \in \mathfrak p_i$ for all $f \in \mathfrak q$, so $\mathfrak q \subset \mathfrak p_i$.
+
+</Theorem>
+
+We can now prove Proposition 4.
+
+<Theorem type="proof" label="Proof of Proposition 4.">
+
+We go in order.
+
+(i) Prime ideals of $A = S^&#123;-1&#125;R$ correspond bijectively to primes $\mathfrak q \subset R$ with $\mathfrak q \cap S = \emptyset$. By the lemma, each prime lies in some $\mathfrak p_i$. It remains to verify that each $\mathfrak p_iA$ is maximal.
+
+Choose $f \notin \mathfrak p_i$. Choose $y \in \mathfrak p_i$ in $B_i$, and choose $N$ larger than the $y$-degree of $f$. Then $s = f + y^N \in (f) + \mathfrak p_i$, because $s \equiv f \not\equiv 0 \mod \mathfrak p_i$. For $j \neq i$, the term $y^N$ is not killed modulo $\mathfrak p_j$, and by choice of $N$ it cannot cancel with $f$. Hence $s \notin \mathfrak p_j$ for every $j$, so $s \in S$. Therefore every element outside $\mathfrak p_i$ becomes invertible in $A/\mathfrak p_iA$, so $\mathfrak p_iA$ is maximal. This shows (i).
+
+(ii) Note that
+
+<MathBlock tex={String.raw`A_{\mathfrak m_i} = (S^{-1}R)_{\mathfrak p_iS^{-1}R} \cong R_{\mathfrak p_i}`} />
+
+because $S \subset R \setminus \mathfrak p_i$, and localizing further at $\mathfrak m_i$ inverts exactly the elements of $R \setminus \mathfrak p_i$. Let $C_i$ be the set of variables outside of $B_i$, and let
+
+<MathBlock tex={String.raw`K_i = \mathrm{Frac}(k[x_j : j \notin B_i])`} />
+
+Then
+
+<MathBlock tex={String.raw`R_{\mathfrak p_i} \cong K_i[x_j : j \in B_i]_{(x_j : j \in B_i)}`} />
+
+This is a localization of a polynomial ring in $\lvert B_i \rvert$ variables over a field, hence is noetherian and local. Moreover, we have $\lvert B_i \rvert = (2^i - 1) - 2^&#123;i-1&#125; + 1 = 2^&#123;i-1&#125;$. This shows (ii).
+
+(iii) Let $I \subset A$ be an ideal. If $I = 0$, it is finitely generated. Otherwise, choose some nonzero $a \in I$. Let $a = f/s$ with $f \in R \setminus \lbrace 0 \rbrace$ and $s \in S$. Then $f$ lies only in finitely many $\mathfrak p_i$, so $a$ lives in only finitely many maximal ideals $\mathfrak m_i$. Call these $\mathfrak m_&#123;i_1&#125;, \ldots, \mathfrak m_&#123;i_r&#125;$.
+
+For each other maximal ideal $\mathfrak m_j$, the element $a$ is a unit in $A_&#123;\mathfrak m_j&#125;$, so $I_&#123;\mathfrak m_j&#125; = A_&#123;\mathfrak m_j&#125;$. For each of the finitely many remaining ideals $\mathfrak m_&#123;i_\ell&#125;$, the local ring $A_&#123;\mathfrak m_&#123;i_\ell&#125;&#125; \cong R_&#123;\mathfrak p_&#123;i_\ell&#125;&#125;$ is noetherian, so $I_&#123;\mathfrak m_&#123;i_\ell&#125;&#125;$ is finitely generated. Choose finitely many elements of $I$ whose images generate these finitely many localized ideals, and let $J \subset I$ be the ideal generated by those elements together with $a$. Then $J_\mathfrak m = I_\mathfrak m$ for all maximal ideals $\mathfrak m \subset A$. Thus $I/J$ localizes to zero at every maximal ideal, so $I/J = 0$ and $I = J$. This proves (iii).
+
+</Theorem>
