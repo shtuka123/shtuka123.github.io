@@ -1,84 +1,31 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import AcademicLayout from '../layouts/AcademicLayout.astro';
+import CourseEntry from '../components/CourseEntry.astro';
+import { biographyIntroduction, researchInterests, roboticsInterests } from '../data/profile';
 import { research } from '../data/research';
 import { teaching } from '../data/teaching';
-import { misc } from '../data/misc';
+import { talks } from '../data/talks';
 ---
+<AcademicLayout home>
+<section class="about-section">
+      <h2 class="underline red">About</h2>
+      <p>{biographyIntroduction} <a href="https://math.berkeley.edu/~swshin/">Sug Woo Shin</a>. {researchInterests} {roboticsInterests}</p>
+      <p><strong>Email:</strong> my first name + my last initial @ berkeley dot edu</p>
+    </section>
 
-<PageLayout title="Aniruddh V." description="Personal site.">
-  <header class="page-header">
-    <div class="section-label">home</div>
-    <h1>Aniruddh V.</h1>
-  </header>
+<section class="home-research">
+      <h2 class="underline gold">Research and Writing</h2>
+      {research.map((item) => <p>{item.title.replace('Cuvve', 'Curve')}. Preprint ({item.year}).</p>)}
+    </section>
 
-  <p>
-    Hi! I am currently an undergraduate at Berkeley studying math and physics. I am interested in special cycles and their
-    connections to the (relative) Langlands program, and more generally algebraic number theory and its connections to
-    algebraic geometry and representation theory.
-  </p>
+<section id="talks" class="home-talks">
+      <h2 class="underline yellow">Talks</h2>
+      <ul class="plain-list talks-list">{talks.map((item) => <li>{item.date}{item.venue && <Fragment>, {item.venue}</Fragment>}. <em>{item.title}</em>.</li>)}</ul>
+    </section>
 
-  <p>
-    You can reach me at
-    <a>"aniruddhv@" + school.edu</a>.
-  </p>
-
-  <section class="archive-section" aria-labelledby="research-heading">
-  <h2 id="research-heading">research</h2>
-  <ul class="post-list">
-    {
-      research.slice(0, 2).map((item) => (
-        <li>
-          <span class="date">{item.year}</span>
-          <div>
-            <div class="title"><a href="/research/">{item.title}</a></div>
-            <div class="excerpt">
-              {item.venue}
-              {item.links.map((link) => (
-                <Fragment> &middot; <a href={link.url}>{link.name}</a></Fragment>
-              ))}
-            </div>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
-  </section>
-
-  <section class="archive-section" aria-labelledby="teaching-heading">
-  <h2 id="teaching-heading">teaching</h2>
-  <ul class="post-list wide-date">
-    {
-      teaching.slice(0, 2).map((item) => (
-        <li>
-          <span class="date">{item.semester}</span>
-          <div>
-            <div class="title"><a href="/teaching/">{item.course} &middot; {item.title}</a></div>
-            <div class="excerpt"><em>{item.role}</em></div>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
-  </section>
-
-  <section class="archive-section" aria-labelledby="misc-heading">
-  <h2 id="misc-heading">miscellaneous</h2>
-  {
-    misc.length > 0 ? (
-      <ul class="post-list">
-        {misc.slice(0, 2).map((item) => (
-          <li>
-            <span class="date">{item.year}</span>
-            <div>
-              <div class="title"><a href="/misc/">{item.title}</a></div>
-              {item.description && <div class="excerpt">{item.description}</div>}
-            </div>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p class="empty-state">nothing filed here yet.</p>
-    )
-  }
-  </section>
-</PageLayout>
+<section class="home-teaching">
+      <h2 class="underline blue">Teaching</h2>
+      <span class="teaching-hint">Click a course to show/hide its description.</span>
+      <div class="teaching-summary">{teaching.map((item) => <CourseEntry item={item} />)}</div>
+    </section>
+</AcademicLayout>

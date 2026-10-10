@@ -1,7 +1,7 @@
 export const site = {
   title: 'Aniruddh V.',
-  description: 'Personal site.',
+  description: 'Aniruddh V. — mathematics, robotics, research, talks, and teaching.',
   author: 'Aniruddh V.',
-  url: 'https://shtuka123.github.io',
+  url: 'https://aniruddh.xyz',
   blogVisible: false
 };

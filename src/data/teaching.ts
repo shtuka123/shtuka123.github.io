@@ -14,6 +14,15 @@ type TeachingItem = {
 
 export const teaching: TeachingItem[] = [
   {
+    semester: 'Fall 2026', course: 'Math 174', title: 'Introduction to Category Theory', role: 'Instructor',
+    description: 'Student-led course. Covers categories, functors, natural transformations, universal properties, (co)limits, and adjunctions.', links: [],
+  },
+  // Short topic summaries from the Berkeley course catalog:
+  // https://undergraduate.catalog.berkeley.edu/courses/1145291
+  // https://berkeleyguidearchive.github.io/2024-25/courses/math/#math121a
+  { semester: 'Fall 2026', course: 'Math 126', title: 'Introduction to PDEs', role: 'Reader', description: 'An introduction to equations describing waves and diffusion, with initial and boundary conditions. Topics include Fourier methods, Green’s functions, maximum principles, and estimates for solutions.', links: [] },
+  { semester: 'Fall 2026', course: 'Math 121A', title: 'Math Methods for Physical Sciences', role: 'Reader', description: 'Mathematical methods for students in the physical sciences, covering series, partial derivatives, complex analysis, integral transforms, and variational calculus.', links: [] },
+  {
     semester: 'Spring 2026',
     course: 'Math 254b',
     title: 'Algebraic Number Theory II',

@@ -1,0 +1,3 @@
+export const researchInterests = "I'm interested in algebraic number theory and its connections with algebraic geometry and representation theory. Specifically, I am interested in the geometry and cohomology of (local and global) Shimura varieties, and more generally moduli spaces of (local and global) shtukas.";
+export const biographyIntroduction = "Hi! I'm currently a Masters student at Johns Hopkins University studying robotics. Previously, I studied math and physics at UC Berkeley, where I was advised by";
+export const roboticsInterests = "I am also interested in various topics in the intersection of robotics, machine learning, and computer vision, specifically in intelligent robot motion.";

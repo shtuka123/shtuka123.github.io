@@ -1,0 +1,16 @@
+---
+interface Props {
+  item: {
+    semester: string;
+    role: string;
+    course: string;
+    title: string;
+    description: string;
+  };
+}
+const { item } = Astro.props;
+---
+<details class="course-entry">
+  <summary>{item.semester}: {item.role} for <span class="course-title">{item.course}, <em>{item.title}</em></span>.</summary>
+  <p class="course-description">{item.description}</p>
+</details>

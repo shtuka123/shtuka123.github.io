@@ -1,41 +1,10 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import AcademicLayout from '../../layouts/AcademicLayout.astro';
+import CourseEntry from '../../components/CourseEntry.astro';
 import { teaching } from '../../data/teaching';
 ---
-
-<PageLayout title="teaching" description="courses I have taught or assisted.">
-  <header class="page-header">
-    <div class="section-label">archive</div>
-    <h1>teaching</h1>
-    <p class="byline">courses I have taught or assisted.</p>
-  </header>
-
-  <ul class="post-list wide-date">
-    {
-      teaching.map((item) => (
-        <li>
-          <span class="date">{item.semester}</span>
-          <div>
-            <div class="title">
-              {item.links[0] ? (
-                <a href={item.links[0].url}>{item.course} &middot; {item.title}</a>
-              ) : (
-                <Fragment>{item.course} &middot; {item.title}</Fragment>
-              )}
-            </div>
-            <div class="excerpt"><em>{item.role}.</em> {item.description}</div>
-            {item.links.length > 0 && (
-              <div class="excerpt">
-                {item.links.map((link, index) => (
-                  <Fragment>{index > 0 && ' '}&middot; <a href={link.url}>{link.name}</a></Fragment>
-                ))}
-              </div>
-            )}
-          </div>
-        </li>
-      ))
-    }
-  </ul>
-
-  <a href="/" class="back">&larr; home</a>
-</PageLayout>
+<AcademicLayout title="Teaching" section="teaching">
+  <header class="page-heading"><h1 class="underline yellow">Teaching</h1> <span class="teaching-hint">Click a course to show/hide its description.</span></header>
+  <p>Current and past teaching.</p>
+  <div class="teaching-summary">{teaching.map((item) => <CourseEntry item={item} />)}</div>
+</AcademicLayout>

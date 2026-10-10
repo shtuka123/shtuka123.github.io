@@ -1,0 +1,42 @@
+---
+import { site } from '../data/site';
+import '../styles/academic.css';
+
+interface Props {
+  title?: string;
+  section?: string;
+  home?: boolean;
+}
+const { title = site.title, section = 'home', home = false } = Astro.props;
+const nav = [
+  { key: 'home', label: 'Home', href: '/' },
+  { key: 'research', label: 'Research', href: '/research/' },
+  { key: 'talks', label: 'Talks', href: '/#talks' },
+  { key: 'teaching', label: 'Teaching', href: '/teaching/' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    <title>{title === site.title ? title : `${title} — ${site.title}`}</title>
+    <link rel="canonical" href={new URL(Astro.url.pathname, site.url)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='25' font-size='28' font-family='serif'%3EA%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      {home && <img class="header-sketch" src="/assets/sketches/pochacco-math-rough.png" width="1536" height="1024" alt="An unfinished pen doodle of Pochacco with a pencil and a few mathematical arrows." fetchpriority="high" />}
+      <header class="site-header">
+        {home ? <h1 class="site-title">{site.title}</h1> : <p class="site-title"><a href="/">{site.title}</a></p>}
+        {!home && <nav aria-label="Main navigation">{nav.map((item, i) => <Fragment>{i > 0 && <span aria-hidden="true"> · </span>}<a href={item.href} aria-current={section === item.key ? 'page' : undefined}>{item.label}</a></Fragment>)}</nav>}
+      </header>
+      <main id="main" tabindex="-1" class={home ? 'home' : undefined}><slot /></main>
+    </div>
+  </body>
+</html>

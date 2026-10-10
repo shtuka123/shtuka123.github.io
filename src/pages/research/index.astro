@@ -1,36 +1,11 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import AcademicLayout from '../../layouts/AcademicLayout.astro';
 import { research } from '../../data/research';
+import { researchInterests } from '../../data/profile';
 ---
-
-<PageLayout title="research" description="papers, preprints, and notes.">
-  <header class="page-header">
-    <div class="section-label">archive</div>
-    <h1>research</h1>
-    <p class="byline">papers, preprints, and notes.</p>
-  </header>
-
-  <ul class="post-list">
-    {
-      research.map((item) => (
-        <li>
-          <span class="date">{item.year}</span>
-          <div>
-            <div class="title">
-              {item.links[0] ? <a href={item.links[0].url}>{item.title}</a> : item.title}
-            </div>
-            <div class="excerpt">{item.description}</div>
-            <div class="excerpt">
-              {item.venue}
-              {item.links.map((link) => (
-                <Fragment> &middot; <a href={link.url}>{link.name}</a></Fragment>
-              ))}
-            </div>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
-
-  <a href="/" class="back">&larr; home</a>
-</PageLayout>
+<AcademicLayout title="Research" section="research">
+  <header class="page-heading"><h1 class="underline gold">Research and Writing</h1></header>
+  <p>{researchInterests}</p>
+  <h2>Preprints</h2>
+  {research.map((item) => <article class="research-entry"><h3>{item.title.replace('Cuvve', 'Curve')}</h3><p>Preprint ({item.year}). {item.description}.</p></article>)}
+</AcademicLayout>

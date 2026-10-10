@@ -1,0 +1,54 @@
+/* The approved academic homepage layout. */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:8px;background:white;color:black;font:16px/normal 'EB Garamond','Times New Roman',serif}
+a{color:#0000ee;text-decoration:underline}
+a:visited{color:#551a8b}
+a:focus-visible,summary:focus-visible{outline:2px solid #0000ee;outline-offset:3px}
+h1{font-size:32px}
+h2{font-size:24px}
+h3{font-size:18.72px}
+h1,h2,h3{font-weight:700;line-height:normal}
+p{margin:16px 0}
+.site-shell{position:relative;max-width:1000px;margin:68px auto 45px}
+.header-sketch{position:absolute;top:-65px;right:-30px;width:240px;height:auto;pointer-events:none}
+.site-header{text-align:center;margin-bottom:24px}
+.site-title{font-size:32px;font-weight:700;line-height:normal;margin:0 0 20px}
+.site-title a{color:black;text-decoration:none}
+.site-header nav{margin:0 0 25px}
+.site-header nav a[aria-current]{font-weight:bold}
+main{display:flow-root}
+main:focus{outline:none}
+.home section{margin:0 0 24px}
+.underline{position:relative;display:inline-block;margin:0}
+.underline::after{content:'';position:absolute;left:0;bottom:-5px;width:100%;height:5px;z-index:-1}
+.red::after{background:#ff9090}
+.gold::after{background:#ffcf7f}
+.yellow::after{background:#fffa62}
+.blue::after{background:#89c4ff}
+.plain-list{list-style:none;padding:0;margin:16px 0}
+.plain-list li{margin:0;line-height:1.4}
+.teaching-summary{margin:16px 0}
+.teaching-hint{display:inline-block;margin-left:14px;color:#555;font-size:14px;font-weight:400}
+.course-entry{margin:0;line-height:1.55}
+.course-entry summary{display:block;list-style:none;cursor:pointer}
+.course-entry summary::-webkit-details-marker{display:none}
+.course-entry .course-description{margin:6px 0 12px 18px;max-width:850px;line-height:1.5}
+.talks-list li{margin-bottom:5px}
+#talks{scroll-margin-top:20px}
+.page-heading{margin-bottom:25px}
+.page-heading h1{font-size:28px}
+.research-entry{margin-bottom:30px}
+.research-entry h3{margin:18px 0 12px}
+.skip-link{position:fixed;top:10px;left:10px;background:white;z-index:50;padding:8px}
+.skip-link:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:1110px){.site-shell{margin-left:5%;margin-right:5%}.header-sketch{right:0;width:210px;top:-57px}}
+@media(max-width:700px){
+  .site-shell{margin:35px 14px 65px}
+  .site-shell:has(.header-sketch){margin-top:115px}
+  .header-sketch{width:150px;top:-110px;right:-5px}
+  .site-header{margin-bottom:24px}
+  .site-title{margin-bottom:17px}
+  .home-research{clear:both}
+}
+@media print{.skip-link,.site-header nav{display:none}.site-shell{margin:0;max-width:none}body{font-size:12pt}}
