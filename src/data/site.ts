@@ -3,5 +3,5 @@ export const site = {
   description: 'Aniruddh V. — mathematics, robotics, research, talks, and teaching.',
   author: 'Aniruddh V.',
   url: 'https://aniruddh.xyz',
-  blogVisible: false
+  blogVisible: true
 };

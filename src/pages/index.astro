@@ -1,29 +1,38 @@
 ---
 import AcademicLayout from '../layouts/AcademicLayout.astro';
 import CourseEntry from '../components/CourseEntry.astro';
+import PostEntry from '../components/PostEntry.astro';
+import { getAllPosts } from '../lib/posts';
 import { biographyIntroduction, researchInterests, roboticsInterests } from '../data/profile';
 import { research } from '../data/research';
 import { teaching } from '../data/teaching';
 import { talks } from '../data/talks';
+const posts = await getAllPosts();
 ---
-<AcademicLayout home>
+<AcademicLayout home math={posts.length > 0}>
 <section class="about-section">
       <h2 class="underline red">About</h2>
       <p>{biographyIntroduction} <a href="https://math.berkeley.edu/~swshin/">Sug Woo Shin</a>. {researchInterests} {roboticsInterests}</p>
       <p><strong>Email:</strong> my first name + my last initial @ berkeley dot edu</p>
     </section>
 
-<section class="home-research">
+<section id="research" class="home-research">
       <h2 class="underline gold">Research and Writing</h2>
       {research.map((item) => <p>{item.title.replace('Cuvve', 'Curve')}. Preprint ({item.year}).</p>)}
     </section>
+
+{posts.length > 0 && <section id="blog" class="home-blog">
+      <h2 class="underline gold">Blog</h2>
+      <span class="teaching-hint">Click a post to show/hide its abstract.</span>
+      <div class="blog-entries">{posts.map((post) => <PostEntry post={post} />)}</div>
+    </section>}
 
 <section id="talks" class="home-talks">
       <h2 class="underline yellow">Talks</h2>
       <ul class="plain-list talks-list">{talks.map((item) => <li>{item.date}{item.venue && <Fragment>, {item.venue}</Fragment>}. <em>{item.title}</em>.</li>)}</ul>
     </section>
 
-<section class="home-teaching">
+<section id="teaching" class="home-teaching">
       <h2 class="underline blue">Teaching</h2>
       <span class="teaching-hint">Click a course to show/hide its description.</span>
       <div class="teaching-summary">{teaching.map((item) => <CourseEntry item={item} />)}</div>

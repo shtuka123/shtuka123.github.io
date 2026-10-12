@@ -1,20 +1,23 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import AcademicLayout from './AcademicLayout.astro';
 import TagList from '../components/TagList.astro';
 import { longDate } from '../lib/format';
+import '../styles/blog.css';
 
-const { title, date, description, tags = [] } = Astro.props;
+const { title, date, description, abstract, tags = [] } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
-  <article class="content post-content">
+<AcademicLayout title={title} description={description} section="blog" math showHeader={false}>
+  <article class="post-content">
     <header class="post-header">
-      <div class="section-label">post</div>
+      <a class="post-back" href="/#blog">← Back</a>
       <h1>{title}</h1>
-      <p class="byline">{longDate(date)}</p>
-      <TagList tags={tags} />
+      <div class="blog-entry-meta">
+        <time datetime={date.toISOString().slice(0, 10)}>{longDate(date)}</time>
+        <TagList tags={tags} />
+      </div>
+      {abstract && <div class="post-abstract"><p><strong>Abstract.</strong> {abstract}</p></div>}
     </header>
     <slot />
-    <a href="/blog/" class="back">&larr; blog</a>
   </article>
-</BaseLayout>
+</AcademicLayout>
