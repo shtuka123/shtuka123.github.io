@@ -1,11 +1,13 @@
 ---
 import AcademicLayout from '../../layouts/AcademicLayout.astro';
+import ResearchEntry from '../../components/ResearchEntry.astro';
 import { research } from '../../data/research';
 import { researchInterests } from '../../data/profile';
 ---
 <AcademicLayout title="Research" section="research">
-  <header class="page-heading"><h1 class="underline gold">Research and Writing</h1></header>
+  <header class="page-heading"><h1 class="underline green">Research</h1></header>
   <p>{researchInterests}</p>
   <h2>Preprints</h2>
-  {research.map((item) => <article class="research-entry"><h3>{item.title.replace('Cuvve', 'Curve')}</h3><p>Preprint ({item.year}). {item.description}.</p></article>)}
+  <p class="research-page-hint">Click a preprint to show/hide its abstract.</p>
+  {research.map((item) => <ResearchEntry item={item} />)}
 </AcademicLayout>

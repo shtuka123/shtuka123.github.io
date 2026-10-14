@@ -23,6 +23,8 @@ main:focus{outline:none}
 .underline::after{content:'';position:absolute;left:0;bottom:-5px;width:100%;height:5px;z-index:-1}
 .red::after{background:#ff9090}
 .gold::after{background:#ffcf7f}
+.green::after{background:#9ed9ac}
+.purple::after{background:#c7a4e8}
 .yellow::after{background:#fffa62}
 .blue::after{background:#89c4ff}
 .plain-list{list-style:none;padding:0;margin:16px 0}
@@ -37,8 +39,7 @@ main:focus{outline:none}
 #talks{scroll-margin-top:20px}
 .page-heading{margin-bottom:25px}
 .page-heading h1{font-size:28px}
-.research-entry{margin-bottom:30px}
-.research-entry h3{margin:18px 0 12px}
+.research-page-hint{color:#555;font-size:14px}
 .skip-link{position:fixed;top:10px;left:10px;background:white;z-index:50;padding:8px}
 .skip-link:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:1110px){.site-shell{margin-left:5%;margin-right:5%}}
@@ -47,5 +48,6 @@ main:focus{outline:none}
   .site-header{margin-bottom:24px}
   .site-title{margin-bottom:17px}
   .home-research{clear:both}
+  .research-hint{display:block;margin:12px 0 0}
 }
 @media print{.skip-link,.site-header nav{display:none}.site-shell{margin:0;max-width:none}body{font-size:12pt}}

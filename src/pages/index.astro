@@ -2,9 +2,11 @@
 import AcademicLayout from '../layouts/AcademicLayout.astro';
 import CourseEntry from '../components/CourseEntry.astro';
 import PostEntry from '../components/PostEntry.astro';
+import ResearchEntry from '../components/ResearchEntry.astro';
 import { getAllPosts } from '../lib/posts';
 import { biographyIntroduction, researchInterests, roboticsInterests } from '../data/profile';
 import { research } from '../data/research';
+import { expository } from '../data/expository';
 import { teaching } from '../data/teaching';
 import { talks } from '../data/talks';
 const posts = await getAllPosts();
@@ -17,8 +19,15 @@ const posts = await getAllPosts();
     </section>
 
 <section id="research" class="home-research">
-      <h2 class="underline gold">Research and Writing</h2>
-      {research.map((item) => <p>{item.title.replace('Cuvve', 'Curve')}. Preprint ({item.year}).</p>)}
+      <h2 class="underline green">Research</h2>
+      <span class="teaching-hint research-hint">Click a preprint to show/hide its abstract.</span>
+      {research.map((item) => <ResearchEntry item={item} />)}
+    </section>
+
+<section id="expository-writing" class="home-expository">
+      <h2 class="underline purple">Expository Writing</h2>
+      <span class="teaching-hint research-hint">Click a title to show/hide its description.</span>
+      {expository.map((item) => <ResearchEntry item={item} />)}
     </section>
 
 {posts.length > 0 && <section id="blog" class="home-blog">
