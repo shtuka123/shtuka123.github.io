@@ -7,7 +7,7 @@ import { researchInterests } from '../../data/profile';
 <AcademicLayout title="Research" section="research">
   <header class="page-heading"><h1 class="underline green">Research</h1></header>
   <p>{researchInterests}</p>
-  <h2>Preprints</h2>
-  <p class="research-page-hint">Click a preprint to show/hide its abstract.</p>
+  <h2>Papers</h2>
+  <p class="research-page-hint">Click a paper to show/hide its abstract.</p>
   {research.map((item) => <ResearchEntry item={item} />)}
 </AcademicLayout>

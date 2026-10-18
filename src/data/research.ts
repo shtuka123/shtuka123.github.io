@@ -22,7 +22,7 @@ export const research: ResearchItem[] = [
     description: 'We prove GAGA for proper schemes over the Fargues–Fontaine curve',
     abstract: 'We prove GAGA for proper schemes over the Fargues–Fontaine curve. Analytification gives an equivalence on pseudocoherent complexes and commutes with proper direct images. This yields the coherent, bounded-derived, perfect, and vector-bundle comparisons for Huber analytification.',
     tags: ['math.AG'],
-    venue: 'Preprint',
+    venue: 'Draft',
     links: [{ name: 'PDF', url: '/papers/gaga.pdf' }]
   }
 ];
