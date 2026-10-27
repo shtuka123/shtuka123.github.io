@@ -19,8 +19,8 @@ export const research: ResearchItem[] = [
     year: '2026',
     date: 'Oct. 2026',
     title: 'GAGA for Proper Schemes over the Fargues–Fontaine Curve',
-    description: 'We prove GAGA for proper schemes over the Fargues–Fontaine curve',
-    abstract: 'We prove GAGA for proper schemes over the Fargues–Fontaine curve. Analytification gives an equivalence on pseudocoherent complexes and commutes with proper direct images. This yields the coherent, bounded-derived, perfect, and vector-bundle comparisons for Huber analytification.',
+    description: 'We prove a GAGA theorem for proper schemes over the Fargues–Fontaine curve.',
+    abstract: 'We prove a GAGA theorem for proper schemes over the Fargues–Fontaine curve. Our methods closely follow the work of Clausen–Scholze.',
     tags: ['math.AG'],
     venue: 'Draft',
     links: [{ name: 'PDF', url: '/papers/gaga.pdf' }]
