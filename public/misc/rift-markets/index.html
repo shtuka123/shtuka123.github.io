@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="rift-snapshot" content="encrypted">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Historical League of Legends gameplay and Kalshi markets.">
+  <title>Rift Markets</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./minimap.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Rift Markets home"><span class="brand-mark" aria-hidden="true">◈</span> Rift Markets</a>
+    <span class="local"><span class="status-dot"></span> Historical snapshot</span>
+  </header>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Game browser">
+      <div class="sidebar-head">
+        <div class="section-title"><h2>Games</h2><span id="game-count" class="pill">…</span></div>
+        <label class="search">
+          <span aria-hidden="true">⌕</span>
+          <input id="search" type="search" placeholder="Search teams or ticker" aria-label="Search teams or ticker" autocomplete="off">
+        </label>
+        <select id="tournaments" aria-label="Tournament"><option value="">All tournaments</option></select>
+      </div>
+      <nav id="game-list" class="game-list" aria-label="Completed games"><p class="small muted">Loading games…</p></nav>
+    </aside>
+    <main id="main">
+      <div id="notice" class="empty" role="status">Loading the local dataset…</div>
+      <div id="details" hidden>
+        <section class="game-heading">
+          <div id="breadcrumb" class="eyebrow"></div>
+          <h1 id="match-title"></h1>
+          <div class="game-facts" id="game-facts"></div>
+        </section>
+        <section class="panel market" aria-labelledby="price-title">
+          <div class="panel-head">
+            <div><h2 id="price-title">Kalshi price history</h2><p id="price-subtitle" class="small muted"></p></div>
+          </div>
+          <div id="market-metrics" class="metrics"></div>
+          <div class="chart-toolbar">
+            <div class="legend" aria-label="Price and event series">
+              <button type="button" data-series="blue" class="team-toggle blue" aria-pressed="true"><span class="swatch"></span><span id="blue-price-label">Blue team</span></button>
+              <button type="button" data-series="red" class="team-toggle red" aria-pressed="true"><span class="swatch"></span><span id="red-price-label">Red team</span></button>
+              <button type="button" data-series="mid" aria-pressed="true"><span class="swatch"></span>Midpoint</button>
+              <button type="button" data-series="price" aria-pressed="true"><span class="swatch dashed"></span>Trade close</button>
+              <button type="button" data-series="quote" aria-pressed="false"><span class="swatch dotted"></span>Bid / ask</button>
+              <button type="button" data-series="events" aria-pressed="true"><span class="swatch event-swatch"></span>Events</button>
+            </div>
+            <div class="segments" aria-label="Chart time range">
+              <button type="button" data-range="game">Game</button>
+              <button type="button" data-range="3600">1H</button>
+              <button type="button" data-range="10800">3H</button>
+              <button type="button" data-range="86400">1D</button>
+              <button type="button" data-range="0">All</button>
+            </div>
+          </div>
+          <div id="chart-wrap" class="chart-wrap">
+            <canvas id="chart" tabindex="0" aria-label="Both teams’ one-minute prices and volume with gameplay markers. Use left and right arrow keys to inspect candles, or choose an event in the timeline."></canvas>
+            <div id="chart-tip" class="tooltip" hidden></div>
+            <div id="chart-empty" class="empty chart-empty" hidden>No visible candles or events in this time range.</div>
+          </div>
+          <div class="chart-footer">
+            <span>Prices in cents · 1-minute candles · UTC</span>
+            <span id="event-chart-status"></span>
+          </div>
+        </section>
+        <section id="minimap" class="panel" aria-label="Game minimap"></section>
+        <div class="lower">
+          <section class="panel timeline" aria-labelledby="events-title">
+            <div class="panel-head">
+              <div><h2 id="events-title">Game timeline</h2><p id="event-subtitle" class="small muted"></p></div>
+              <select id="events-filter" aria-label="Event type">
+                <option value="All">All events</option>
+              </select>
+            </div>
+            <div id="event-list" class="event-list"></div>
+            <div class="panel-footer"><a id="gol-link" target="_blank" rel="noopener">Games of Legends ↗</a></div>
+          </section>
+          <section class="panel coverage" aria-labelledby="coverage-title">
+            <div class="panel-head">
+              <div><h2 id="coverage-title">Market details</h2><p class="small muted">Settled game-winner contract</p></div>
+              <select id="contracts" aria-label="YES contract"></select>
+            </div>
+            <dl id="contract-details" class="contract-details"></dl>
+            <p id="contract-rules" class="rules"></p>
+            <div id="recent-trades" hidden></div>
+            <div class="panel-footer"><a id="kalshi-link" target="_blank" rel="noopener">Open on Kalshi ↗</a></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

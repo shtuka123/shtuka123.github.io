@@ -1,0 +1,75 @@
+#minimap { margin-top: 16px; }
+.rift-time { display: flex; align-items: baseline; gap: 9px; }
+.rift-clock { color: var(--accent); font: 1.05rem var(--mono); font-variant-numeric: tabular-nums; }
+.rift-scrubber { position: relative; margin: 0 20px 13px; }
+.rift-range { display: block; position: relative; z-index: 1; appearance: none; width: 100%; height: 21px; margin: 0; background: transparent; cursor: ew-resize; }
+.rift-range::-webkit-slider-runnable-track { height: 8px; background: transparent; }
+.rift-range::-moz-range-track { height: 8px; background: transparent; }
+.rift-range::-webkit-slider-thumb { appearance: none; margin-top: -3px; width: 14px; height: 14px; background: var(--accent); border-radius: 100%; border: 2px solid #171a21; }
+.rift-range::-moz-range-thumb { width: 10px; height: 10px; background: var(--accent); border-radius: 100%; border: 2px solid #171a21; }
+.rift-ticks { position: absolute; left: 7px; right: 7px; top: 7px; height: 7px; border-radius: 4px; background: #303640; }
+.rift-tick { position: absolute; width: 2px; height: 7px; background: #819bb0; }
+.rift-tick.objective { background: #edb78c; }
+.rift-tick.death { background: #bc8498; }
+.rift-preview { position: absolute; top: -4px; width: 2px; height: 15px; background: var(--accent); }
+.rift-scale { display: flex; justify-content: space-between; padding: 2px 5px 0; font-family: var(--mono); }
+.rift-content { display: grid; grid-template-columns: minmax(220px, 390px) minmax(210px, 1fr); gap: 19px; padding: 0 20px 17px; }
+.rift-map { position: relative; isolation: isolate; aspect-ratio: 1; width: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: 9px; background: #111917; }
+.rift-art { display: block; width: 100%; height: 100%; filter: brightness(.65) saturate(.78); }
+.rift-art.rift-event-art { filter: brightness(.85); }
+.rift-layer { position: absolute; inset: 0; pointer-events: none; }
+.rift-layer > span { position: absolute; transform: translate(-50%, -50%); pointer-events: auto; }
+.rift-structure { display: block; width: 8px; height: 8px; background: currentColor; border: 1px solid #151b22; box-shadow: 0 0 0 1px #151b22; border-radius: 2px; }
+.rift-structure.blue, .rift-team.blue { color: #8cd2ff; }
+.rift-structure.red, .rift-team.red { color: #ff9f9e; }
+.rift-structure.inhibitor { border-radius: 50%; width: 7px; height: 7px; }
+.rift-structure.destroyed { background: #1f252c; border-color: currentColor; opacity: .48; }
+.rift-structure.was-destroyed { background: #1f252c; border-color: currentColor; }
+.rift-pit { display: grid; place-items: center; width: 19px; height: 19px; border: 1px solid #c99572; border-radius: 50%; background: #22252b; color: #edb78c; font: 700 .67rem var(--mono); }
+.rift-pit.taken { background: #63462f; }
+.rift-portrait { display: grid; position: relative; place-items: center; width: 20px; height: 20px; overflow: hidden; color: #f4f7fb; background: #303640; border-radius: 4px; font: 700 .56rem var(--mono); line-height: 1; }
+.rift-portrait-image { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rift-player { display: grid; place-items: center; width: 27px; height: 27px; background: #1d3041; border: 2px solid #8cd2ff; color: #fff; border-radius: 50%; box-shadow: 0 1px 4px #000; }
+.rift-player .rift-portrait { width: 100%; height: 100%; border-radius: 50%; }
+.rift-player.red { background: #44282a; border-color: #ff9f9e; }
+.rift-player.dead .rift-portrait { filter: grayscale(1); opacity: .65; }
+.rift-layer .rift-kill-location { width: 11px; height: 11px; border: 1.5px solid #edb78c; background: #181b21; transform: translate(-50%, -50%) rotate(45deg); box-shadow: 0 0 0 2px #1115; }
+.rift-kill-location.blue { border-color: #8cd2ff; }
+.rift-kill-location.red { border-color: #ff9f9e; }
+.rift-layer .rift-death-portrait { width: 24px; height: 24px; border-style: dashed; border-radius: 4px; transform: translate(-50%, -50%); }
+.rift-death-portrait .rift-portrait { width: 100%; height: 100%; filter: grayscale(1); }
+.rift-death-cross { position: absolute; right: -4px; bottom: -4px; display: grid; place-items: center; width: 12px; height: 12px; border: 1px solid #161b20; border-radius: 50%; background: #bc8498; color: #151920; font: 700 10px/1 var(--mono); pointer-events: none; }
+.rift-map-key { display: flex; gap: 5px 12px; flex-wrap: wrap; align-items: center; margin-top: 7px; line-height: 1.2; }
+.rift-map-key span { display: inline-flex; gap: 5px; align-items: center; }
+.rift-map-key span::before { content: ""; width: 7px; height: 7px; display: block; border: 1px solid #a4adba; border-radius: 2px; }
+.rift-map-key .rift-turret-key::before, .rift-map-key .rift-inhibitor-key::before { background: #a4adba; }
+.rift-map-key .rift-inhibitor-key::before, .rift-map-key .rift-objective-key::before { border-radius: 100%; }
+.rift-map-key .rift-objective-key::before { border-color: #edb78c; }
+.rift-map-key .rift-event-key::before { border-style: dashed; border-color: #bc8498; }
+.rift-map-key .rift-position-key::before { border-radius: 100%; border-color: #8cd2ff; }
+.rift-credits { display: flex; flex-wrap: wrap; gap: 4px 11px; margin: 7px 0 0; }
+.rift-credit { display: inline-block; color: var(--muted); }
+.rift-sidebar { min-width: 0; }
+.rift-section-title { margin: 0 0 6px; font-size: .82rem; font-weight: 650; }
+.rift-coverage { line-height: 1.4; margin-bottom: 11px; }
+.rift-roster { display: grid; gap: 6px; margin-bottom: 13px; }
+.rift-team { border: 1px solid var(--border); border-radius: 7px; overflow: hidden; background: #191d25; }
+.rift-team-name { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; padding: 7px 9px; font-size: .75rem; font-weight: 650; border-bottom: 1px solid var(--border); }
+.rift-team-name span:last-child { font-weight: 400; white-space: nowrap; }
+.rift-champion { display: grid; grid-template-columns: 20px minmax(0, 1fr) minmax(0, 1fr) minmax(0, max-content); align-items: center; gap: 6px; padding: 4px 9px; color: var(--text); font-size: .72rem; }
+.rift-champion + .rift-champion { border-top: 1px solid #252a33; }
+.rift-champion span { overflow-wrap: anywhere; }
+.rift-status { text-align: right; font-family: var(--mono); font-size: .67rem; }
+.rift-dead { color: #ffaaa8; }
+.rift-objectives { margin: 0; padding: 0; list-style: none; font-size: .75rem; }
+.rift-objectives li { display: flex; justify-content: space-between; gap: 9px; padding: 4px 0; }
+.rift-objectives li span:last-child { text-align: right; }
+
+@media (max-width: 980px) {
+  .rift-content { grid-template-columns: minmax(0, 1fr); }
+  .rift-map-column { width: min(100%, 390px); }
+}
+@media (max-width: 700px) {
+  .rift-content { padding-inline: 13px; }
+  .rift-scrubber { margin-inline: 13px; }
+}
