@@ -4,7 +4,7 @@ import ResearchEntry from '../../components/ResearchEntry.astro';
 import { research } from '../../data/research';
 import { researchInterests } from '../../data/profile';
 ---
-<AcademicLayout title="Research" section="research">
+<AcademicLayout title="Research" section="research" math={research.some((item) => item.abstract.includes('$'))}>
   <header class="page-heading"><h1 class="underline green">Research</h1></header>
   <p>{researchInterests}</p>
   <h2>Papers</h2>

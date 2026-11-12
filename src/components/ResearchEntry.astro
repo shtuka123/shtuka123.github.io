@@ -16,7 +16,7 @@ const date = item.date ?? item.year;
     </div>
   </details>
   <div class="research-meta">
-    <span>{item.venue ? `${item.venue}${date ? `${item.venue === 'Draft' ? ' ' : ''}(${date})` : ''}` : date}</span>
+    <span>{item.venue ? `${item.venue}${date ? ` (${date})` : ''}` : date}</span>
     <TagList tags={item.tags} />
     {item.links.map((link) => <a href={link.url}>{link.name}</a>)}
   </div>
