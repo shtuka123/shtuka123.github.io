@@ -1,5 +1,5 @@
 /* Saved-record viewer. All predictions and timings were produced before export. */
-import { HostedReplayApi } from './replay_adapter.js';
+import { HostedReplayApi } from './replay_adapter.js?v=next-quote-v1';
 const replay = new HostedReplayApi();
 const $ = id => document.getElementById(id);
 const countFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
@@ -82,7 +82,12 @@ export function targetExclusions(scores={}) {
   return {late:number(scores.late),invalid:number(scores.invalid_target),discontinuous:number(scores.discontinuous),
     censored:censored.length?censored.reduce((sum,[,value])=>sum+number(value),0):number(scores.censored)};
 }
-export function normalizeRunId(value) { return typeof value==='string' && /^run-[0-9]{8}T[0-9]{6}Z-[a-f0-9]{8}$/.test(value)?value:''; }export function sharedReplayHref(href,runId) {  if(!normalizeRunId(runId))throw new Error('Invalid saved recording identity');  const url=new URL(href);url.searchParams.set('run',runId);  return url.pathname+url.search+url.hash;}
+export function normalizeRunId(value) { return typeof value==='string' && /^run-[0-9]{8}T[0-9]{6}Z-[a-f0-9]{8}$/.test(value)?value:''; }
+export function sharedReplayHref(href,runId) {
+  if(!normalizeRunId(runId))throw new Error('Invalid saved recording identity');
+  const url=new URL(href);url.searchParams.set('run',runId);
+  return url.pathname+url.search+url.hash;
+}
 export function recordedRunForForm(view,runs,gameId,side) {
   const selected=runs.find(run=>run.run_id===view),sideName=Number(side)===1?'red':'blue';
   return selected?.game_id===String(gameId)&&selected.side===sideName?selected.run_id:null;
@@ -104,7 +109,7 @@ export function normalizeRuns(raw={},games=[]) {
     const c=run.config || {}, game=games.find(g=>String(g.game_id)===String(c.game_id)), side=c.side==='red'||c.side===1?1:0;
     const team=gameTokens(game).find(t=>t.side===side)?.team || c.side || 'outcome';
     const stamp=`${id.slice(8,10)}/${id.slice(10,12)} ${id.slice(13,15)}:${id.slice(15,17)} UTC`;
-    return [{id,label:`${stamp} · ${game?.label || c.game_id || 'Archived game'} · ${team} · recorded source ${number(c.speed,1)}× · ${c.paper?.enabled?'paper ledger · ':''}${run.status || 'saved'}`}];
+    return [{id,label:`${stamp} · ${run.model_kind==='next_quote'?'Next-quote model':'Current 1-second model'} · ${game?.label || c.game_id || 'Archived game'} · ${team} · recorded source ${number(c.speed,1)}× · ${c.paper?.enabled?'paper ledger · ':''}${run.status || 'saved'}`}];
   });
 }
 export function canControlViewedRun(snapshot,view) { return snapshot?.raw.hosted_saved_replay===true || !view || snapshot?.raw.server?.worker_active===true; }
@@ -204,8 +209,10 @@ function render(raw) {
     const catalogGame = model.games.find(g=>String(g.game_id)===String(s.game.game_id));
     const tokens=gameTokens(catalogGame || s.game), side=s.side==='blue'?0:s.side==='red'?1:Number(s.side);
     $('session-title').textContent=catalogGame?.label || `${s.game.series || 'Archived game'} · Map ${s.game.map_number || '—'}`;
-    $('session-subtitle').textContent=`${tokens.find(t=>t.side===side)?.team || s.side || 'Selected outcome'} · Saved 1-second forecasts · captured at ${raw.recorded_source_speed||'—'}× source replay`;
+    const targetLabel=raw.model_kind==='next_quote'?'Next-quote model':'Current 1-second model';
+    $('session-subtitle').textContent=`${tokens.find(t=>t.side===side)?.team || s.side || 'Selected outcome'} · ${targetLabel} · captured at ${raw.recorded_source_speed||'—'}× source replay`;
   }
+  $('forecast-target-label').textContent=raw.model_kind==='next_quote'?'Next quote':'1,000 ms';
   $('archive-clock').textContent=timeAt(s.source);
   $('archive-date').textContent=dateAt(s.source)?.toISOString().slice(0,10) || 'Awaiting replay';
   $('recorded-source-speed').textContent=recordedSourceSpeedLabel(raw);
@@ -344,7 +351,52 @@ async function poll() {
 function renderCadence(summary) {
   if(!summary || !Array.isArray(summary.rows))return;
   $('cadence-panel').hidden=false;
-  $('cadence-content').innerHTML=`<p>14 historical maps. Gaps are measured within each game; quote gaps are measured separately for each outcome. These archive intervals are not a fixed live API cadence, and the next arrival time is unknown when a forecast is issued.</p><div class="table-wrap"><table><thead><tr><th>Recorded stream</th><th>Median gap</th><th>p99 gap</th><th>Mean gap</th></tr></thead><tbody>${readableCadenceRows(summary.rows).map(row=>`<tr><td>${escapeHtml(row.label)}</td><td>${fixed(row.p50_ms,2)} ms</td><td>${fixed(row.p99_ms,2)} ms</td><td>${fixed(row.mean_ms,2)} ms</td></tr>`).join('')}</tbody></table></div><ul>${(summary.limitations || []).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}<li>Playback 1× means one second of captured run wall time per browser second. A recording captured at 100× advances archive time faster; worker timings are still the original measurements.</li></ul>`;
+  $('cadence-content').innerHTML=`<p>Earlier research cohort: 14 historical maps, separate from the fresh test comparison above. Gaps are measured within each game; quote gaps are measured separately for each outcome. These archive intervals are not a fixed live API cadence, and the next arrival time is unknown when a forecast is issued.</p><div class="table-wrap"><table><thead><tr><th>Recorded stream</th><th>Median gap</th><th>p99 gap</th><th>Mean gap</th></tr></thead><tbody>${readableCadenceRows(summary.rows).map(row=>`<tr><td>${escapeHtml(row.label)}</td><td>${fixed(row.p50_ms,2)} ms</td><td>${fixed(row.p99_ms,2)} ms</td><td>${fixed(row.mean_ms,2)} ms</td></tr>`).join('')}</tbody></table></div><ul>${(summary.limitations || []).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}<li>Playback 1× means one second of captured run wall time per browser second. A recording captured at 100× advances archive time faster; worker timings are still the original measurements.</li></ul>`;
+}
+export function comparisonView(value) {
+  if(value?.schema!=='seconds_next_quote_dashboard_comparison_v1' || value.status!=='complete'
+      || !Array.isArray(value.accuracy) || !Array.isArray(value.latency)
+      || value.primary_metric!=='equal_series_mae_cents' || value.target_cents!==.25)
+    throw new Error('Unsupported completed model comparison.');
+  const ids=new Set(value.accuracy.map(row=>row.id));
+  if(ids.size!==3 || !['next_quote','current_one_second','hold'].every(id=>ids.has(id)))
+    throw new Error('All three matched accuracy baselines are required.');
+  const unavailable=value.dataset?.test_observed===0;
+  for(const row of value.accuracy){
+    if(unavailable){
+      if(row.mae_cents!==null||row.ci95_cents!==null||row.observed!==0)throw new Error('Empty evidence must remain unavailable.');
+      continue;
+    }
+    if(typeof row.mae_cents!=='number'||!Number.isFinite(row.mae_cents)||row.mae_cents<0
+        ||!Array.isArray(row.ci95_cents)||row.ci95_cents.length!==2
+        ||row.ci95_cents.some(x=>typeof x!=='number'||!Number.isFinite(x)||x<0)
+        ||row.ci95_cents[0]>row.ci95_cents[1])throw new Error('Invalid comparison error interval.');
+  }
+  const selected=value.accuracy.find(row=>row.id==='next_quote');
+  return {...value,evidence_unavailable:unavailable,point_below_target:!unavailable&&selected.mae_cents<.25,
+    interval_below_target:!unavailable&&selected.ci95_cents[1]<.25};
+}
+function renderComparison(raw) {
+  if(!raw)return;
+  const v=comparisonView(raw),d=v.dataset||{};
+  $('comparison-panel').hidden=false;
+  const verdict=v.evidence_unavailable?'No valid next-quote targets were available in this test.':
+    v.interval_below_target?'The point estimate and 95% interval are below 0.25¢.':
+    v.point_below_target?'The point estimate is below 0.25¢; the 95% interval is not entirely below it.':
+    'The next-quote model has not reached 0.25¢ on this test.';
+  const money=x=>x===null||x===undefined?'—':`${fixed(x,4)}¢`;
+  const rows=v.accuracy.map(r=>`<article class="comparison-score ${r.id==='next_quote'?'selected-model':''}"><h4>${escapeHtml(r.label)}</h4><strong>${money(r.mae_cents)}</strong><p>95% series-bootstrap interval<br>${money(r.ci95_cents?.[0])} – ${money(r.ci95_cents?.[1])}</p><dl><dt>Pooled row MAE</dt><dd>${money(r.pooled_mae_cents)}</dd><dt>Moving-target MAE</dt><dd>${money(r.moving_mae_cents)}</dd><dt>Nonzero predictions</dt><dd>${count(r.exact_nonzero_calls)} / ${count(r.observed)}</dd></dl></article>`).join('');
+  $('comparison-content').innerHTML=`<p class="comparison-scope">All three predictions are scored against the same first next received quote, including unchanged prices. This completed-test summary is separate from the selected playback below.</p>
+    <div class="comparison-scores">${rows}</div><p class="comparison-verdict ${v.point_below_target?'':'goal-not-met'}">${escapeHtml(verdict)}</p>
+    ${v.prediction_behavior?`<p class="comparison-behavior">${escapeHtml(v.prediction_behavior)}</p>`:''}
+    <p>${count(d.test_series_scored)} of ${count(d.test_series_requested)} scheduled test series · ${count(d.test_games_scored)} scored games · ${count(d.test_observed)} observed targets from ${count(d.test_origins)} origins. Primary MAE gives each scored series equal weight.</p>
+    <p>Wait to the next quote across all recorded attempts: median ${duration(v.target_wait_us_all_attempts?.p50)}, p99 ${duration(v.target_wait_us_all_attempts?.p99)}. Among scored targets: median ${duration(v.target_wait_us?.p50)}, p99 ${duration(v.target_wait_us?.p99)}. Future waits are measured afterward and never become model inputs.</p>
+    <h4>Receive → prediction at original arrival spacing</h4><p>Matched 1× historical replay windows. Includes the receiving queue, decoding, rolling features, inference and in-memory publication.</p>
+    <div class="table-wrap"><table><thead><tr><th>Model</th><th>Forecasts</th><th>Mean</th><th>p99</th><th>Nonzero p99</th><th>Maximum</th><th>≥ 1 ms</th></tr></thead><tbody>${v.latency.map(r=>`<tr><td>${escapeHtml(r.label)}</td><td>${count(r.forecasts)}</td><td>${fixed(r.mean_us,1)} µs</td><td>${fixed(r.p99_us,1)} µs</td><td>${numeric(r.nonzero_p99_us)===null?'—':`${fixed(r.nonzero_p99_us,1)} µs`}</td><td>${fixed(r.max_us,1)} µs</td><td>${count(r.ge_1ms)}</td></tr>`).join('')}</tbody></table></div>
+    <p>${v.latency.map(r=>{const t=v.replay_timeliness?.[r.id];return t?`${escapeHtml(r.label)}: ${count(t.timely)} of ${count(t.observed)} valid targets arrived after the forecast was ready (${count(t.late)} were already late).`:'';}).filter(Boolean).join(' ')}</p>
+    ${v.latency.length&&v.latency.every(r=>r.nonzero_p99_us===null)?'<p>No nonzero forecasts occurred in these fixed timing windows. Nonzero-prediction latency is unmeasured.</p>':''}
+    <details class="comparison-details"><summary>Results by held-out series</summary><div class="table-wrap"><table><thead><tr><th>Series</th><th>Observed</th><th>Next-quote model</th><th>Current model</th><th>Hold</th></tr></thead><tbody>${(v.per_series||[]).map(r=>`<tr><td>${escapeHtml(r.label||r.series)}</td><td>${count(r.observed)}</td><td>${money(r.next_quote_mae_cents)}</td><td>${money(r.current_model_mae_cents)}</td><td>${money(r.hold_mae_cents)}</td></tr>`).join('')}</tbody></table></div></details>
+    <details class="comparison-details"><summary>Method and coverage</summary><p>${escapeHtml(v.training_summary||'')}</p><ul>${(v.limitations||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></details>`;
 }
 async function init() {
   model.view=normalizeRunId(new URLSearchParams(location.search).get('run'));
@@ -374,13 +426,14 @@ async function init() {
   try {
     const catalog=await api('catalog');
     model.savedRuns=catalog.runs||[];
-    if(catalog.capabilities && (catalog.capabilities.model_horizon_ms!==1000 || catalog.capabilities.gameplay_delay_ms!==1000))throw new Error('The saved model timing does not match this dashboard.');
+    if(catalog.capabilities && (catalog.capabilities.model_target_by_recording!==true || catalog.capabilities.gameplay_delay_ms!==1000))throw new Error('The saved model timing does not match this dashboard.');
     model.games=(catalog.games || []).map(g=>{if(typeof g.game_id==='number' && !Number.isSafeInteger(g.game_id))throw new Error('Catalog game IDs must be lossless strings.');return {...g,game_id:String(g.game_id)};});
     $('game').replaceChildren(...model.games.map(g=>new Option(g.label || `${g.blue} vs ${g.red}`,g.game_id)));
     if(catalog.default_game_id!==undefined)$('game').value=String(catalog.default_game_id);
     connection(true);selectGame();
     if(!model.view && normalizeRunId(catalog.default_run_id)){model.view=catalog.default_run_id;updateViewUrl();}
     renderCadence(catalog.cadence_summary);
+    renderComparison(catalog.comparison);
   } catch(e) {connection(false);alertMessage(`Catalog unavailable: ${e.message}`);$('game').replaceChildren(new Option('Catalog unavailable',''));}
   await refreshRuns();poll();
 }

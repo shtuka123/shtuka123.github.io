@@ -10,8 +10,8 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="referrer" content="no-referrer">
   <title>Replay Lab · Saved recordings</title>
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <link rel="stylesheet" href="./style.css?v=next-quote-v1">
+  <script type="module" src="./app.js?v=next-quote-v1"></script>
 </head>
 <body>
   <header class="topbar">
@@ -35,7 +35,7 @@
         <p class="field-note" id="speed-note">Playback follows recorded wall time. Worker timings remain unchanged.</p>
         <div class="time-controls"><label class="field">Recorded offset <span class="input-unit"><input id="seek-seconds" type="number" value="0" min="0" step="0.1"><span>s</span></span></label><label class="field">Playback span <span class="input-unit"><input id="duration-seconds" type="number" placeholder="To end" min="0.1" step="0.1"><span>s</span></span></label></div>
         <div class="fixed-contract">
-          <div><span>Forecast horizon</span><strong>1,000 ms</strong></div>
+          <div><span>Forecast target</span><strong id="forecast-target-label">1,000 ms</strong></div>
           <div><span>Gameplay delay</span><strong>1,000 ms</strong></div>
           <p>Riot source time + modeled delay. Historical source-time scenario.</p>
         </div>
@@ -58,10 +58,14 @@
     <main>
       <div id="alert" class="alert" role="alert" hidden></div>
       <section class="session-heading">
-        <div><div class="section-kicker">OBSERVATION → FORECAST → ACTUAL</div><h2 id="session-title">The next second, replayed.</h2><p id="session-subtitle">Select an archived game to inspect forecasts as observations arrive.</p></div>
+        <div><div class="section-kicker">OBSERVATION → FORECAST → ACTUAL</div><h2 id="session-title">The next quote, replayed.</h2><p id="session-subtitle">Select an archived game to inspect forecasts as observations arrive.</p></div>
         <span id="run-status" class="run-status idle"><i></i><span>Ready</span></span>
       </section>
       <p class="source-assumptions"><span>SAVED REPLAY</span> Forecasts, target releases and worker timings were recorded previously. Playback speed changes only this presentation. The original source replay speed is shown separately. Riot availability was assumed at source time +1,000 ms.</p>
+      <section id="comparison-panel" class="panel comparison-panel" hidden aria-label="Unseen-game model comparison">
+        <div class="panel-head"><div><span class="section-kicker">COMPLETED HISTORICAL BACKTEST</span><h3>Predict the next received quote.</h3></div><span class="micro-tag">UNSEEN GAMES</span></div>
+        <div id="comparison-content" class="comparison-content"></div>
+      </section>
       <section class="run-browser" aria-label="Saved recordings"><label class="field">Recording<select id="run-view"><option value="">Current saved playback</option></select></label><button id="refresh-runs" class="button" type="button" title="Refresh the shared recording list">Refresh</button><a id="run-permalink" hidden>Link to this recording</a><p id="view-note">Saved records only · no model runs in the browser.</p></section>
       <section class="replay-strip" aria-label="Replay progress">
         <div class="clock-block"><span class="eyebrow">SOURCE CLOCK · ARCHIVE UTC</span><strong id="archive-clock">—</strong><span id="archive-date" class="muted">Awaiting replay</span><span id="recorded-source-speed" class="muted">Original capture speed: —</span></div>

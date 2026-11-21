@@ -153,6 +153,7 @@ export class RecordedReplayReducer {
     const b=this.bundle,complete=this.positionMs>=b.playback_duration_ms;
     return {schema:'seconds_hosted_replay_state_v1',status,run_id:b.run_id,historical_only:true,
       hosted_saved_replay:true,game:clone(b.game),side:b.config.side,speed:playbackSpeed,
+      model_kind:b.config.model_kind||'current_one_second',
       recorded_source_speed:b.recorded_speed,config:{...clone(b.config),speed:playbackSpeed,
         seek_seconds:this.positionMs/1000,duration_seconds:b.playback_duration_ms/1000},
       server:{worker_active:status==='running'||status==='paused',historical_only:true,model_running:false},
@@ -167,7 +168,9 @@ export class RecordedReplayReducer {
       latest_quote:clone(this.latestQuote),latest_forecast:clone(this.latestForecast),
       series:this.rows.slice(-500).map(clone),metrics:this.metrics(),
       paper:complete?{...clone(b.final.paper),recorded_only:true}:clone(this.paper),
-      scenario:{model_horizon_ms:1000,gameplay_delay_ms:1000,new_inference:false,new_orders:false},error:null};
+      scenario:{model_horizon_ms:b.config.model_kind==='next_quote'?null:1000,
+        forecast_target:b.config.model_kind==='next_quote'?'next_received_own_bbo':'midpoint_at_plus_one_second',
+        gameplay_delay_ms:1000,new_inference:false,new_orders:false},error:null};
   }
 }
 
@@ -226,8 +229,8 @@ export class HostedReplayApi {
   async handle(path,data){
     const catalog=await this.getCatalog();
     if(path==='catalog')return {...clone(catalog),games:catalog.games.filter(g=>catalog.runs.some(r=>r.game_id===g.game_id)),
-      capabilities:{model_horizon_ms:1000,gameplay_delay_ms:1000,historical_only:true,new_inference:false,live_orders:false}};
-    if(path==='runs')return {runs:catalog.runs.map(r=>({run_id:r.run_id,status:'saved',label:r.label,
+      capabilities:{model_target_by_recording:true,gameplay_delay_ms:1000,historical_only:true,new_inference:false,live_orders:false}};
+    if(path==='runs')return {runs:catalog.runs.map(r=>({run_id:r.run_id,status:'saved',label:r.label,model_kind:r.model_kind||'current_one_second',
       config:{game_id:r.game_id,side:r.side,speed:r.recorded_speed,paper:{enabled:r.paper_enabled===true}}}))};
     if(path==='state')return this.state();
     if(path.startsWith('run/')){
