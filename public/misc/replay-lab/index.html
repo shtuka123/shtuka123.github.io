@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Encrypted playback of saved historical forecasts and recorded worker timings.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Replay Lab · Saved recordings</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>REPLAY<span class="brand-light"> / LAB</span></span></div>
+    <div class="top-context"><span class="tag">SAVED REPLAY</span><span class="top-divider"></span><span id="connection" class="connection"><i></i>Unlocking recording</span></div>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="Replay configuration">
+      <div class="section-kicker">SAVED RECORDING</div>
+      <h1>Play a recording.</h1>
+      <p class="sidebar-intro">Saved forecasts. Recorded worker timings.<br>No model runs in this browser.</p>
+      <form id="session-form">
+        <label class="field">Game<select id="game" name="game_id" required aria-describedby="game-detail"><option value="">Loading archived games…</option></select></label>
+        <p id="game-detail" class="field-note">Decrypting the shared recording catalog.</p>
+        <label class="field">Outcome<select id="outcome" name="side" required><option value="">Choose a game first</option></select></label>
+        <fieldset class="speed-field"><legend>Playback speed</legend><div class="segmented" id="speeds">
+          <button type="button" data-speed="1" aria-pressed="true">1× <span>Recorded time</span></button>
+          <button type="button" data-speed="10" aria-pressed="false">10×</button>
+          <button type="button" data-speed="100" aria-pressed="false">100×</button>
+        </div></fieldset>
+        <p class="field-note" id="speed-note">Playback follows recorded wall time. Worker timings remain unchanged.</p>
+        <div class="time-controls"><label class="field">Recorded offset <span class="input-unit"><input id="seek-seconds" type="number" value="0" min="0" step="0.1"><span>s</span></span></label><label class="field">Playback span <span class="input-unit"><input id="duration-seconds" type="number" placeholder="To end" min="0.1" step="0.1"><span>s</span></span></label></div>
+        <div class="fixed-contract">
+          <div><span>Forecast horizon</span><strong>1,000 ms</strong></div>
+          <div><span>Gameplay delay</span><strong>1,000 ms</strong></div>
+          <p>Riot source time + modeled delay. Historical source-time scenario.</p>
+        </div>
+        <div class="paper-control">
+          <label class="switch-label"><span>Recorded paper ledger <small>Read-only original example policy</small></span><input id="paper-enabled" type="checkbox" role="switch" disabled><span class="switch-visual" aria-hidden="true"></span></label>
+          <div id="paper-fields" class="paper-fields" hidden>
+            <label class="field">Minimum edge <span class="input-unit"><input id="min-edge" type="number" value="0.25" min="0" max="100" step="0.05"><span>¢</span></span></label>
+            <label class="field">Max position <span class="input-unit"><input id="max-position" type="number" value="10" min="1" max="1000" step="1"><span>contracts</span></span></label>
+            <label class="field">Order delay <span class="input-unit"><input id="order-delay" type="number" value="25" min="0" max="999" step="1"><span>ms</span></span></label>
+          </div>
+        </div>
+        <div class="session-actions">
+          <button class="button primary" id="start" type="submit" disabled><span aria-hidden="true">▶</span> Play saved recording</button>
+          <div class="secondary-actions"><button class="button" id="pause" type="button" disabled>Pause</button><button class="button stop" id="stop" type="button" disabled>Stop</button></div>
+        </div>
+      </form>
+      <div class="sidebar-bottom"><span class="lock-icon" aria-hidden="true">◇</span><div>Encrypted saved records<p>No inference, live feed or new orders.</p></div></div>
+    </aside>
+
+    <main>
+      <div id="alert" class="alert" role="alert" hidden></div>
+      <section class="session-heading">
+        <div><div class="section-kicker">OBSERVATION → FORECAST → ACTUAL</div><h2 id="session-title">The next second, replayed.</h2><p id="session-subtitle">Select an archived game to inspect forecasts as observations arrive.</p></div>
+        <span id="run-status" class="run-status idle"><i></i><span>Ready</span></span>
+      </section>
+      <p class="source-assumptions"><span>SAVED REPLAY</span> Forecasts, target releases and worker timings were recorded previously. Playback speed changes only this presentation. The original source replay speed is shown separately. Riot availability was assumed at source time +1,000 ms.</p>
+      <section class="run-browser" aria-label="Saved recordings"><label class="field">Recording<select id="run-view"><option value="">Current saved playback</option></select></label><button id="refresh-runs" class="button" type="button" title="Refresh the shared recording list">Refresh</button><a id="run-permalink" hidden>Link to this recording</a><p id="view-note">Saved records only · no model runs in the browser.</p></section>
+      <section class="replay-strip" aria-label="Replay progress">
+        <div class="clock-block"><span class="eyebrow">SOURCE CLOCK · ARCHIVE UTC</span><strong id="archive-clock">—</strong><span id="archive-date" class="muted">Awaiting replay</span><span id="recorded-source-speed" class="muted">Original capture speed: —</span></div>
+        <div class="progress-block"><div class="progress-label"><span id="elapsed">00:00 / —</span><span id="progress-value">0%</span></div><div id="progress" class="progress" role="progressbar" aria-label="Game replay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div><div class="progress-label muted"><span id="events-processed">0 observations processed</span><span id="pace-label">1× recorded-wall-time playback</span></div></div>
+      </section>
+
+      <section class="saved-seek" aria-label="Seek saved recording"><label for="playback-seek">PLAYBACK CLOCK · RECORDED WALL TIME</label><input id="playback-seek" type="range" min="0" max="1" step="any" value="0" disabled><span id="playback-position">No recording selected</span></section>
+
+      <section class="metrics" aria-label="Session metrics">
+        <article class="metric primary-metric"><div class="metric-top"><h3>Next-quote error</h3><span class="micro-tag">PRIMARY</span></div><strong id="next-mae">—<small>¢</small></strong><p id="next-mae-note">Waiting for matched actual quotes</p></article>
+        <article class="metric"><div class="metric-top"><h3>1-second error</h3><span class="micro-tag secondary-tag">FIXED HORIZON</span></div><strong id="one-second-mae">—<small>¢</small></strong><p id="one-second-note">Scored only when the target is observed</p></article>
+        <article class="metric"><div class="metric-top"><h3>Recorded handler p99</h3><span class="micro-tag">ALL UPDATES</span></div><strong id="handler-p99">—<small>µs</small></strong><p id="handler-note">Original worker calls · not browser performance</p></article>
+        <article class="metric"><div class="metric-top"><h3>Forecasts issued</h3><span id="coverage-tag" class="micro-tag">—</span></div><strong id="forecast-count">0</strong><p id="forecast-note">0 pending · 0 unavailable</p></article>
+      </section>
+
+      <div class="primary-grid">
+        <section class="panel forecast-panel">
+          <div class="panel-head"><div><span class="section-kicker">PRICE PATH</span><h3>Prediction meets observation.</h3></div><div class="chart-modes segmented" aria-label="Actual-price evaluation"><button type="button" data-target="next" aria-pressed="true">Next quote</button><button type="button" data-target="1s" aria-pressed="false">+1 second</button></div></div>
+          <div class="chart-meta"><div class="legend"><span><i class="actual"></i>Actual</span><span><i class="predicted"></i>Predicted</span><button id="hold-toggle" type="button" aria-pressed="false"><i class="hold"></i>Hold price</button></div><span id="chart-target-note" class="chart-caption">Variable-horizon actual · next same-token quote</span></div>
+          <div class="chart-wrap"><canvas id="price-chart" tabindex="0" aria-label="Recorded forecast and observed prices, aligned by forecast issue time. Use arrow keys to inspect points."></canvas><div id="chart-empty" class="chart-empty"><span class="empty-graphic" aria-hidden="true">↗</span><strong>Choose and play a saved recording.</strong><p>Forecasts and actual targets appear at their recorded release points.<br>No new predictions are computed here.</p></div><div id="chart-tip" class="tooltip" hidden></div></div>
+          <div class="chart-footer"><span id="chart-count">No forecast points yet</span><span>Prices in cents · aligned by forecast issue</span></div>
+        </section>
+
+        <section class="panel latency-panel">
+          <div class="panel-head"><div><span class="section-kicker">RECORDED WORKER TIMINGS</span><h3>Receive → forecast</h3></div><span class="tiny-dot" aria-hidden="true"></span></div>
+          <div class="latency-population"><div class="segmented" aria-label="Latency population"><button type="button" data-latency-population="forecasts" aria-pressed="true">Forecasts</button><button type="button" data-latency-population="nonzero" aria-pressed="false">Nonzero</button><button type="button" data-latency-population="all" aria-pressed="false">All updates</button></div><p id="latency-population-note">Actual forecasts · 0 calls</p></div>
+          <div class="latency-grid">
+            <div><span>p50</span><strong id="latency-p50">—</strong></div><div><span>p95</span><strong id="latency-p95">—</strong></div>
+            <div><span>p99</span><strong id="latency-p99">—</strong></div><div><span>Maximum</span><strong id="latency-max">—</strong></div>
+          </div>
+          <div class="deadline-line"><span>Receive → forecast ≥ 1 ms</span><strong id="deadline-misses">—</strong></div>
+          <div class="stage-section"><div class="subheading">Measured path tails <span>µs</span></div><div id="stages" class="stages"><p class="muted small">Measurements appear when available.</p></div></div>
+          <div class="pacing-section"><div><span>Queue depth</span><strong id="queue-depth">—</strong></div><div><span>Pacing lag · p99</span><strong id="pacing-lag">—</strong></div><div><span>Recorded quote age</span><strong id="source-age">—</strong></div></div>
+          <p class="panel-footnote">These are original recorded worker measurements, including its queue and computation. Browser rendering, download and playback delays are not inference measurements. Intervals overlap; do not sum their percentiles.</p>
+        </section>
+      </div>
+
+      <section class="panel predictions-panel">
+        <div class="panel-head"><div><span class="section-kicker">FORECAST TAPE</span><h3>Recent predictions</h3></div><span id="recent-count" class="panel-counter">0 rows</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Issued · UTC</th><th>Current</th><th>Predicted</th><th>Next actual</th><th title="Predicted minus next actual, in cents">Δ next</th><th>Quote wait</th><th>+1s actual</th><th>State</th></tr></thead><tbody id="predictions-body"><tr class="empty-row"><td colspan="8">No forecasts yet. Pending actuals remain visible until they resolve.</td></tr></tbody></table></div>
+        <div class="panel-footer"><span id="scoring-note">Next quote and +1-second targets are evaluated separately.</span><span id="run-id">No active session</span></div>
+        <div class="export-links"><a id="download-records" hidden download>Download saved journal</a><a id="download-summary" hidden download>Download recorded summary</a><span>Downloads contain sanitized saved records. The chart shows a recent playback window.</span></div>
+      </section>
+
+      <section class="panel paper-panel" id="paper-panel">
+        <div class="panel-head"><div><span class="section-kicker">RECORDED EXAMPLE POLICY</span><h3>Saved paper ledger</h3></div><span id="paper-status" class="micro-tag">NOT RECORDED</span></div>
+        <div id="paper-empty" class="paper-empty"><div class="paper-symbol" aria-hidden="true">⇄</div><div><strong>Only previously recorded paper events appear here.</strong><p>Choose a recording that includes a paper ledger. This page cannot place orders or generate new fills.</p></div></div>
+        <div id="paper-content" hidden><div class="paper-metrics"><div><span>Position</span><strong id="paper-position">—</strong></div><div><span>Cash balance</span><strong id="paper-realized">—</strong></div><div><span>Marked P&L</span><strong id="paper-unrealized">—</strong></div><div><span>Orders / fills</span><strong id="paper-order-count">—</strong></div></div><p id="paper-assumptions" class="paper-assumptions"></p><div class="table-wrap"><table><thead><tr><th>Time · UTC</th><th>Action</th><th>Quantity</th><th>Price</th><th>Status</th><th>Reason</th></tr></thead><tbody id="paper-body"></tbody></table></div></div>
+      </section>
+      <section id="cadence-panel" class="panel cadence-panel" hidden aria-label="Historical source cadence"><div class="panel-head"><div><span class="section-kicker">SOURCE CADENCE</span><h3>Archive arrivals, not playback speed.</h3></div></div><div id="cadence-content" class="cadence-copy"></div></section>
+      <footer class="footer"><span><i></i>Saved historical records · no model or trading service</span><span id="updated-at">Unlocking saved data</span></footer>
+    </main>
+  </div>
+</body>
+</html>
